@@ -1,8 +1,15 @@
 #include <QCoreApplication>
+#include <iostream>
+#include "trymariadb.h"
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);
+using namespace std;
+
+int main(int argc, char* argv[]) {
+	//QCoreApplication a(argc, argv);
+
+	//cout << "ciao ciao!" << endl;
     
-    return a.exec();
+    tryMariaDb();
+
+	//return a.exec();
 }
