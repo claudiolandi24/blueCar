@@ -7,11 +7,11 @@ void tryMariaDb(){
 	conf.user = "claudio";
 	conf.pass = "claudio";
 	conf.port = 3306;
-    conf.defaultDB = "db1";
+    conf.defaultDB = "blueCar";
 	DB db;
 	db.setConf(conf);
     
-    auto res = db.query("select * from blueCar.type");
+    auto res = db.query("select * from type");
     
     [[maybe_unused]] int breakPoint = 0;
 }
