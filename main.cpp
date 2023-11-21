@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     //tryMariaDb();
     
     
-    //tryMenu();
+    tryMenu();
 
 	//return a.exec();
 }

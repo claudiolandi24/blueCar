@@ -10,6 +10,10 @@ MenuItem::MenuItem(string label_) {
 MenuItem::~MenuItem() {
 }
 
+void MenuItem::printEmptyLineSeparator() {
+	cout << "\n\n";
+}
+
 Menu::~Menu() {
 	for (auto itr = items.begin(); itr != items.end(); itr++) {
 		delete *itr;
@@ -19,21 +23,29 @@ Menu::~Menu() {
 void Menu::show() {
 	cout << "--- " << title << " ---" << endl;
 	for (unsigned i = 0; i < items.size(); i++) {
-		cout << "-" << i << " " << items[i]->label << endl;
+		cout << "-" << i + 1 << " " << items[i]->label << endl;
 	}
-	cout << "---" << endl;
+	cout << "-0 " << exitLabel << endl;
 }
 
-void Menu::runSelectedItem() {
+int Menu::askForOption() {
 	cout << "Select an option" << endl;
+	//TODO remove everywhere unsigned
 	unsigned option;
 	cin >> option;
-	items[option]->run();
+	printEmptyLineSeparator();
+	return int(option);
 }
 
 void Menu::run() {
-	show();
-	runSelectedItem();
+	while (true) {
+		show();
+		int selectedOption = askForOption();
+		if (!selectedOption) {
+			break;
+		}
+		items[unsigned(selectedOption - 1)]->run();
+	}
 };
 
 void Menu::addItem(MenuItem* item) {
@@ -45,6 +57,7 @@ MenuLogin::MenuLogin(string label_)
 	title = "LOGIN";
 	addItem(new Action1("Action 1"));
 	addItem(new Action2("Action 2"));
+	exitLabel = "Quit";
 }
 
 Action::~Action() {
@@ -59,6 +72,7 @@ Action1::~Action1() {
 
 void Action1::run() {
 	cout << "running action 1" << endl;
+	printEmptyLineSeparator();
 };
 
 Action2::~Action2() {
@@ -66,6 +80,7 @@ Action2::~Action2() {
 
 void Action2::run() {
 	cout << "running action 2" << endl;
+	printEmptyLineSeparator();
 };
 
 void tryMenu() {

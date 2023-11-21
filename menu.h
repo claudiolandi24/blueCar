@@ -7,6 +7,9 @@
 using namespace std;
 
 class MenuItem {
+      protected:
+	void printEmptyLineSeparator();
+
       public:
 	string label;
 
@@ -20,10 +23,11 @@ class Menu : public MenuItem {
       protected:
 	string            title;
 	vector<MenuItem*> items;
+	string            exitLabel = "Back";
 
 	void addItem(MenuItem* item);
 	void show();
-	void runSelectedItem();
+	int  askForOption();
 	~Menu();
 
       public:
