@@ -14,6 +14,7 @@ void MenuItem::printEmptyLineSeparator() {
 void Menu::show() {
 	cout << "--- " << title << " ---" << endl;
 	for (unsigned i = 0; i < items.size(); i++) {
+        //TODO wrap to avoid offset
 		cout << "-" << i + 1 << " " << items[i]->label << endl;
 	}
 	cout << "-0 " << exitLabel << endl;
