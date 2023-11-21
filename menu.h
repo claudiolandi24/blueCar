@@ -41,15 +41,20 @@ class MenuLogin : public Menu {
 	MenuLogin(string label_);
 };
 
+class MenuAdmin : public Menu {
+      public:
+	MenuAdmin(string label_);
+};
+
 class Action : public MenuItem {
       public:
 	Action(string label_)
 	    : MenuItem(label_){};
 };
 
-class Action1 : public Action {
+class ActionLogin : public Action {
       public:
-	Action1(string label_)
+	ActionLogin(string label_)
 	    : Action(label_){};
 	void run() override;
 };

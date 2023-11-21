@@ -46,13 +46,21 @@ void Menu::addItem(unique_ptr<MenuItem> item) {
 MenuLogin::MenuLogin(string label_)
     : Menu(label_) {
 	title = "LOGIN";
-	addItem(make_unique<Action1>("Action 1"));
+	addItem(make_unique<ActionLogin>("I already have an account. Log in"));
 	addItem(make_unique<ActionRegister>("I do not have an account. Register"));
 	exitLabel = "Quit";
 }
 
-void Action1::run() {
-	cout << "running action 1" << endl;
+MenuAdmin::MenuAdmin(string label_)
+    : Menu(label_) {
+	title = "ADMIN";
+	// car user
+}
+
+void ActionLogin::run() {
+	MenuAdmin ma("");
+	ma.run();
+
 	printEmptyLineSeparator();
 };
 
