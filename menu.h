@@ -46,6 +46,11 @@ class MenuAdmin : public Menu {
 	MenuAdmin(string label_);
 };
 
+class MenuUser : public Menu {
+      public:
+	MenuUser(string label_);
+};
+
 class MenuManageCar : public Menu {
       public:
 	MenuManageCar(string label_);
@@ -128,6 +133,13 @@ class ActionRemoveUser : public Action {
 class ActionShowUsers : public Action {
       public:
 	ActionShowUsers(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionRentCar : public Action {
+      public:
+	ActionRentCar(string label_)
 	    : Action(label_){};
 	void run() override;
 };

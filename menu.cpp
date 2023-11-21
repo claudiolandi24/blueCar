@@ -46,8 +46,8 @@ void Menu::addItem(unique_ptr<MenuItem> item) {
 MenuLogin::MenuLogin(string label_)
     : Menu(label_) {
 	title = "LOGIN";
-	addItem(make_unique<ActionLogin>("Log in\n(I already have an account.)"));
-	addItem(make_unique<ActionRegister>("Register\n(I do not have an account.)"));
+	addItem(make_unique<ActionLogin>("Log in (I already have an account)"));
+	addItem(make_unique<ActionRegister>("Register (I do not have an account)"));
 	exitLabel = "Quit";
 }
 
@@ -59,9 +59,16 @@ MenuAdmin::MenuAdmin(string label_)
 	exitLabel = "Log out";
 }
 
+MenuUser::MenuUser(string label_)
+    : Menu(label_) {
+	title = "USER";
+	addItem(make_unique<ActionRentCar>("Rent car"));
+	exitLabel = "Log out";
+}
+
 MenuManageCar::MenuManageCar(string label_)
     : Menu(label_) {
-	title = "MANAGE CAR";
+	title = "MANAGE CARS";
 	addItem(make_unique<ActionAddCar>("Add car"));
 	addItem(make_unique<ActionUpdateCar>("Update car"));
 	addItem(make_unique<ActionRemoveCar>("Remove car"));
@@ -70,7 +77,7 @@ MenuManageCar::MenuManageCar(string label_)
 
 MenuManageUser::MenuManageUser(string label_)
     : Menu(label_) {
-	title = "MANAGE USER";
+	title = "MANAGE USERS";
 	addItem(make_unique<ActionAddUser>("Add user"));
 	addItem(make_unique<ActionUpdateUser>("Update user"));
 	addItem(make_unique<ActionRemoveUser>("Remove user"));
@@ -78,8 +85,20 @@ MenuManageUser::MenuManageUser(string label_)
 }
 
 void ActionLogin::run() {
-	MenuAdmin ma("");
-	ma.run();
+	cout << "Insert your username" << endl;
+	string userName;
+	cin >> userName;
+	printEmptyLineSeparator();
+
+	if (userName == "admin") {
+		MenuAdmin ma("");
+		ma.run();
+	} else if (userName == "claudio") {
+		MenuUser mu("");
+		mu.run();
+	} else {
+		cout << "Invalid user " << userName << endl;
+	}
 
 	printEmptyLineSeparator();
 };
@@ -93,14 +112,17 @@ void ActionAddCar::run() {
 	cout << "running add car" << endl;
 	printEmptyLineSeparator();
 };
+
 void ActionUpdateCar::run() {
 	cout << "running update car" << endl;
 	printEmptyLineSeparator();
 };
+
 void ActionRemoveCar::run() {
 	cout << "running remove car" << endl;
 	printEmptyLineSeparator();
 };
+
 void ActionShowCars::run() {
 	cout << "running show cars" << endl;
 	printEmptyLineSeparator();
@@ -110,16 +132,24 @@ void ActionAddUser::run() {
 	cout << "running add user" << endl;
 	printEmptyLineSeparator();
 };
+
 void ActionUpdateUser::run() {
 	cout << "running update user" << endl;
 	printEmptyLineSeparator();
 };
+
 void ActionRemoveUser::run() {
 	cout << "running remove user" << endl;
 	printEmptyLineSeparator();
 };
+
 void ActionShowUsers::run() {
 	cout << "running show users" << endl;
+	printEmptyLineSeparator();
+};
+
+void ActionRentCar::run() {
+	cout << "running rent car" << endl;
 	printEmptyLineSeparator();
 };
 
