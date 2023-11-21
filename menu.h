@@ -43,21 +43,21 @@ class MenuLogin : public Menu {
 
 class Action : public MenuItem {
       public:
-	Action(string s)
-	    : MenuItem(s){};
+	Action(string label_)
+	    : MenuItem(label_){};
 };
 
 class Action1 : public Action {
       public:
-	Action1(string s)
-	    : Action(s){};
+	Action1(string label_)
+	    : Action(label_){};
 	void run() override;
 };
 
 class Action2 : public Action {
       public:
-	Action2(string s)
-	    : Action(s){};
+	Action2(string label_)
+	    : Action(label_){};
 	void run() override;
 };
 
