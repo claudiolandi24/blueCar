@@ -45,7 +45,6 @@ class Action : public MenuItem {
       public:
 	Action(string s)
 	    : MenuItem(s){};
-	void run() override;
 };
 
 class Action1 : public Action {

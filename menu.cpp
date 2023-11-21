@@ -52,10 +52,6 @@ MenuLogin::MenuLogin(string label_)
 	exitLabel = "Quit";
 }
 
-void Action::run(){
-
-};
-
 void Action1::run() {
 	cout << "running action 1" << endl;
 	printEmptyLineSeparator();
