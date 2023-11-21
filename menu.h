@@ -145,6 +145,7 @@ class ActionRentCar : public Action {
 };
 
 void tryMenu();
+//
 //void tryMenu() {
 //	/*
 //    string s("ciao");
