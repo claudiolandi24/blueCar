@@ -46,15 +46,35 @@ void Menu::addItem(unique_ptr<MenuItem> item) {
 MenuLogin::MenuLogin(string label_)
     : Menu(label_) {
 	title = "LOGIN";
-	addItem(make_unique<ActionLogin>("I already have an account. Log in"));
-	addItem(make_unique<ActionRegister>("I do not have an account. Register"));
+	addItem(make_unique<ActionLogin>("Log in\n(I already have an account.)"));
+	addItem(make_unique<ActionRegister>("Register\n(I do not have an account.)"));
 	exitLabel = "Quit";
 }
 
 MenuAdmin::MenuAdmin(string label_)
     : Menu(label_) {
 	title = "ADMIN";
-	// car user
+	addItem(make_unique<MenuCar>("Manage cars"));
+	addItem(make_unique<MenuUser>("Manage users"));
+	exitLabel = "Log out";
+}
+
+MenuCar::MenuCar(string label_)
+    : Menu(label_) {
+	title = "CAR";
+	addItem(make_unique<ActionAddCar>("Add car"));
+	addItem(make_unique<ActionUpdateCar>("Update car"));
+	addItem(make_unique<ActionRemoveCar>("Remove car"));
+	addItem(make_unique<ActionShowCars>("Show cars"));
+}
+
+MenuUser::MenuUser(string label_)
+    : Menu(label_) {
+	title = "USER";
+	addItem(make_unique<ActionAddUser>("Add user"));
+	addItem(make_unique<ActionUpdateUser>("Update user"));
+	addItem(make_unique<ActionRemoveUser>("Remove user"));
+	addItem(make_unique<ActionShowUsers>("Show users"));
 }
 
 void ActionLogin::run() {
@@ -66,6 +86,40 @@ void ActionLogin::run() {
 
 void ActionRegister::run() {
 	cout << "running register" << endl;
+	printEmptyLineSeparator();
+};
+
+void ActionAddCar::run() {
+	cout << "running add car" << endl;
+	printEmptyLineSeparator();
+};
+void ActionUpdateCar::run() {
+	cout << "running update car" << endl;
+	printEmptyLineSeparator();
+};
+void ActionRemoveCar::run() {
+	cout << "running remove car" << endl;
+	printEmptyLineSeparator();
+};
+void ActionShowCars::run() {
+	cout << "running show cars" << endl;
+	printEmptyLineSeparator();
+};
+
+void ActionAddUser::run() {
+	cout << "running add user" << endl;
+	printEmptyLineSeparator();
+};
+void ActionUpdateUser::run() {
+	cout << "running update user" << endl;
+	printEmptyLineSeparator();
+};
+void ActionRemoveUser::run() {
+	cout << "running remove user" << endl;
+	printEmptyLineSeparator();
+};
+void ActionShowUsers::run() {
+	cout << "running show users" << endl;
 	printEmptyLineSeparator();
 };
 

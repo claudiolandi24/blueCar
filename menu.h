@@ -46,6 +46,16 @@ class MenuAdmin : public Menu {
 	MenuAdmin(string label_);
 };
 
+class MenuCar : public Menu {
+      public:
+	MenuCar(string label_);
+};
+
+class MenuUser : public Menu {
+      public:
+	MenuUser(string label_);
+};
+
 class Action : public MenuItem {
       public:
 	Action(string label_)
@@ -62,6 +72,62 @@ class ActionLogin : public Action {
 class ActionRegister : public Action {
       public:
 	ActionRegister(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionAddCar : public Action {
+      public:
+	ActionAddCar(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionUpdateCar : public Action {
+      public:
+	ActionUpdateCar(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionRemoveCar : public Action {
+      public:
+	ActionRemoveCar(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionShowCars : public Action {
+      public:
+	ActionShowCars(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionAddUser : public Action {
+      public:
+	ActionAddUser(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionUpdateUser : public Action {
+      public:
+	ActionUpdateUser(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionRemoveUser : public Action {
+      public:
+	ActionRemoveUser(string label_)
+	    : Action(label_){};
+	void run() override;
+};
+
+class ActionShowUsers : public Action {
+      public:
+	ActionShowUsers(string label_)
 	    : Action(label_){};
 	void run() override;
 };
