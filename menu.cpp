@@ -48,7 +48,6 @@ MenuLogin::MenuLogin(string label_)
 	title = "LOGIN";
 	addItem(make_unique<Action1>("Action 1"));
 	addItem(make_unique<Action2>("Action 2"));
-
 	exitLabel = "Quit";
 }
 
