@@ -7,17 +7,8 @@ MenuItem::MenuItem(string label_) {
 	label = label_;
 }
 
-MenuItem::~MenuItem() {
-}
-
 void MenuItem::printEmptyLineSeparator() {
 	cout << "\n\n";
-}
-
-Menu::~Menu() {
-	for (auto itr = items.begin(); itr != items.end(); itr++) {
-		delete *itr;
-	}
 }
 
 void Menu::show() {
@@ -48,35 +39,27 @@ void Menu::run() {
 	}
 };
 
-void Menu::addItem(MenuItem* item) {
-	items.push_back(item);
+void Menu::addItem(unique_ptr<MenuItem> item) {
+	items.push_back(move(item));
 }
 
 MenuLogin::MenuLogin(string label_)
     : Menu(label_) {
 	title = "LOGIN";
-	addItem(new Action1("Action 1"));
-	addItem(new Action2("Action 2"));
-	exitLabel = "Quit";
-}
+	addItem(make_unique<Action1>("Action 1"));
+	addItem(make_unique<Action2>("Action 2"));
 
-Action::~Action() {
+	exitLabel = "Quit";
 }
 
 void Action::run(){
 
 };
 
-Action1::~Action1() {
-}
-
 void Action1::run() {
 	cout << "running action 1" << endl;
 	printEmptyLineSeparator();
 };
-
-Action2::~Action2() {
-}
 
 void Action2::run() {
 	cout << "running action 2" << endl;
