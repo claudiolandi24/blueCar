@@ -46,14 +46,14 @@ class MenuAdmin : public Menu {
 	MenuAdmin(string label_);
 };
 
-class MenuCar : public Menu {
+class MenuManageCar : public Menu {
       public:
-	MenuCar(string label_);
+	MenuManageCar(string label_);
 };
 
-class MenuUser : public Menu {
+class MenuManageUser : public Menu {
       public:
-	MenuUser(string label_);
+	MenuManageUser(string label_);
 };
 
 class Action : public MenuItem {

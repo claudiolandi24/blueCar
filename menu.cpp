@@ -54,23 +54,23 @@ MenuLogin::MenuLogin(string label_)
 MenuAdmin::MenuAdmin(string label_)
     : Menu(label_) {
 	title = "ADMIN";
-	addItem(make_unique<MenuCar>("Manage cars"));
-	addItem(make_unique<MenuUser>("Manage users"));
+	addItem(make_unique<MenuManageCar>("Manage cars"));
+	addItem(make_unique<MenuManageUser>("Manage users"));
 	exitLabel = "Log out";
 }
 
-MenuCar::MenuCar(string label_)
+MenuManageCar::MenuManageCar(string label_)
     : Menu(label_) {
-	title = "CAR";
+	title = "MANAGE CAR";
 	addItem(make_unique<ActionAddCar>("Add car"));
 	addItem(make_unique<ActionUpdateCar>("Update car"));
 	addItem(make_unique<ActionRemoveCar>("Remove car"));
 	addItem(make_unique<ActionShowCars>("Show cars"));
 }
 
-MenuUser::MenuUser(string label_)
+MenuManageUser::MenuManageUser(string label_)
     : Menu(label_) {
-	title = "USER";
+	title = "MANAGE USER";
 	addItem(make_unique<ActionAddUser>("Add user"));
 	addItem(make_unique<ActionUpdateUser>("Update user"));
 	addItem(make_unique<ActionRemoveUser>("Remove user"));
