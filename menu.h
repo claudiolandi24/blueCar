@@ -54,9 +54,9 @@ class Action1 : public Action {
 	void run() override;
 };
 
-class Action2 : public Action {
+class ActionRegister : public Action {
       public:
-	Action2(string label_)
+	ActionRegister(string label_)
 	    : Action(label_){};
 	void run() override;
 };

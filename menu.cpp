@@ -47,7 +47,7 @@ MenuLogin::MenuLogin(string label_)
     : Menu(label_) {
 	title = "LOGIN";
 	addItem(make_unique<Action1>("Action 1"));
-	addItem(make_unique<Action2>("Action 2"));
+	addItem(make_unique<ActionRegister>("I do not have an account. Register"));
 	exitLabel = "Quit";
 }
 
@@ -56,8 +56,8 @@ void Action1::run() {
 	printEmptyLineSeparator();
 };
 
-void Action2::run() {
-	cout << "running action 2" << endl;
+void ActionRegister::run() {
+	cout << "running register" << endl;
 	printEmptyLineSeparator();
 };
 
