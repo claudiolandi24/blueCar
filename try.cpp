@@ -16,10 +16,14 @@ void try0() {
 //	QString s = QTextStream(stdin).readLine();
 //	QTextStream(stdout) << "value is '" << s << "'\n";
     
-    //Car::getNewCarFromUser();
     
-    auto res = db.query("select * from db1.persons");
-    int b = 0;
-    Q_UNUSED(b);
+    
+//    auto res = db.query("select * from db1.persons");
+//    int b = 0;
+//    Q_UNUSED(b);
+    
+    auto car = Car::getNewCarFromUser();
+    car.saveToDb();
+    
     
 }

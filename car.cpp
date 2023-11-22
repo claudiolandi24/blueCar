@@ -1,10 +1,14 @@
 #include "car.h"
+#include "rbk/minMysql/min_mysql.h"
+#include "rbk/misc/b64.h"
 #include "utilityfunctions.h"
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
 
 using namespace std;
+
+extern DB db;
 
 class ValidateGeneralAlphaNum : public Validate {
 	QPair<bool, QString> getValidatedString(const QString& string) override {
@@ -68,5 +72,23 @@ Car Car::getNewCarFromUser() {
 	return car;
 }
 
-void Car::saveToDb() {
+void Car::saveToDb() { //2 3 4
+	QString skel = R"(
+INSERT INTO car
+SET typeId = %1,
+    licensePlate = %2,
+    brand = %3,
+    name = %4,
+    isFree = %5,
+    locationId = %6,
+    totalDistanceTraveled = %7;
+)";
+	auto    sql  = skel.arg(typeId)
+	               .arg(base64this(licensePlate))
+	               .arg(base64this(brand))
+	               .arg(base64this(name))
+	               .arg(isFree)
+	               .arg(locationId)
+	               .arg(totalDistanceTraveled);
+	db.query(sql);
 }
