@@ -19,13 +19,8 @@ void ActionUpdateCar::run() {
 
 void ActionRemoveCar::run() {
 	cout << "--- REMOVE CAR ---" << endl;
-    Car::deleteCarAfterUserRequest();
-    
-	printEmptyLineSeparator();
-};
+	Car::deleteCarAfterUserRequest();
 
-void ActionShowCars::run() {
-	cout << "running show cars" << endl;
 	printEmptyLineSeparator();
 };
 
@@ -35,5 +30,8 @@ MenuManageCar::MenuManageCar(string label_)
 	addItem(make_unique<ActionAddCar>("Add car"));
 	addItem(make_unique<ActionUpdateCar>("Update car"));
 	addItem(make_unique<ActionRemoveCar>("Remove car"));
-	addItem(make_unique<ActionShowCars>("Show cars"));
+}
+
+void MenuManageCar::actionBeforeShow() {
+	cout << "TABLE\n";
 }

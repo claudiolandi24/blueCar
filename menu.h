@@ -39,9 +39,10 @@ class Menu : public MenuItem {
 	ItemVector items;
 	string     exitLabel = "Back";
 
-	void addItem(unique_ptr<MenuItem> item);
-	void show();
-	int  askForOption();
+	void         addItem(unique_ptr<MenuItem> item);
+	void         show();
+	int          askForOption();
+	virtual void actionBeforeShow(){};
 
       public:
 	Menu(string label_)

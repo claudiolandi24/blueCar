@@ -6,6 +6,7 @@ using namespace std;
 
 void Menu::show() {
 	cout << "--- " << title << " ---" << endl;
+	actionBeforeShow();
 	for (unsigned itemNumber = 1; itemNumber <= items.size(); itemNumber++) {
 		cout << "-" << itemNumber << " " << items.getItemByItemNumber(itemNumber)->label << endl;
 	}

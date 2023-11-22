@@ -25,14 +25,10 @@ class ActionRemoveCar : public Action {
 	void run() override;
 };
 
-class ActionShowCars : public Action {
-      public:
-	ActionShowCars(string label_)
-	    : Action(label_){};
-	void run() override;
-};
-
 class MenuManageCar : public Menu {
+      protected:
+	void actionBeforeShow() override;
+
       public:
 	MenuManageCar(string label_);
 };
