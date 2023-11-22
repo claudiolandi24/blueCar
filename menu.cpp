@@ -13,7 +13,6 @@ void Menu::show() {
 
 int Menu::askForOption() {
 	cout << "Select an option" << endl;
-	//TODO remove everywhere unsigned
 	unsigned option;
 	cin >> option;
 	printEmptyLineSeparator();
