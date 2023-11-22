@@ -65,7 +65,8 @@ int getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate) {
 	while (true) {
 		QTextStream(stdout) << requestMsg << Qt::endl;
 		QString value = QTextStream(stdin).readLine();
-		qDebug().noquote() << QSL("value = '%1'\n\n%2").arg(value).arg(QStacker16Light());
+        //TODO
+		//qDebug().noquote() << QSL("value = '%1'\n\n%2").arg(value).arg(QStacker16Light());
 		value    = value.trimmed();
 		auto res = validate.get()->getValidatedInt(value);
 

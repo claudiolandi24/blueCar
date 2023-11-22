@@ -1,12 +1,14 @@
 #include "menumanagecar.h"
-#include <iostream>
 #include "car.h"
+#include <QTextStream>
+#include <iostream>
 
 void ActionAddCar::run() {
 	cout << "--- ADD CAR ---" << endl;
-    Car newCar = Car::getNewCarFromUser();
-    newCar.saveToDb();
-    
+	Car newCar = Car::getNewCarFromUser();
+	newCar.saveToDb();
+	QTextStream(stdout) << "Car added successfully" << Qt::endl;
+
 	printEmptyLineSeparator();
 };
 

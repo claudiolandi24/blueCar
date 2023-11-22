@@ -2,11 +2,13 @@
 #include "menuadmin.h"
 #include "menuuser.h"
 #include <iostream>
+#include <QTextStream>
 
 void ActionLogin::run() {
 	cout << "Insert your username" << endl;
-	string userName;
-	cin >> userName;
+    QString userName = QTextStream(stdin).readLine();
+	//string userName;
+	//cin >> userName;
 	printEmptyLineSeparator();
 
 	if (userName == "admin") {
@@ -16,11 +18,11 @@ void ActionLogin::run() {
 		MenuUser mu("");
 		mu.run();
 	} else {
-		cout << "Invalid user " << userName << endl;
+        //TODO remove all cout <<. use qtextstream. so here remove toStdString()
+		cout << "Invalid user " << userName.toStdString() << endl;
 	}
 
-	printEmptyLineSeparator();
-};
+	printEmptyLineSeparator(); };
 
 void ActionRegister::run() {
 	cout << "running register" << endl;

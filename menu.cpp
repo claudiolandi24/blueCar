@@ -1,4 +1,5 @@
 #include "menu.h"
+#include <QTextStream>
 #include <iostream>
 
 using namespace std;
@@ -13,10 +14,13 @@ void Menu::show() {
 
 int Menu::askForOption() {
 	cout << "Select an option" << endl;
-	unsigned option;
-	cin >> option;
+	QString strOption = QTextStream(stdin).readLine();
+	bool    ok;
+	int     option = strOption.toInt(&ok);
+	//TODO check ok
+
 	printEmptyLineSeparator();
-	return int(option);
+	return option;
 }
 
 void Menu::run() {

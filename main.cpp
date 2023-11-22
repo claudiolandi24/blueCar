@@ -9,8 +9,8 @@ using namespace std;
 int main() {
 	initDb();
 
-	//runApplication();
-	try0();
+	runApplication();
+	//try0();
 
 	return 0;
 }
