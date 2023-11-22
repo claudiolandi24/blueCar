@@ -1,6 +1,8 @@
 #include "try.h"
+#include "rbk/minMysql/min_mysql.h"
 #include <QTextStream>
 
+extern DB db;
 //using namespace Qt;
 
 void tryQPrint() {
@@ -14,6 +16,10 @@ void try0() {
 //	QString s = QTextStream(stdin).readLine();
 //	QTextStream(stdout) << "value is '" << s << "'\n";
     
-    Car::getNewCarFromUser();
+    //Car::getNewCarFromUser();
+    
+    auto res = db.query("select * from db1.persons");
+    int b = 0;
+    Q_UNUSED(b);
     
 }

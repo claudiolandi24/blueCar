@@ -9,6 +9,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         car.cpp \
+        database.cpp \
         main.cpp \
         menu.cpp \
         menuadmin.cpp \
@@ -29,6 +30,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     action.h \
     car.h \
+    database.h \
     menu.h \
     menuadmin.h \
     menuitem.h \
