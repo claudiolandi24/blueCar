@@ -11,6 +11,12 @@ SOURCES += \
         car.cpp \
         main.cpp \
         menu.cpp \
+        menuadmin.cpp \
+        menuitem.cpp \
+        menulogin.cpp \
+        menumanagecar.cpp \
+        menumanageuser.cpp \
+        menuuser.cpp \
         trymariadb.cpp
 
 # Default rules for deployment.
@@ -19,8 +25,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    action.h \
     car.h \
     menu.h \
+    menuadmin.h \
+    menuitem.h \
+    menulogin.h \
+    menumanagecar.h \
+    menumanageuser.h \
+    menuuser.h \
     trymariadb.h
 	
 include(rbk/rbk.pri)
