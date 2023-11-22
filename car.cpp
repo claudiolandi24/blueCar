@@ -72,7 +72,7 @@ Car Car::getNewCarFromUser() {
 	return car;
 }
 
-void Car::saveToDb() { //2 3 4
+void Car::saveToDb() {
 	QString skel = R"(
 INSERT INTO car
 SET typeId = %1,
