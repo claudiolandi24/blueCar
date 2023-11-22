@@ -13,9 +13,8 @@ void MenuItem::printEmptyLineSeparator() {
 
 void Menu::show() {
 	cout << "--- " << title << " ---" << endl;
-	for (unsigned i = 0; i < items.size(); i++) {
-        //TODO wrap to avoid offset
-		cout << "-" << i + 1 << " " << items[i]->label << endl;
+	for (unsigned itemNumber = 1; itemNumber <= items.size(); itemNumber++) {
+		cout << "-" << itemNumber << " " << items.getItemByItemNumber(itemNumber)->label << endl;
 	}
 	cout << "-0 " << exitLabel << endl;
 }
@@ -36,12 +35,12 @@ void Menu::run() {
 		if (!selectedOption) {
 			break;
 		}
-		items[unsigned(selectedOption - 1)]->run();
+		items.getItemByItemNumber(unsigned(selectedOption))->run();
 	}
 };
 
 void Menu::addItem(unique_ptr<MenuItem> item) {
-	items.push_back(move(item));
+	items.push_back(item);
 }
 
 MenuLogin::MenuLogin(string label_)
