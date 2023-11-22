@@ -19,7 +19,6 @@ SOURCES += \
         menumanageuser.cpp \
         menuuser.cpp \
         try.cpp \
-        trymariadb.cpp \
         utilityfunctions.cpp
 
 # Default rules for deployment.
@@ -39,7 +38,6 @@ HEADERS += \
     menumanageuser.h \
     menuuser.h \
     try.h \
-    trymariadb.h \
     utilityfunctions.h
 	
 include(rbk/rbk.pri)

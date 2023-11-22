@@ -35,7 +35,7 @@ MenuLogin::MenuLogin(string label_)
 	exitLabel = "Quit";
 }
 
-void tryMenu() {
+void runApplication() {
 	MenuLogin ml("");
 	ml.run();
 }

@@ -23,6 +23,6 @@ class MenuLogin : public Menu {
 	MenuLogin(string label_);
 };
 
-void tryMenu();
+void runApplication();
 
 #endif // MENULOGIN_H

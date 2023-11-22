@@ -1,6 +1,9 @@
 #include "try.h"
 #include "rbk/minMysql/min_mysql.h"
 #include <QTextStream>
+#include <iostream>
+
+using namespace std;
 
 extern DB db;
 //using namespace Qt;
@@ -21,6 +24,15 @@ void try0() {
 //    auto res = db.query("select * from db1.persons");
 //    int b = 0;
 //    Q_UNUSED(b);
+    
+    
+//    cout << "insert number\n";
+//    int n;
+//    cin >> n;
+    
+    QTextStream(stdout) << "QT insert number\n";
+    QString s = QTextStream(stdin).readLine();
+    
     
     auto car = Car::getNewCarFromUser();
     car.saveToDb();
