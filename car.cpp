@@ -92,3 +92,50 @@ SET typeId = %1,
 	               .arg(totalDistanceTraveled);
 	db.query(sql);
 }
+
+bool Car::carIdExists(int carId) {
+	QString skel = R"(
+select * from car where id = %1; 
+)";
+	auto    sql  = skel.arg(carId);
+	auto    res  = db.query(sql);
+	if (res.empty()) {
+		return false;
+	}
+	return true;
+}
+
+QPair<bool, int> Car::getCarIdFromUser() {
+	QTextStream(stdout) << "Insert the ID of the car you want to remove.\n"
+	                       "You can get it by showing all the cars (option 'Show cars' in 'MANAGE CARS' menu)\n"
+                           "Insert 0 (zero) to cancel this operation"
+	                    << Qt::endl;
+	QString rawInput = QTextStream(stdin).readLine();
+	bool    ok;
+	int     carId = rawInput.toInt(&ok);
+	if (!ok) {
+		QTextStream(stdout) << "The inserted value is not a valid number" << Qt::endl;
+		return {false, 0};
+	}
+	if (!carIdExists(carId)) {
+		QTextStream(stdout) << QSL("No car with ID %1").arg(carId) << Qt::endl;
+		return {false, 0};
+	}
+
+	return {true, carId};
+}
+
+void Car::deleteCarFromDb(int id) {
+	QString sql = QSL("DELETE FROM car WHERE id = %1;").arg(id);
+	db.query(sql);
+}
+
+void Car::deleteCarAfterUserRequest() {
+	auto carId = getCarIdFromUser();
+	if (!carId.first) {
+		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
+		return;
+	}
+	deleteCarFromDb(carId.second);
+	QTextStream(stdout) << "Car removed successfully" << Qt::endl;
+}
