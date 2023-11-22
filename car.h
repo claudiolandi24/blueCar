@@ -5,7 +5,7 @@
 #include <QVector>
 
 class Car {
-      private:
+   public:
 	// db id
 	int     id     = 0;
 	int     typeId = 0;
@@ -16,8 +16,8 @@ class Car {
 	int     locationId            = 0;
 	int     totalDistanceTraveled = 0;
 
-      public:
-	Car();
+
+	Car() = default;
 	static Car          getNewCarFromUser();
 	static Car          getCarFromDb(int id);
 	static QVector<Car> getAllCarsFromDb();

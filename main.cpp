@@ -2,6 +2,7 @@
 #include "trymariadb.h"
 #include <QCoreApplication>
 #include <iostream>
+#include "try.h"
 
 using namespace std;
 
@@ -12,7 +13,10 @@ int main(int argc, char* argv[]) {
 
 	//tryMariaDb();
 
-	tryMenu();
+	//tryMenu();
+    
+    try0();
+    
 
 	//return a.exec();
 }

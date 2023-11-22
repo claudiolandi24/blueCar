@@ -1,8 +1,12 @@
 #include "menumanagecar.h"
 #include <iostream>
+#include "car.h"
 
 void ActionAddCar::run() {
-	cout << "running add car" << endl;
+	cout << "--- ADD CAR ---" << endl;
+    Car newCar = Car::getNewCarFromUser();
+    newCar.saveToDb();
+    
 	printEmptyLineSeparator();
 };
 
@@ -12,7 +16,7 @@ void ActionUpdateCar::run() {
 };
 
 void ActionRemoveCar::run() {
-	cout << "running remove car" << endl;
+	cout << "--- REMOVE CAR ---" << endl;
 	printEmptyLineSeparator();
 };
 

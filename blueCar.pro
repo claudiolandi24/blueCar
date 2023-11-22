@@ -17,7 +17,9 @@ SOURCES += \
         menumanagecar.cpp \
         menumanageuser.cpp \
         menuuser.cpp \
-        trymariadb.cpp
+        try.cpp \
+        trymariadb.cpp \
+        utilityfunctions.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,6 +36,8 @@ HEADERS += \
     menumanagecar.h \
     menumanageuser.h \
     menuuser.h \
-    trymariadb.h
+    try.h \
+    trymariadb.h \
+    utilityfunctions.h
 	
 include(rbk/rbk.pri)
