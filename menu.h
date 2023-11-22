@@ -14,7 +14,6 @@ class MenuItem {
       public:
 	string label;
 
-	//MenuItem();
 	MenuItem(string label_);
 	virtual ~MenuItem() = default;
 	virtual void run()  = 0;
@@ -170,18 +169,5 @@ class ActionRentCar : public Action {
 };
 
 void tryMenu();
-//
-//void tryMenu() {
-//	/*
-//    string s("ciao");
-//	Action mi(s);
-//	auto a = Action1("Action 1");
-//    */
-
-//	MenuLogin ml("");
-//	ml.run();
-//}
-
-//void pippo(){}
 
 #endif // MENU_H
