@@ -7,10 +7,12 @@
 
 class ActionUpdateCar : public Action {
       public:
-    Car car;
-    
+	Car car;
+
 	ActionUpdateCar(string label_, Car car_)
-	    : Action(label_){car=car_;};
+	    : Action(label_) {
+		car = car_;
+	};
 	void run() override;
 };
 
@@ -21,38 +23,38 @@ class ActionUpdateType : public ActionUpdateCar {
 	void run() override;
 };
 
-class ActionUpdateLicensePlate : public Action {
+class ActionUpdateLicensePlate : public ActionUpdateCar {
       public:
-	ActionUpdateLicensePlate(string label_)
-	    : Action(label_){};
+	ActionUpdateLicensePlate(string label_, Car car_)
+	    : ActionUpdateCar(label_, car_){};
 	void run() override;
 };
 
-class ActionUpdateBrand : public Action {
+class ActionUpdateBrand : public ActionUpdateCar {
       public:
-	ActionUpdateBrand(string label_)
-	    : Action(label_){};
+	ActionUpdateBrand(string label_, Car car_)
+	    : ActionUpdateCar(label_, car_){};
 	void run() override;
 };
 
-class ActionUpdateName : public Action {
+class ActionUpdateName : public ActionUpdateCar {
       public:
-	ActionUpdateName(string label_)
-	    : Action(label_){};
+	ActionUpdateName(string label_, Car car_)
+	    : ActionUpdateCar(label_, car_){};
 	void run() override;
 };
 
-class ActionUpdateLocation : public Action {
+class ActionUpdateLocation : public ActionUpdateCar {
       public:
-	ActionUpdateLocation(string label_)
-	    : Action(label_){};
+	ActionUpdateLocation(string label_, Car car_)
+	    : ActionUpdateCar(label_, car_){};
 	void run() override;
 };
 
-class ActionUpdateDistanceTraveled : public Action {
+class ActionUpdateDistanceTraveled : public ActionUpdateCar {
       public:
-	ActionUpdateDistanceTraveled(string label_)
-	    : Action(label_){};
+	ActionUpdateDistanceTraveled(string label_, Car car_)
+	    : ActionUpdateCar(label_, car_){};
 	void run() override;
 };
 

@@ -36,12 +36,12 @@ MenuUpdateCar::MenuUpdateCar(string label_, Car car_)
 	car = car_;
 
 	title = "UPDATE CAR";
-	addItem(make_unique<ActionUpdateType>("Update the type",car));
-	addItem(make_unique<ActionUpdateLicensePlate>("Update the license plate"));
-	addItem(make_unique<ActionUpdateBrand>("Update the brand"));
-	addItem(make_unique<ActionUpdateName>("Update the name"));
+	addItem(make_unique<ActionUpdateType>("Update the type", car));
+	addItem(make_unique<ActionUpdateLicensePlate>("Update the license plate", car));
+	addItem(make_unique<ActionUpdateBrand>("Update the brand", car));
+	addItem(make_unique<ActionUpdateName>("Update the name", car));
 	//TODO IMP only if free
-	addItem(make_unique<ActionUpdateLocation>("Update the location"));
-	addItem(make_unique<ActionUpdateDistanceTraveled>("Update the total distance traveled"));
+	addItem(make_unique<ActionUpdateLocation>("Update the location", car));
+	addItem(make_unique<ActionUpdateDistanceTraveled>("Update the total distance traveled", car));
 	exitLabel = "End the update operation";
 }
