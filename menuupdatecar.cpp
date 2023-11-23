@@ -36,7 +36,7 @@ MenuUpdateCar::MenuUpdateCar(string label_, Car car_)
 	car = car_;
 
 	title = "UPDATE CAR";
-	addItem(make_unique<ActionUpdateType>("Update the type"));
+	addItem(make_unique<ActionUpdateType>("Update the type",car));
 	addItem(make_unique<ActionUpdateLicensePlate>("Update the license plate"));
 	addItem(make_unique<ActionUpdateBrand>("Update the brand"));
 	addItem(make_unique<ActionUpdateName>("Update the name"));
