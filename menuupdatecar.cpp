@@ -2,7 +2,8 @@
 #include <iostream>
 
 void ActionUpdateType::run() {
-	cout << "-type" << endl;
+    //HERE
+	//car.typeId = getValidatedInt("Insert the car 'type': ECO, MID-CLASS or DELUXE", make_unique<ValidateType>());
 	printEmptyLineSeparator();
 };
 
