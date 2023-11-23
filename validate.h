@@ -7,24 +7,36 @@
 
 class Validate {
       public:
+    QString conditionForValue;
+    
+    virtual ~Validate() = default;
 	virtual QPair<bool, QString> getValidatedString(const QString& string);
 	virtual QPair<bool, int>     getValidatedInt(const QString& string);
-	virtual ~Validate() = default;
+	
 };
 
 class ValidateGeneralAlphaNum : public Validate {
+public:
+    ValidateGeneralAlphaNum();
 	QPair<bool, QString> getValidatedString(const QString& string) override;
 };
 
 class ValidatePositiveOrZeroInteger : public Validate {
+public:
+    ValidatePositiveOrZeroInteger();
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
 
 class ValidateType : public Validate {
+public:
+    ValidateType();
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
 
+
 class ValidateLocation : public Validate {
+public:
+    ValidateLocation();
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
 

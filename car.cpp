@@ -28,7 +28,7 @@ Car Car::getCarFromSqlRow(sqlRow row) {
 }
 
 void Car::setTypeFromTerminal() {
-	typeId = getValidatedInt("Insert the car 'type': ECO, MID-CLASS or DELUXE", make_unique<ValidateType>());
+	typeId = getValidatedInt("Insert the car 'type'", make_unique<ValidateType>());
 }
 
 void Car::setLicensePlateFromTerminal() {
@@ -44,7 +44,7 @@ void Car::setNameFromTerminal() {
 }
 
 void Car::setLocationFromTerminal() {
-	locationId = getValidatedInt("Insert the current car 'location': 'Inner Circle', 'Middle Circle' or 'Outer Circle'", make_unique<ValidateLocation>());
+	locationId = getValidatedInt("Insert the current car 'location'", make_unique<ValidateLocation>());
 }
 
 void Car::setDistanceTraveledFromTerminal() {
