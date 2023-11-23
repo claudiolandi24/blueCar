@@ -19,6 +19,17 @@ int getTypeId(QString type) {
 	}
 }
 
+QString getTypeNameHuman(int id) {
+	if (id == 1) {
+		return "ECO";
+	} else if (id == 2) {
+		return "MID-CLASS";
+	} else if (id == 3) {
+		return "DELUXE";
+	} else
+		return QString();
+}
+
 int getLocationId(QString location) {
 	location = location.trimmed();
 	location = location.toLower();
@@ -30,6 +41,25 @@ int getLocationId(QString location) {
 		return 3;
 	} else {
 		return 0;
+	}
+}
+
+QString getLocationNameHuman(int id) {
+	if (id == 1) {
+		return "Inner Circle";
+	} else if (id == 2) {
+		return "Middle Circle";
+	} else if (id == 3) {
+		return "Outer Circle";
+	} else
+		return QString();
+}
+
+QString getAvailabilityHuman(bool isFree) {
+	if (isFree) {
+		return "free";
+	} else {
+		return "rented";
 	}
 }
 
@@ -65,7 +95,7 @@ int getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate) {
 	while (true) {
 		QTextStream(stdout) << requestMsg << Qt::endl;
 		QString value = QTextStream(stdin).readLine();
-        //TODO
+		//TODO
 		//qDebug().noquote() << QSL("value = '%1'\n\n%2").arg(value).arg(QStacker16Light());
 		value    = value.trimmed();
 		auto res = validate.get()->getValidatedInt(value);

@@ -2,6 +2,7 @@
 #include "rbk/minMysql/min_mysql.h"
 #include "rbk/misc/b64.h"
 #include "utilityfunctions.h"
+#include "variadictable.h"
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
@@ -53,6 +54,19 @@ class ValidateLocation : public Validate {
 		return {true, locationId};
 	}
 };
+
+Car Car::getCarFromSqlRow(sqlRow row) {
+	Car car;
+	row.get2("id", car.id);
+	row.get2("typeId", car.typeId);
+	row.get2("licensePlate", car.licensePlate);
+	row.get2("brand", car.brand);
+	row.get2("name", car.name);
+	row.get2("isFree", car.isFree);
+	row.get2("locationId", car.locationId);
+	row.get2("totalDistanceTraveled", car.totalDistanceTraveled);
+	return car;
+}
 
 Car Car::getNewCarFromUser() {
 	Car car;
@@ -108,7 +122,7 @@ select * from car where id = %1;
 QPair<bool, int> Car::getCarIdFromUser() {
 	QTextStream(stdout) << "Insert the ID of the car you want to remove.\n"
 	                       "You can get it by showing all the cars (option 'Show cars' in 'MANAGE CARS' menu)\n"
-                           "Insert 0 (zero) to cancel this operation"
+	                       "Insert 0 (zero) to cancel this operation"
 	                    << Qt::endl;
 	QString rawInput = QTextStream(stdin).readLine();
 	bool    ok;
@@ -138,4 +152,41 @@ void Car::deleteCarAfterUserRequest() {
 	}
 	deleteCarFromDb(carId.second);
 	QTextStream(stdout) << "Car removed successfully" << Qt::endl;
+}
+
+QList<Car> Car::getAllCarsFromDb() {
+	auto sql = QSL("select * from car;");
+	auto res = db.query(sql);
+
+	QList<Car> cars;
+	for (const auto& row : res) {
+		cars.push_back(Car::getCarFromSqlRow(row));
+	}
+
+	return cars;
+}
+
+void Car::printAllCarsAsTable() {
+	auto                                                                    cars = getAllCarsFromDb();
+	VariadicTable<int, string, string, string, string, string, string, int> table(
+	    {"id",
+	     "type",
+	     "licensePlate",
+	     "brand",
+	     "name",
+	     "availability",
+	     "location",
+	     "totalDistanceTraveled"},
+	    10);
+	for (const auto& car : cars) {
+		table.addRow(car.id,
+		             getTypeNameHuman(car.typeId).toStdString(),
+		             car.licensePlate.toStdString(),
+		             car.brand.toStdString(),
+		             car.name.toStdString(),
+		             getAvailabilityHuman(car.isFree).toStdString(),
+		             getLocationNameHuman(car.locationId).toStdString(),
+		             car.totalDistanceTraveled);
+	}
+	table.print(std::cout);
 }

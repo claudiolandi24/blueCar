@@ -38,6 +38,7 @@ HEADERS += \
     menumanageuser.h \
     menuuser.h \
     try.h \
-    utilityfunctions.h
+    utilityfunctions.h \
+    variadictable.h
 	
 include(rbk/rbk.pri)

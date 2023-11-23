@@ -33,5 +33,6 @@ MenuManageCar::MenuManageCar(string label_)
 }
 
 void MenuManageCar::actionBeforeShow() {
-	cout << "TABLE\n";
+	Car::printAllCarsAsTable();
+	cout << "\n";
 }

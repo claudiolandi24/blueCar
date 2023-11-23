@@ -23,9 +23,12 @@ class Validate {
 QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate);
 int     getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate);
 
-int  getTypeId(QString type);
-int  getLocationId(QString location);
-bool isAlphanumeric(const QString& string);
-bool isAlphanumeric(const QString& string, int maxLen);
+int     getTypeId(QString type);
+QString getTypeNameHuman(int id);
+int     getLocationId(QString location);
+QString getLocationNameHuman(int id);
+QString getAvailabilityHuman(bool isFree);
+bool    isAlphanumeric(const QString& string);
+bool    isAlphanumeric(const QString& string, int maxLen);
 
 #endif // UTILITYFUNCTIONS_H

@@ -1,14 +1,14 @@
 #ifndef CAR_H
 #define CAR_H
 
+#include "rbk/minMysql/sqlRow.h"
+#include <QList>
 #include <QPair>
-#include <QString>
-#include <QVector>
 
 class Car {
       private:
 	static QPair<bool, int> getCarIdFromUser();
-    static bool carIdExists(int carId);
+	static bool             carIdExists(int carId);
 
       public:
 	// db id
@@ -22,11 +22,13 @@ class Car {
 	int     totalDistanceTraveled = 0;
 
 	Car() = default;
-	static Car          getNewCarFromUser();
-	static Car          getCarFromDb(int id);
-	static QVector<Car> getAllCarsFromDb();
-	static void         deleteCarAfterUserRequest();
-	static void         deleteCarFromDb(int id);
+	static Car        getCarFromSqlRow(sqlRow row);
+	static Car        getNewCarFromUser();
+	static Car        getCarFromDb(int id);
+	static QList<Car> getAllCarsFromDb();
+	static void       printAllCarsAsTable();
+	static void       deleteCarAfterUserRequest();
+	static void       deleteCarFromDb(int id);
 
 	void saveToDb();
 	void updateInDb();
