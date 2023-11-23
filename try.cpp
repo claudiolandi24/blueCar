@@ -1,10 +1,9 @@
 #include "try.h"
+#include "car.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "variadictable.h"
 #include <QTextStream>
 #include <iostream>
-#include "car.h"
-
 
 using namespace std;
 
@@ -16,24 +15,24 @@ void tryQPrint() {
 	QTextStream(stdout) << "Hello World2" << Qt::endl;
 }
 
-void try1(){
-//	QTextStream(stdout) << "type\n";
-//	QString s = QTextStream(stdin).readLine();
-//	QTextStream(stdout) << "value is '" << s << "'\n";
+void try1() {
+	//	QTextStream(stdout) << "type\n";
+	//	QString s = QTextStream(stdin).readLine();
+	//	QTextStream(stdout) << "value is '" << s << "'\n";
 
-//    auto res = db.query("select * from db1.persons");
-//    int b = 0;
-//    Q_UNUSED(b);
+	//    auto res = db.query("select * from db1.persons");
+	//    int b = 0;
+	//    Q_UNUSED(b);
 
-//    cout << "insert number\n";
-//    int n;
-//    cin >> n;
+	//    cout << "insert number\n";
+	//    int n;
+	//    cin >> n;
 
-//    QTextStream(stdout) << "QT insert number\n";
-//    QString s = QTextStream(stdin).readLine();
+	//    QTextStream(stdout) << "QT insert number\n";
+	//    QString s = QTextStream(stdin).readLine();
 
-//    auto car = Car::getNewCarFromUser();
-//    car.saveToDb();
+	//    auto car = Car::getNewCarFromUser();
+	//    car.saveToDb();
 }
 
 void tryTable() {
@@ -50,14 +49,24 @@ void tryTable() {
 	}
 }
 
-void tryTableCar(){
-    Car::printAllCarsAsTable();
+void tryTableCar() {
+	Car::printAllCarsAsTable();
 }
 
+#include <QCryptographicHash>
+void tryHash() {
+	QString    password     = "asd123";
+	QByteArray passwordData = password.toUtf8(); // Convert the password to UTF-8 encoded bytes
+	QByteArray hashedData   = QCryptographicHash::hash(passwordData, QCryptographicHash::Sha256);
+
+	// Convert the hashed data to a hexadecimal string
+	QString hashedPassword = QString(hashedData.toHex());
+    qDebug() << hashedPassword;
+    
+}
 
 void try0() {
 	//tryTable();
-    tryTableCar();
-
-
+	//tryTableCar();
+    tryHash();
 }
