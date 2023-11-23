@@ -7,7 +7,7 @@
 
 class Car {
       private:
-	static QPair<bool, int> getCarIdFromUser();
+	static QPair<bool, int> getCarIdFromUser(const QString& operation);
 	static bool             carIdExists(int carId);
 
       public:
@@ -25,9 +25,11 @@ class Car {
 	static Car        getCarFromSqlRow(sqlRow row);
 	static Car        getNewCarFromUser();
 	static Car        getCarFromDb(int id);
-	static QList<Car> getAllCarsFromDb();
+	static QList<Car> getCarsFromDb(const QString& whereCondition = QString());
 	static void       printAllCarsAsTable();
+	static void       printCarsAsTable(const QList<Car> &cars);
 	static void       deleteCarAfterUserRequest();
+	static void       updateCarAfterUserRequest();
 	static void       deleteCarFromDb(int id);
 
 	void saveToDb();

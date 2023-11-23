@@ -1,4 +1,6 @@
 #include "car.h"
+#include "menu.h"
+#include "menuupdatecar.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rbk/misc/b64.h"
 #include "utilityfunctions.h"
@@ -119,10 +121,16 @@ select * from car where id = %1;
 	return true;
 }
 
-QPair<bool, int> Car::getCarIdFromUser() {
-	QTextStream(stdout) << "Insert the ID of the car you want to remove.\n"
-	                       "Insert 0 (zero) to cancel this operation"
-	                    << Qt::endl;
+QPair<bool, int> Car::getCarIdFromUser(const QString& operation) {
+	if (operation != "update" and operation != "remove") {
+		//TODO log error
+		return {false, 0};
+	}
+
+	QString msgSkel = R"(Insert the ID of the car you want to %1.
+Insert 0 (zero) to cancel this operation)";
+	auto    msg     = msgSkel.arg(operation);
+	QTextStream(stdout) << msg << Qt::endl;
 	QString rawInput = QTextStream(stdin).readLine();
 	bool    ok;
 	int     carId = rawInput.toInt(&ok);
@@ -144,7 +152,7 @@ void Car::deleteCarFromDb(int id) {
 }
 
 void Car::deleteCarAfterUserRequest() {
-	auto carId = getCarIdFromUser();
+	auto carId = getCarIdFromUser("remove");
 	if (!carId.first) {
 		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
 		return;
@@ -153,9 +161,28 @@ void Car::deleteCarAfterUserRequest() {
 	QTextStream(stdout) << "Car removed successfully" << Qt::endl;
 }
 
-QList<Car> Car::getAllCarsFromDb() {
-	auto sql = QSL("select * from car;");
-	auto res = db.query(sql);
+void Car::updateCarAfterUserRequest() {
+	auto carId = getCarIdFromUser("update");
+	if (!carId.first) {
+		QTextStream(stdout) << "Update operation cancelled" << Qt::endl;
+		return;
+	}
+
+	auto carList = getCarsFromDb(QSL("where id = %1").arg(carId.second));
+	Car  car     = carList[0];
+	QTextStream(stdout) << "Updating car:" << Qt::endl;
+	printCarsAsTable({car});
+
+	MenuUpdateCar menuUpdate("",car);
+	menuUpdate.run();
+
+	//QTextStream(stdout) << "Car updated successfully" << Qt::endl;
+}
+
+QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
+	auto sqlSkel = QSL("select * from car %1;");
+	auto sql     = sqlSkel.arg(whereCondition);
+	auto res     = db.query(sql);
 
 	QList<Car> cars;
 	for (const auto& row : res) {
@@ -165,8 +192,7 @@ QList<Car> Car::getAllCarsFromDb() {
 	return cars;
 }
 
-void Car::printAllCarsAsTable() {
-	auto                                                                    cars = getAllCarsFromDb();
+void Car::printCarsAsTable(const QList<Car>& cars) {
 	VariadicTable<int, string, string, string, string, string, string, int> table(
 	    {"id",
 	     "type",
@@ -188,4 +214,9 @@ void Car::printAllCarsAsTable() {
 		             car.totalDistanceTraveled);
 	}
 	table.print(std::cout);
+}
+
+void Car::printAllCarsAsTable() {
+	auto cars = getCarsFromDb();
+	printCarsAsTable(cars);
 }

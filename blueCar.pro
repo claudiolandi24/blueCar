@@ -17,6 +17,7 @@ SOURCES += \
         menulogin.cpp \
         menumanagecar.cpp \
         menumanageuser.cpp \
+        menuupdatecar.cpp \
         menuuser.cpp \
         try.cpp \
         utilityfunctions.cpp
@@ -36,6 +37,7 @@ HEADERS += \
     menulogin.h \
     menumanagecar.h \
     menumanageuser.h \
+    menuupdatecar.h \
     menuuser.h \
     try.h \
     utilityfunctions.h \
