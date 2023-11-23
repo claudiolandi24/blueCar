@@ -1,37 +1,48 @@
 #include "menuupdatecar.h"
+#include <QTextStream>
 #include <iostream>
+#include <validate.h>
+
+void ActionUpdateCar::updateInDb() {
+	car.updateInDb();
+	QTextStream(stdout) << "Car updated successfully:" << Qt::endl;
+	car.printAsTable();
+	printEmptyLineSeparator();
+}
 
 void ActionUpdateType::run() {
-    //HERE
-	//car.typeId = getValidatedInt("Insert the car 'type': ECO, MID-CLASS or DELUXE", make_unique<ValidateType>());
-	printEmptyLineSeparator();
+	car.setTypeFromUser();
+	updateInDb();
 };
 
 void ActionUpdateLicensePlate::run() {
-	cout << "-licensePlate" << endl;
-	printEmptyLineSeparator();
+	car.setLicensePlateFromUser();
+	updateInDb();
 };
 
 void ActionUpdateBrand::run() {
-	cout << "-brand" << endl;
-	printEmptyLineSeparator();
+	car.setBrandFromUser();
+	updateInDb();
 };
 
 void ActionUpdateName::run() {
-	cout << "-name" << endl;
-	printEmptyLineSeparator();
+	car.setNameFromUser();
+	updateInDb();
 };
 
 void ActionUpdateLocation::run() {
-	cout << "" << endl;
-	printEmptyLineSeparator();
+	car.setLocationFromUser();
+	updateInDb();
 };
 
 void ActionUpdateDistanceTraveled::run() {
-	cout << "" << endl;
-	printEmptyLineSeparator();
+	car.setDistanceTraveledFromUser();
+	updateInDb();
 };
 
+//TODO
+// check empty lines separator in interaction
+// some missing
 MenuUpdateCar::MenuUpdateCar(string label_, Car car_)
     : Menu(label_) {
 	car = car_;

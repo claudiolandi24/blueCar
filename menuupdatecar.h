@@ -6,6 +6,9 @@
 #include "menu.h"
 
 class ActionUpdateCar : public Action {
+protected:
+    void updateInDb();
+    
       public:
 	Car car;
 

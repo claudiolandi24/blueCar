@@ -27,13 +27,21 @@ class Car {
 	static Car        getCarFromDb(int id);
 	static QList<Car> getCarsFromDb(const QString& whereCondition = QString());
 	static void       printAllCarsAsTable();
-	static void       printCarsAsTable(const QList<Car> &cars);
+	static void       printCarsAsTable(const QList<Car>& cars);
+	void              printAsTable();
 	static void       deleteCarAfterUserRequest();
 	static void       updateCarAfterUserRequest();
 	static void       deleteCarFromDb(int id);
 
 	void saveToDb();
 	void updateInDb();
+
+	void setTypeFromUser();
+	void setLicensePlateFromUser();
+	void setBrandFromUser();
+	void setNameFromUser();
+	void setLocationFromUser();
+	void setDistanceTraveledFromUser();
 };
 
 #endif // CAR_H

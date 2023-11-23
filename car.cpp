@@ -4,17 +4,15 @@
 #include "rbk/minMysql/min_mysql.h"
 #include "rbk/misc/b64.h"
 #include "utilityfunctions.h"
+#include "validate.h"
 #include "variadictable.h"
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
-#include "validate.h"
 
 using namespace std;
 
 extern DB db;
-
-
 
 Car Car::getCarFromSqlRow(sqlRow row) {
 	Car car;
@@ -29,20 +27,38 @@ Car Car::getCarFromSqlRow(sqlRow row) {
 	return car;
 }
 
+void Car::setTypeFromUser() {
+	typeId = getValidatedInt("Insert the car 'type': ECO, MID-CLASS or DELUXE", make_unique<ValidateType>());
+}
+
+void Car::setLicensePlateFromUser() {
+	licensePlate = getValidatedString("Insert the car 'license plate'", make_unique<ValidateGeneralAlphaNum>());
+}
+
+void Car::setBrandFromUser() {
+	brand = getValidatedString("Insert the car 'brand'", make_unique<ValidateGeneralAlphaNum>());
+}
+
+void Car::setNameFromUser() {
+	name = getValidatedString("Insert the car 'name'", make_unique<ValidateGeneralAlphaNum>());
+}
+
+void Car::setLocationFromUser() {
+	locationId = getValidatedInt("Insert the current car 'location': 'Inner Circle', 'Middle Circle' or 'Outer Circle'", make_unique<ValidateLocation>());
+}
+
+void Car::setDistanceTraveledFromUser() {
+	totalDistanceTraveled = getValidatedInt("Insert the total distance traveled by the car", make_unique<ValidatePositiveOrZeroInteger>());
+}
+
 Car Car::getNewCarFromUser() {
 	Car car;
-	// type
-	car.typeId = getValidatedInt("Insert the car 'type': ECO, MID-CLASS or DELUXE", make_unique<ValidateType>());
-	// license plate
-	car.licensePlate = getValidatedString("Insert the car 'license plate'", make_unique<ValidateGeneralAlphaNum>());
-	// brand
-	car.brand = getValidatedString("Insert the car 'brand'", make_unique<ValidateGeneralAlphaNum>());
-	// name
-	car.name = getValidatedString("Insert the car 'name'", make_unique<ValidateGeneralAlphaNum>());
-	// location
-	car.locationId = getValidatedInt("Insert the current car 'location': 'Inner Circle', 'Middle Circle' or 'Outer Circle'", make_unique<ValidateLocation>());
-	// total distance traveled
-	car.totalDistanceTraveled = getValidatedInt("Insert the total distance traveled by the car", make_unique<ValidatePositiveOrZeroInteger>());
+	car.setTypeFromUser();
+	car.setLicensePlateFromUser();
+	car.setBrandFromUser();
+	car.setNameFromUser();
+	car.setLocationFromUser();
+	car.setDistanceTraveledFromUser();
 
 	return car;
 }
@@ -58,13 +74,36 @@ SET typeId = %1,
     locationId = %6,
     totalDistanceTraveled = %7;
 )";
-	auto    sql  = skel.arg(typeId)
+	auto    sql  = skel
+	               .arg(typeId)
 	               .arg(base64this(licensePlate))
 	               .arg(base64this(brand))
 	               .arg(base64this(name))
-	               .arg(isFree)
+	               .arg(isFree) //
 	               .arg(locationId)
 	               .arg(totalDistanceTraveled);
+	db.query(sql);
+}
+
+void Car::updateInDb() {
+	QString skel = R"(
+UPDATE car SET
+    typeId = %1,
+    licensePlate = %2,
+    brand = %3,
+    name = %4,
+    locationId = %5,
+    totalDistanceTraveled = %6
+WHERE id = %7;
+)";
+	auto    sql  = skel
+	               .arg(typeId)
+	               .arg(base64this(licensePlate))
+	               .arg(base64this(brand))
+	               .arg(base64this(name))
+	               .arg(locationId)
+	               .arg(totalDistanceTraveled)
+	               .arg(id);
 	db.query(sql);
 }
 
@@ -120,6 +159,10 @@ void Car::deleteCarAfterUserRequest() {
 	QTextStream(stdout) << "Car removed successfully" << Qt::endl;
 }
 
+void Car::printAsTable() {
+	printCarsAsTable({*this});
+}
+
 void Car::updateCarAfterUserRequest() {
 	auto carId = getCarIdFromUser("update");
 	if (!carId.first) {
@@ -130,9 +173,10 @@ void Car::updateCarAfterUserRequest() {
 	auto carList = getCarsFromDb(QSL("where id = %1").arg(carId.second));
 	Car  car     = carList[0];
 	QTextStream(stdout) << "Updating car:" << Qt::endl;
-	printCarsAsTable({car});
 
-	MenuUpdateCar menuUpdate("",car);
+    car.printAsTable();
+
+	MenuUpdateCar menuUpdate("", car);
 	menuUpdate.run();
 
 	//QTextStream(stdout) << "Car updated successfully" << Qt::endl;
