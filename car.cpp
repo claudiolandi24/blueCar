@@ -28,7 +28,7 @@ Car Car::getCarFromSqlRow(sqlRow row) {
 }
 
 void Car::setTypeFromTerminal() {
-	typeId = getValidatedInt("Insert the car 'type'", make_unique<ValidateType>());
+	typeId = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>());
 }
 
 void Car::setLicensePlateFromTerminal() {

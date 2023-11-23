@@ -39,11 +39,11 @@ QPair<bool, int> ValidatePositiveOrZeroInteger::getValidatedInt(const QString& s
 	return {true, n};
 }
 
-ValidateType::ValidateType() {
+ValidateCarType::ValidateCarType() {
 	conditionForValue = "; must be ECO, MID-CLASS or DELUXE";
 }
 
-QPair<bool, int> ValidateType::getValidatedInt(const QString& string) {
+QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
 	int typeId = getTypeId(string);
 	if (!typeId) {
 		return {false, 0};
@@ -61,6 +61,43 @@ QPair<bool, int> ValidateLocation::getValidatedInt(const QString& string) {
 		return {false, 0};
 	}
 	return {true, locationId};
+}
+
+ValidateUsername::ValidateUsername() {
+	conditionForValue = "; must contain only alphanumeric characters or '_', max length 50";
+}
+
+QPair<bool, QString> ValidateUsername::getValidatedString(const QString& string) {
+	bool ok = isAlphanumeric(string, 50, {'_'});
+	if (!ok) {
+		return {false, QString()};
+	}
+	return {true, string};
+}
+
+ValidatePwd::ValidatePwd() {
+	conditionForValue = R"(.
+Allowed characters:
+- letters
+- digits
+- any symbol of these: !, ?, @, (, ), [, ], {, }
+  
+Min length = 10
+Max length = 100
+  
+And must contain at least the following:
+- 1 upper-case letter
+- 1 lowercase letter
+- 1 digit
+- 1 allowed symbol)";
+}
+
+QPair<bool, QString> ValidatePwd::getValidatedString(const QString& string) {
+	bool ok = isValidPwd(string);
+	if (!ok) {
+		return {false, QString()};
+	}
+	return {true, string};
 }
 
 QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate) {

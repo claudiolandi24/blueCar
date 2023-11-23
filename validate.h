@@ -7,37 +7,47 @@
 
 class Validate {
       public:
-    QString conditionForValue;
-    
-    virtual ~Validate() = default;
+	QString conditionForValue;
+
+	virtual ~Validate() = default;
 	virtual QPair<bool, QString> getValidatedString(const QString& string);
 	virtual QPair<bool, int>     getValidatedInt(const QString& string);
-	
 };
 
 class ValidateGeneralAlphaNum : public Validate {
-public:
-    ValidateGeneralAlphaNum();
+      public:
+	ValidateGeneralAlphaNum();
 	QPair<bool, QString> getValidatedString(const QString& string) override;
 };
 
 class ValidatePositiveOrZeroInteger : public Validate {
-public:
-    ValidatePositiveOrZeroInteger();
+      public:
+	ValidatePositiveOrZeroInteger();
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
 
-class ValidateType : public Validate {
-public:
-    ValidateType();
+class ValidateCarType : public Validate {
+      public:
+	ValidateCarType();
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
-
 
 class ValidateLocation : public Validate {
-public:
-    ValidateLocation();
+      public:
+	ValidateLocation();
 	QPair<bool, int> getValidatedInt(const QString& string) override;
+};
+
+class ValidateUsername : public Validate {
+      public:
+	ValidateUsername();
+	QPair<bool, QString> getValidatedString(const QString& string) override;
+};
+
+class ValidatePwd : public Validate {
+      public:
+	ValidatePwd();
+	QPair<bool, QString> getValidatedString(const QString& string) override;
 };
 
 QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate);

@@ -1,18 +1,17 @@
 #include "user.h"
 #include "validate.h"
 
-
 User User::getNewUserFromTerminal() {
 	User user;
-    user.setUsernameFromTerminal();
-    user.setPwdHashFromTerminal();
-    user.setNameFromTerminal();
-    user.setSurnameFromTerminal();
-    user.setAddressFromTerminal();
-    user.setCreditCardFromTerminal();
-    user.setDrivingLicenseFromTerminal();
-    
-    return user;
+	user.setUsernameFromTerminal();
+	user.setPwdHashFromTerminal();
+	user.setNameFromTerminal();
+	user.setSurnameFromTerminal();
+	user.setAddressFromTerminal();
+	user.setCreditCardFromTerminal();
+	user.setDrivingLicenseFromTerminal();
+
+	return user;
 }
 
 void User::saveToDb() {
@@ -20,10 +19,12 @@ void User::saveToDb() {
 }
 
 void User::setUsernameFromTerminal() {
-    username = getValidatedString("Insert the username", make_unique<ValidateGeneralAlphaNum>());
+	username = getValidatedString("Choose an username and insert it", make_unique<ValidateGeneralAlphaNum>());
 }
 
-void User::setPwdHashFromTerminal() { //TODO
+void User::setPwdHashFromTerminal() {
+	QString pwd = getValidatedString("Choose a password and insert it", make_unique<ValidatePwd>());
+    //TODO here
 }
 
 void User::setNameFromTerminal() { //TODO

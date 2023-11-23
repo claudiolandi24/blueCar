@@ -63,18 +63,45 @@ QString getAvailabilityHuman(bool isFree) {
 	}
 }
 
-bool isAlphanumeric(const QString& string) {
+bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars) {
 	for (const QChar& c : string) {
-		if (!c.isLetterOrNumber()) {
+		bool ok = c.isLetterOrNumber() or extraAllowedChars.contains(c);
+		if (!ok) {
 			return false;
 		}
 	}
 	return true;
 }
 
-bool isAlphanumeric(const QString& string, int maxLen) {
-	bool ok = isAlphanumeric(string) and string.length() <= maxLen;
+bool isValidPwd(const QString& string) {
+	if (string.length() < 10 or string.length() > 100) {
+		return false;
+	}
+
+	bool hasLowerCase = false;
+	bool hasUpperCase = false;
+	bool hasDigit     = false;
+	bool hasSymbol    = false;
+
+	QString symbols = "!?@()[]{}";
+	for (const auto& c : string) {
+		if (c.isLower()) {
+			hasLowerCase = true;
+		} else if (c.isUpper()) {
+			hasUpperCase = true;
+		} else if (c.isDigit()) {
+			hasDigit = true;
+		} else if (symbols.contains(c)) {
+			hasSymbol = true;
+		} else {
+			return false;
+		}
+	}
+	bool ok = hasLowerCase and hasUpperCase and hasDigit and hasSymbol;
 	return ok;
 }
 
-
+bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extraAllowedChars) {
+	bool ok = isAlphanumeric(string, extraAllowedChars) and string.length() <= maxLen;
+	return ok;
+}
