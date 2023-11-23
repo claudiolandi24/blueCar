@@ -121,7 +121,6 @@ select * from car where id = %1;
 
 QPair<bool, int> Car::getCarIdFromUser() {
 	QTextStream(stdout) << "Insert the ID of the car you want to remove.\n"
-	                       "You can get it by showing all the cars (option 'Show cars' in 'MANAGE CARS' menu)\n"
 	                       "Insert 0 (zero) to cancel this operation"
 	                    << Qt::endl;
 	QString rawInput = QTextStream(stdin).readLine();
