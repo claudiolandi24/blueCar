@@ -9,6 +9,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         car.cpp \
+        creditcard.cpp \
         database.cpp \
         main.cpp \
         menu.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
         menuupdatecar.cpp \
         menuuser.cpp \
         try.cpp \
+        user.cpp \
         utilityfunctions.cpp \
         validate.cpp
 
@@ -31,6 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     action.h \
     car.h \
+    creditcard.h \
     database.h \
     menu.h \
     menuadmin.h \
@@ -41,6 +44,7 @@ HEADERS += \
     menuupdatecar.h \
     menuuser.h \
     try.h \
+    user.h \
     utilityfunctions.h \
     validate.h \
     variadictable.h

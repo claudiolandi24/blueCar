@@ -11,32 +11,32 @@ void ActionUpdateCar::updateInDb() {
 }
 
 void ActionUpdateType::run() {
-	car.setTypeFromUser();
+	car.setTypeFromTerminal();
 	updateInDb();
 };
 
 void ActionUpdateLicensePlate::run() {
-	car.setLicensePlateFromUser();
+	car.setLicensePlateFromTerminal();
 	updateInDb();
 };
 
 void ActionUpdateBrand::run() {
-	car.setBrandFromUser();
+	car.setBrandFromTerminal();
 	updateInDb();
 };
 
 void ActionUpdateName::run() {
-	car.setNameFromUser();
+	car.setNameFromTerminal();
 	updateInDb();
 };
 
 void ActionUpdateLocation::run() {
-	car.setLocationFromUser();
+	car.setLocationFromTerminal();
 	updateInDb();
 };
 
 void ActionUpdateDistanceTraveled::run() {
-	car.setDistanceTraveledFromUser();
+	car.setDistanceTraveledFromTerminal();
 	updateInDb();
 };
 

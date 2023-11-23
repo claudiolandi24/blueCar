@@ -1,8 +1,14 @@
 #include "menumanageuser.h"
+#include "user.h"
+#include <QTextStream>
 #include <iostream>
 
 void ActionAddUser::run() {
-	cout << "running add user" << endl;
+	cout << "--- ADD USER ---" << endl;
+	User user = User::getNewUserFromTerminal();
+	user.saveToDb();
+	QTextStream(stdout) << "User added successfully" << Qt::endl;
+    
 	printEmptyLineSeparator();
 };
 

@@ -5,7 +5,7 @@
 
 void ActionAddCar::run() {
 	cout << "--- ADD CAR ---" << endl;
-	Car newCar = Car::getNewCarFromUser();
+	Car newCar = Car::getNewCarFromTerminal();
 	newCar.saveToDb();
 	QTextStream(stdout) << "Car added successfully" << Qt::endl;
 

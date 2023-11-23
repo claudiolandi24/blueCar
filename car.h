@@ -23,7 +23,7 @@ class Car {
 
 	Car() = default;
 	static Car        getCarFromSqlRow(sqlRow row);
-	static Car        getNewCarFromUser();
+	static Car        getNewCarFromTerminal();
 	static Car        getCarFromDb(int id);
 	static QList<Car> getCarsFromDb(const QString& whereCondition = QString());
 	static void       printAllCarsAsTable();
@@ -36,12 +36,12 @@ class Car {
 	void saveToDb();
 	void updateInDb();
 
-	void setTypeFromUser();
-	void setLicensePlateFromUser();
-	void setBrandFromUser();
-	void setNameFromUser();
-	void setLocationFromUser();
-	void setDistanceTraveledFromUser();
+	void setTypeFromTerminal();
+	void setLicensePlateFromTerminal();
+	void setBrandFromTerminal();
+	void setNameFromTerminal();
+	void setLocationFromTerminal();
+	void setDistanceTraveledFromTerminal();
 };
 
 #endif // CAR_H

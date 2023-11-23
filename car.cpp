@@ -27,39 +27,39 @@ Car Car::getCarFromSqlRow(sqlRow row) {
 	return car;
 }
 
-void Car::setTypeFromUser() {
+void Car::setTypeFromTerminal() {
 	typeId = getValidatedInt("Insert the car 'type': ECO, MID-CLASS or DELUXE", make_unique<ValidateType>());
 }
 
-void Car::setLicensePlateFromUser() {
+void Car::setLicensePlateFromTerminal() {
 	licensePlate = getValidatedString("Insert the car 'license plate'", make_unique<ValidateGeneralAlphaNum>());
 }
 
-void Car::setBrandFromUser() {
+void Car::setBrandFromTerminal() {
 	brand = getValidatedString("Insert the car 'brand'", make_unique<ValidateGeneralAlphaNum>());
 }
 
-void Car::setNameFromUser() {
+void Car::setNameFromTerminal() {
 	name = getValidatedString("Insert the car 'name'", make_unique<ValidateGeneralAlphaNum>());
 }
 
-void Car::setLocationFromUser() {
+void Car::setLocationFromTerminal() {
 	locationId = getValidatedInt("Insert the current car 'location': 'Inner Circle', 'Middle Circle' or 'Outer Circle'", make_unique<ValidateLocation>());
 }
 
-void Car::setDistanceTraveledFromUser() {
+void Car::setDistanceTraveledFromTerminal() {
 	totalDistanceTraveled = getValidatedInt("Insert the total distance traveled by the car", make_unique<ValidatePositiveOrZeroInteger>());
 }
 
-Car Car::getNewCarFromUser() {
+Car Car::getNewCarFromTerminal() {
 	Car car;
-	car.setTypeFromUser();
-	car.setLicensePlateFromUser();
-	car.setBrandFromUser();
-	car.setNameFromUser();
-	car.setLocationFromUser();
-	car.setDistanceTraveledFromUser();
-
+	car.setTypeFromTerminal();
+	car.setLicensePlateFromTerminal();
+	car.setBrandFromTerminal();
+	car.setNameFromTerminal();
+	car.setLocationFromTerminal();
+	car.setDistanceTraveledFromTerminal();
+    
 	return car;
 }
 
