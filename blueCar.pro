@@ -20,7 +20,8 @@ SOURCES += \
         menuupdatecar.cpp \
         menuuser.cpp \
         try.cpp \
-        utilityfunctions.cpp
+        utilityfunctions.cpp \
+        validate.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -41,6 +42,7 @@ HEADERS += \
     menuuser.h \
     try.h \
     utilityfunctions.h \
+    validate.h \
     variadictable.h
 	
 include(rbk/rbk.pri)

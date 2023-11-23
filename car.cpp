@@ -8,54 +8,13 @@
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
+#include "validate.h"
 
 using namespace std;
 
 extern DB db;
 
-class ValidateGeneralAlphaNum : public Validate {
-	QPair<bool, QString> getValidatedString(const QString& string) override {
-		bool ok = isAlphanumeric(string, 100);
-		if (!ok) {
-			return {false, QString()};
-		}
-		return {true, string};
-	}
-};
 
-class ValidatePositiveOrZeroInteger : public Validate {
-	QPair<bool, int> getValidatedInt(const QString& string) override {
-		bool ok;
-		int  n = string.toInt(&ok);
-		if (!ok) {
-			return {false, 0};
-		}
-		if (n < 0) {
-			return {false, 0};
-		}
-		return {true, n};
-	}
-};
-
-class ValidateType : public Validate {
-	QPair<bool, int> getValidatedInt(const QString& string) override {
-		int typeId = getTypeId(string);
-		if (!typeId) {
-			return {false, 0};
-		}
-		return {true, typeId};
-	}
-};
-
-class ValidateLocation : public Validate {
-	QPair<bool, int> getValidatedInt(const QString& string) override {
-		int locationId = getLocationId(string);
-		if (!locationId) {
-			return {false, 0};
-		}
-		return {true, locationId};
-	}
-};
 
 Car Car::getCarFromSqlRow(sqlRow row) {
 	Car car;
