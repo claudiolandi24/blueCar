@@ -16,7 +16,7 @@ extern DB db;
 
 Car::Car() {
 	entityName  = "car";
-	entityTable = "car";
+	table = "car";
 }
 
 Car Car::getCarFromSqlRow(const sqlRow& row) {
@@ -119,7 +119,7 @@ void Car::printAsTable() {
 void Car::updateCarAfterRequest() {
 	auto carId = getIdFromTerminal("update");
 	if (!carId.first) {
-		QTextStream(stdout) << "Update operation cancelled" << Qt::endl;
+		QTextStream(stdout) << "Update operation canceled" << Qt::endl;
 		return;
 	}
 

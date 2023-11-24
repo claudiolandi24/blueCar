@@ -10,7 +10,7 @@
 class Entity {
       public:
 	static QString entityName;
-	static QString entityTable;
+	static QString table;
 
 	Entity() = default;
 

@@ -2,11 +2,9 @@
 #define USER_H
 
 #include "creditcard.h"
+#include "entity.h"
 #include "rbk/minMysql/min_mysql.h"
 #include <QString>
-#include "entity.h"
-
-
 
 class User : public Entity {
       public:
@@ -34,9 +32,11 @@ class User : public Entity {
 	void setDrivingLicenseFromTerminal();
 
 	static void printAllUsersAsTable();
-    static void printUsersAsTable(const QList<User>& users);
-    
-  
+	static void printUsersAsTable(const QList<User>& users);
+	void        printAsTable();
+
+	static void updateUserAfterRequest();
+	void        updateInDb();
 };
 
 #endif // USER_H

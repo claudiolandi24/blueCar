@@ -16,7 +16,6 @@ protected:
 	    : Action(label_) {
 		car = car_;
 	};
-	void run() override;
 };
 
 class ActionUpdateType : public ActionUpdateCar {

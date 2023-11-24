@@ -9,8 +9,8 @@
 extern DB db;
 
 User::User() {
-	entityName  = "user";
-	entityTable = "user";
+	entityName = "user";
+	table      = "user";
 }
 
 User User::getNewUserFromTerminal() {
@@ -136,4 +136,48 @@ void User::printUsersAsTable(const QList<User>& users) {
 		             u.drivingLicense.toStdString());
 	}
 	table.print(std::cout);
+}
+
+void User::printAsTable() {
+	printUsersAsTable({*this});
+}
+
+void User::updateUserAfterRequest() {
+	auto userId = getIdFromTerminal("update");
+	if (!userId.first) {
+		QTextStream(stdout) << "Update operation canceled" << Qt::endl;
+		return;
+	}
+
+	auto userList = getUsersFromDb(QSL("where id = %1").arg(userId.second));
+	User user     = userList[0];
+	QTextStream(stdout) << "Updating user:" << Qt::endl;
+
+	user.printAsTable();
+
+	//claudio
+}
+
+void User::updateInDb() {
+	creditCard.updateInDb();
+
+	QString skel = R"(
+UPDATE user SET
+    username = %1	
+    pwdHash = '%2'	
+    name = %3	
+    surname = %4	
+    address = %5	
+    drivingLicense = %6
+WHERE id = %7;
+)";
+	auto    sql  = skel
+	               .arg(base64this(username))
+	               .arg(pwdHash)
+	               .arg(base64this(name))
+	               .arg(base64this(surname))
+	               .arg(base64this(address))
+	               .arg(base64this(drivingLicense))
+	               .arg(id);
+	db.query(sql);
 }

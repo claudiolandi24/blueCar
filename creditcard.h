@@ -16,7 +16,9 @@ class CreditCard {
 	static QList<CreditCard> getCreditCardsFromDb(const QString& whereCondition = QString());
 
 	void setHashFromTerminal();
-	void saveToDb();
+	
+    void saveToDb();
+    void updateInDb();
 };
 
 #endif // CREDITCARD_H

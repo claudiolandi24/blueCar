@@ -46,3 +46,15 @@ set hash = '%1';
 	db.query(sql);
 	id = (long long)(db.lastId());
 }
+
+void CreditCard::updateInDb() {
+	QString skel = R"(
+UPDATE creditCard SET
+    hash = '%1'
+WHERE id = %2;
+)";
+	auto    sql  = skel
+	               .arg(hash)
+	               .arg(id);
+	db.query(sql);
+}

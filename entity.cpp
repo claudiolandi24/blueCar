@@ -5,14 +5,14 @@
 extern DB db;
 
 QString Entity::entityName;
-QString Entity::entityTable;
+QString Entity::table;
 
 bool Entity::idExists(int id) {
 	QString skel = R"(
 select * from %1 where id = %2; 
 )";
 	auto    sql  = skel
-	               .arg(entityTable)
+	               .arg(table)
 	               .arg(id);
 	auto res = db.query(sql);
 	if (res.empty()) {
@@ -53,7 +53,7 @@ Insert 0 (zero) to cancel this operation)";
 
 void Entity::deleteFromDb(int id) {
 	QString sql = QSL("DELETE FROM %1 WHERE id = %2;")
-            .arg(entityTable)
+            .arg(table)
             .arg(id);
 	db.query(sql);
 }
