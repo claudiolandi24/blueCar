@@ -4,12 +4,15 @@
 
 extern DB db;
 
-bool Entity::entityIdExists(int id) {
+QString Entity::entityName;
+QString Entity::entityTable;
+
+bool Entity::idExists(int id) {
 	QString skel = R"(
 select * from %1 where id = %2; 
 )";
 	auto    sql  = skel
-	               .arg(table)
+	               .arg(entityTable)
 	               .arg(id);
 	auto res = db.query(sql);
 	if (res.empty()) {
@@ -27,7 +30,7 @@ QPair<bool, int> Entity::getIdFromTerminal(const QString& operation) {
 	QString msgSkel = R"(Insert the ID of the %1 you want to %2.
 Insert 0 (zero) to cancel this operation)";
 	auto    msg     = msgSkel
-	               .arg(name)
+	               .arg(entityName)
 	               .arg(operation);
 	QTextStream(stdout) << msg << Qt::endl;
 	QString rawInput = QTextStream(stdin).readLine();
@@ -37,9 +40,9 @@ Insert 0 (zero) to cancel this operation)";
 		QTextStream(stdout) << "The inserted value is not a valid number" << Qt::endl;
 		return {false, 0};
 	}
-	if (!entityIdExists(id)) {
+	if (!idExists(id)) {
 		auto msg = QSL("No %1 with ID %2")
-		               .arg(name)
+		               .arg(entityName)
 		               .arg(id);
 		QTextStream(stdout) << msg << Qt::endl;
 		return {false, 0};

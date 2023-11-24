@@ -1,14 +1,15 @@
 #ifndef CAR_H
 #define CAR_H
 
+#include "entity.h"
 #include "rbk/minMysql/sqlRow.h"
 #include <QList>
 #include <QPair>
 
-class Car {
+class Car : public Entity {
       private:
-	static QPair<bool, int> getCarIdFromUser(const QString& operation);
-	static bool             carIdExists(int carId);
+	//static QPair<bool, int> getCarIdFromUser(const QString& operation);
+	//static bool             carIdExists(int carId);
 
       public:
 	// db id
@@ -21,7 +22,7 @@ class Car {
 	int     locationId            = 0;
 	int     totalDistanceTraveled = 0;
 
-	Car() = default;
+	Car();
 	static Car        getCarFromSqlRow(const sqlRow& row);
 	static Car        getNewCarFromTerminal();
 	static Car        getCarFromDb(int id);

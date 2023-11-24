@@ -14,6 +14,11 @@ using namespace std;
 
 extern DB db;
 
+Car::Car() {
+	entityName  = "car";
+	entityTable = "car";
+}
+
 Car Car::getCarFromSqlRow(const sqlRow& row) {
 	Car car;
 	row.get2("id", car.id);
@@ -107,6 +112,7 @@ WHERE id = %7;
 	db.query(sql);
 }
 
+/*
 bool Car::carIdExists(int carId) {
 	QString skel = R"(
 select * from car where id = %1; 
@@ -118,7 +124,9 @@ select * from car where id = %1;
 	}
 	return true;
 }
+*/
 
+/*
 QPair<bool, int> Car::getCarIdFromUser(const QString& operation) {
 	if (operation != "update" and operation != "remove") {
 		//TODO log error
@@ -143,6 +151,7 @@ Insert 0 (zero) to cancel this operation)";
 
 	return {true, carId};
 }
+*/
 
 void Car::deleteCarFromDb(int id) {
 	QString sql = QSL("DELETE FROM car WHERE id = %1;").arg(id);
@@ -150,7 +159,7 @@ void Car::deleteCarFromDb(int id) {
 }
 
 void Car::deleteCarAfterRequest() {
-	auto carId = getCarIdFromUser("remove");
+	auto carId = getIdFromTerminal("remove");
 	if (!carId.first) {
 		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
 		return;
@@ -164,7 +173,7 @@ void Car::printAsTable() {
 }
 
 void Car::updateCarAfterRequest() {
-	auto carId = getCarIdFromUser("update");
+	auto carId = getIdFromTerminal("update");
 	if (!carId.first) {
 		QTextStream(stdout) << "Update operation cancelled" << Qt::endl;
 		return;
