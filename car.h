@@ -30,9 +30,9 @@ class Car : public Entity {
 	static void       printAllCarsAsTable();
 	static void       printCarsAsTable(const QList<Car>& cars);
 	void              printAsTable();
-	static void       deleteCarAfterRequest();
+
 	static void       updateCarAfterRequest();
-	static void       deleteCarFromDb(int id);
+
 
 	void saveToDb();
 	void updateInDb();

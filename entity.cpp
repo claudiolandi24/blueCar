@@ -50,3 +50,26 @@ Insert 0 (zero) to cancel this operation)";
 
 	return {true, id};
 }
+
+void Entity::deleteFromDb(int id) {
+	QString sql = QSL("DELETE FROM %1 WHERE id = %2;")
+            .arg(entityTable)
+            .arg(id);
+	db.query(sql);
+}
+
+void Entity::deleteAfterRequest() {
+	auto id = getIdFromTerminal("remove");
+	if (!id.first) {
+		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
+		return;
+	}
+	deleteFromDb(id.second);
+    //Car/User
+    QString entityNameFirstUpper = entityName;
+    entityNameFirstUpper[0]=entityNameFirstUpper[0].toUpper();
+    auto msg = QSL("%1 removed successfully").arg(entityNameFirstUpper);
+	QTextStream(stdout) << msg << Qt::endl;
+}
+
+

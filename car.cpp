@@ -153,20 +153,9 @@ Insert 0 (zero) to cancel this operation)";
 }
 */
 
-void Car::deleteCarFromDb(int id) {
-	QString sql = QSL("DELETE FROM car WHERE id = %1;").arg(id);
-	db.query(sql);
-}
 
-void Car::deleteCarAfterRequest() {
-	auto carId = getIdFromTerminal("remove");
-	if (!carId.first) {
-		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
-		return;
-	}
-	deleteCarFromDb(carId.second);
-	QTextStream(stdout) << "Car removed successfully" << Qt::endl;
-}
+
+
 
 void Car::printAsTable() {
 	printCarsAsTable({*this});

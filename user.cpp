@@ -8,6 +8,11 @@
 
 extern DB db;
 
+User::User() {
+	entityName  = "user";
+	entityTable = "user";
+}
+
 User User::getNewUserFromTerminal() {
 	User user;
 	user.setUsernameFromTerminal();
@@ -131,8 +136,4 @@ void User::printUsersAsTable(const QList<User>& users) {
 		             u.drivingLicense.toStdString());
 	}
 	table.print(std::cout);
-}
-
-void User::deleteUserAfterRequest() {
-    //claudio2
 }

@@ -4,11 +4,11 @@
 #include "creditcard.h"
 #include "rbk/minMysql/min_mysql.h"
 #include <QString>
+#include "entity.h"
 
 
 
-
-class User {
+class User : public Entity {
       public:
 	long long  id = 0;
 	QString    username;
@@ -19,7 +19,7 @@ class User {
 	CreditCard creditCard;
 	QString    drivingLicense;
 
-	User() = default;
+	User();
 	static User        getNewUserFromTerminal();
 	static User        getUserFromSqlRow(const sqlRow& row);
 	static QList<User> getUsersFromDb(const QString& whereCondition = "");
@@ -36,7 +36,7 @@ class User {
 	static void printAllUsersAsTable();
     static void printUsersAsTable(const QList<User>& users);
     
-    static void deleteUserAfterRequest();
+  
 };
 
 #endif // USER_H

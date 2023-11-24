@@ -21,7 +21,7 @@ void ActionUpdateCar::run() {
 
 void ActionRemoveCar::run() {
 	cout << "--- REMOVE CAR ---" << endl;
-	Car::deleteCarAfterRequest();
+	Car::deleteAfterRequest();
 
 	printEmptyLineSeparator();
 };

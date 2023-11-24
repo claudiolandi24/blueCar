@@ -6,7 +6,7 @@
 
 /*
  * Entity = Car or User
- */ 
+ */
 class Entity {
       public:
 	static QString entityName;
@@ -16,6 +16,8 @@ class Entity {
 
 	static bool             idExists(int id);
 	static QPair<bool, int> getIdFromTerminal(const QString& operation);
+	static void             deleteFromDb(int id);
+	static void             deleteAfterRequest();
 };
 
 #endif // ENTITY_H

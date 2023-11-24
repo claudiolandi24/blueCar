@@ -19,7 +19,7 @@ void ActionUpdateUser::run() {
 
 void ActionRemoveUser::run() {
 	cout << "--- REMOVE USER ---" << endl;
-    //here
+    User::deleteAfterRequest();
     
 	printEmptyLineSeparator();
 };
