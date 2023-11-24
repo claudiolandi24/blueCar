@@ -14,15 +14,16 @@ int     getLocationId(QString location);
 QString getLocationNameHuman(int id);
 QString getAvailabilityHuman(bool isFree);
 bool    isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars = QList<QChar>());
+bool    isNumeric(const QString& string, int maxLength = 0);
 /*
  * Allowed characters:
  * - letters
  * - digits
  * - any symbol of these: !, ?, @, (, ), [, ], {, }
- * 
+ *
  * Min length = 10
  * Max length = 100
- * 
+ *
  * And must contain at least the following:
  * - 1 upper-case letter
  * - 1 lowercase letter

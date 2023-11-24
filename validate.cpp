@@ -1,4 +1,5 @@
 #include "validate.h"
+#include <QRegularExpression>
 #include <QTextStream>
 
 QPair<bool, QString> Validate::getValidatedString(const QString& string) {
@@ -108,6 +109,48 @@ QPair<bool, QString> ValidatePwd::getValidatedString(const QString& string) {
 	bool ok = isValidPwd(string);
 	if (!ok) {
 		return {false, QString()};
+	}
+	return {true, string};
+}
+
+ValidateCreditCardNumber::ValidateCreditCardNumber() {
+	conditionForValue = "must contain only digits, max length = 19";
+}
+
+//TODO
+// remove all magic numbs
+// for example here CONFIG <--- or define const for class <--- maybe better?
+QPair<bool, QString> ValidateCreditCardNumber::getValidatedString(const QString& string) {
+	bool ok = isNumeric(string, 19);
+	if (!ok) {
+		return {false, {}};
+	}
+	return {true, string};
+}
+
+ValidateCreditCardDate::ValidateCreditCardDate() {
+	conditionForValue = "must have the format 'MM/AAAA'";
+}
+
+QPair<bool, QString> ValidateCreditCardDate::getValidatedString(const QString& string) {
+	// Format for date is 'MM/YYYY'
+	static QRegularExpression regexp("^\\d{2}/\\d{4}$");
+	QRegularExpressionMatch   match = regexp.match(string);
+	bool                      ok    = match.hasMatch() and match.captured(0) == string;
+	if (!ok) {
+		return {false, {}};
+	}
+	return {true, string};
+}
+
+ValidateCreditCardSecureCode::ValidateCreditCardSecureCode() {
+	conditionForValue = "must contain only digits, max length = 4";
+}
+
+QPair<bool, QString> ValidateCreditCardSecureCode::getValidatedString(const QString& string) {
+	bool ok = isNumeric(string, 4);
+	if (!ok) {
+		return {false, {}};
 	}
 	return {true, string};
 }

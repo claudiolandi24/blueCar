@@ -79,7 +79,7 @@ SET typeId = %1,
 	               .arg(base64this(licensePlate))
 	               .arg(base64this(brand))
 	               .arg(base64this(name))
-	               .arg(isFree) //
+	               .arg(isFree)
 	               .arg(locationId)
 	               .arg(totalDistanceTraveled);
 	db.query(sql);

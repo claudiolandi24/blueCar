@@ -1,5 +1,6 @@
 #include "try.h"
 #include "car.h"
+#include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "variadictable.h"
 #include <QTextStream>
@@ -61,12 +62,20 @@ void tryHash() {
 
 	// Convert the hashed data to a hexadecimal string
 	QString hashedPassword = QString(hashedData.toHex());
-    qDebug() << hashedPassword;
-    
+	qDebug() << hashedPassword;
+}
+
+void tryErrPrint() {
+	qDebug().noquote() << "message: function a() failed" << QStacker16Light();
+	qInfo().noquote() << "message: function b() failed" << QStacker16Light();
+	qWarning().noquote() << "message: function c() failed" << QStacker16Light();
+	qCritical().noquote() << "message: function d() failed" << QStacker16Light();
+	//qFatal("fatal message") << "message: function e() failed" << QStacker16Light();
 }
 
 void try0() {
 	//tryTable();
 	//tryTableCar();
-    tryHash();
+	//tryHash();
+	tryErrPrint();
 }

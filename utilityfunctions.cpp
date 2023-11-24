@@ -73,6 +73,19 @@ bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars
 	return true;
 }
 
+bool isNumeric(const QString& string, int maxLength) {
+	if (maxLength and string.length() > maxLength) {
+		return false;
+	}
+
+	for (const auto& c : string) {
+		if (!c.isDigit()) {
+			return false;
+		}
+	}
+	return true;
+}
+
 bool isValidPwd(const QString& string) {
 	if (string.length() < 10 or string.length() > 100) {
 		return false;

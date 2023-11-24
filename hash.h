@@ -3,6 +3,6 @@
 
 #include <QString>
 
-QString hash0(const QString& string);
+QString getHash(const QString& string);
 
 #endif // HASH_H

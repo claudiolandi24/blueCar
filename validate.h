@@ -56,6 +56,25 @@ class ValidateDrivingLicense : public Validate {
 	QPair<bool, QString> getValidatedString(const QString& string) override;
 };
 
+class ValidateCreditCardNumber : public Validate{
+public:
+    ValidateCreditCardNumber();
+    QPair<bool, QString> getValidatedString(const QString& string) override;
+};
+
+class ValidateCreditCardDate : public Validate{
+public:
+    ValidateCreditCardDate();
+    QPair<bool, QString> getValidatedString(const QString& string) override;
+};
+
+class ValidateCreditCardSecureCode : public Validate{
+public:
+    ValidateCreditCardSecureCode();
+    QPair<bool, QString> getValidatedString(const QString& string) override;
+};
+
+
 QString
     getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate);
 int getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate);

@@ -6,12 +6,13 @@
 class CreditCard {
       public:
 	long long id = 0;
-	QString   number;
-	// MM/AAAA
-	QString expirationDate;
-	QString secureCode;
+	QString   hash;
 
 	CreditCard() = default;
+    static CreditCard getNewCreditCardFromTerminal();
+    
+    void setHashFromTerminal();
+    void saveToDb();
 };
 
 #endif // CREDITCARD_H
