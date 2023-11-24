@@ -4,6 +4,9 @@
 #include "qpair.h"
 #include <QString>
 
+/*
+ * Entity = Car or User
+ */ 
 class Entity {
       public:
 	static QString entityName;

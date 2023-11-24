@@ -134,5 +134,5 @@ void User::printUsersAsTable(const QList<User>& users) {
 }
 
 void User::deleteUserAfterRequest() {
-    //here2
+    //claudio2
 }
