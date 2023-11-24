@@ -12,11 +12,11 @@ void ActionLogin::run() {
 	printEmptyLineSeparator();
 
 	if (userName == "admin") {
-		MenuAdmin ma("");
-		ma.run();
+		MenuAdmin menuAdmin("");
+		menuAdmin.run();
 	} else if (userName == "claudio") {
-		MenuUser mu("");
-		mu.run();
+		MenuUser menuUser("");
+		menuUser.run();
 	} else {
 		//TODO remove all cout <<. use qtextstream. so here remove toStdString()
 		cout << "Invalid user " << userName.toStdString() << endl;
