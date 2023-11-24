@@ -2,6 +2,7 @@
 #include "hash.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "validate.h"
+#include <cassert>
 
 extern DB db;
 
@@ -48,6 +49,7 @@ set hash = '%1';
 }
 
 void CreditCard::updateInDb() {
+    assert(id>0);
 	QString skel = R"(
 UPDATE creditCard SET
     hash = '%1'

@@ -83,5 +83,8 @@ void try0() {
 	//tryTableCar();
 	//tryHash();
 	//tryErrPrint();
-    printAllUsers();
+    //printAllUsers();
+    
+    assert(false);
+    
 }

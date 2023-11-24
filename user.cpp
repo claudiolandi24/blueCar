@@ -96,7 +96,7 @@ void User::setAddressFromTerminal() {
 }
 
 void User::setCreditCardFromTerminal() {
-	creditCard = CreditCard::getNewCreditCardFromTerminal();
+	creditCard.setHashFromTerminal();
 }
 
 void User::setDrivingLicenseFromTerminal() {
