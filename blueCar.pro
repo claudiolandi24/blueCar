@@ -11,6 +11,7 @@ SOURCES += \
         car.cpp \
         creditcard.cpp \
         database.cpp \
+        entity.cpp \
         hash.cpp \
         main.cpp \
         menu.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     car.h \
     creditcard.h \
     database.h \
+    entity.h \
     hash.h \
     menu.h \
     menuadmin.h \
