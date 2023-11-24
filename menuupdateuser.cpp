@@ -48,6 +48,7 @@ MenuUpdateUser::MenuUpdateUser(string label_, User user_) : Menu(label_)
     user=user_;
     
     title="UPDATE USER";
-    //addItem(make_unique<ActionUpdateUsername>("Update the ", user));
+    addItem(make_unique<ActionUpdateUsername>("Update the username", user));
     //addItem(make_unique<ActionUpdate>("Update the ", user));
+
 }

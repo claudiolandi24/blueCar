@@ -17,49 +17,49 @@ class ActionUpdateUser : public Action {
 	};
 };
 
-class ActionUpdateUsername : ActionUpdateUser {
+class ActionUpdateUsername : public ActionUpdateUser {
       public:
 	ActionUpdateUsername(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
 	void run() override;
 };
 
-class ActionUpdatePwdHash : ActionUpdateUser {
+class ActionUpdatePwdHash : public ActionUpdateUser {
       public:
 	ActionUpdatePwdHash(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
 	void run() override;
 };
 
-class ActionUpdateNameOfUser : ActionUpdateUser {
+class ActionUpdateNameOfUser : public ActionUpdateUser {
       public:
 	ActionUpdateNameOfUser(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
 	void run() override;
 };
 
-class ActionUpdateSurname : ActionUpdateUser {
+class ActionUpdateSurname : public ActionUpdateUser {
       public:
 	ActionUpdateSurname(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
 	void run() override;
 };
 
-class ActionUpdateAddress : ActionUpdateUser {
+class ActionUpdateAddress : public ActionUpdateUser {
       public:
 	ActionUpdateAddress(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
 	void run() override;
 };
 
-class ActionUpdateCreditCard : ActionUpdateUser {
+class ActionUpdateCreditCard : public ActionUpdateUser {
       public:
 	ActionUpdateCreditCard(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
 	void run() override;
 };
 
-class ActionUpdateDrivingLicense : ActionUpdateUser {
+class ActionUpdateDrivingLicense : public ActionUpdateUser {
       public:
 	ActionUpdateDrivingLicense(string label_, User user_)
 	    : ActionUpdateUser(label_, user_){};
