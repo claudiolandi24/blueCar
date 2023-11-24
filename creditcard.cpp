@@ -21,13 +21,9 @@ CreditCard CreditCard::getNewCreditCardFromTerminal() {
 void CreditCard::saveToDb() {
 	QString skel = R"(
 INSERT INTO creditCard
-set hash = %1;
+set hash = '%1';
 )";
 	auto    sql  = skel.arg(hash);
-	try {
-		db.query(sql);
-		id = (long long)(db.lastId());
-	} catch (const ExceptionV2& e) {
-        
-	}
+	db.query(sql);
+	id = (long long)(db.lastId());
 }

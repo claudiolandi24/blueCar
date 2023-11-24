@@ -24,7 +24,7 @@ void User::saveToDb() {
 	QString skel = R"(
 INSERT INTO user
 SET username = %1,
-    pwdHash = %2,
+    pwdHash = '%2',
     name = %3,
     surname = %4,
     address = %5,
