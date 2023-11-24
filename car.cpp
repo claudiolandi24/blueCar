@@ -112,51 +112,6 @@ WHERE id = %7;
 	db.query(sql);
 }
 
-/*
-bool Car::carIdExists(int carId) {
-	QString skel = R"(
-select * from car where id = %1; 
-)";
-	auto    sql  = skel.arg(carId);
-	auto    res  = db.query(sql);
-	if (res.empty()) {
-		return false;
-	}
-	return true;
-}
-*/
-
-/*
-QPair<bool, int> Car::getCarIdFromUser(const QString& operation) {
-	if (operation != "update" and operation != "remove") {
-		//TODO log error
-		return {false, 0};
-	}
-
-	QString msgSkel = R"(Insert the ID of the car you want to %1.
-Insert 0 (zero) to cancel this operation)";
-	auto    msg     = msgSkel.arg(operation);
-	QTextStream(stdout) << msg << Qt::endl;
-	QString rawInput = QTextStream(stdin).readLine();
-	bool    ok;
-	int     carId = rawInput.toInt(&ok);
-	if (!ok) {
-		QTextStream(stdout) << "The inserted value is not a valid number" << Qt::endl;
-		return {false, 0};
-	}
-	if (!carIdExists(carId)) {
-		QTextStream(stdout) << QSL("No car with ID %1").arg(carId) << Qt::endl;
-		return {false, 0};
-	}
-
-	return {true, carId};
-}
-*/
-
-
-
-
-
 void Car::printAsTable() {
 	printCarsAsTable({*this});
 }
@@ -176,8 +131,6 @@ void Car::updateCarAfterRequest() {
 
 	MenuUpdateCar menuUpdate("", car);
 	menuUpdate.run();
-
-	//QTextStream(stdout) << "Car updated successfully" << Qt::endl;
 }
 
 QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
