@@ -39,9 +39,9 @@ class ActionUpdateBrand : public ActionUpdateCar {
 	void run() override;
 };
 
-class ActionUpdateName : public ActionUpdateCar {
+class ActionUpdateNameOfCar : public ActionUpdateCar {
       public:
-	ActionUpdateName(string label_, Car car_)
+	ActionUpdateNameOfCar(string label_, Car car_)
 	    : ActionUpdateCar(label_, car_){};
 	void run() override;
 };

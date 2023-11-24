@@ -1,6 +1,7 @@
 #include "user.h"
 #include "creditcard.h"
 #include "hash.h"
+#include "menuupdateuser.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rbk/misc/b64.h"
 #include "validate.h"
@@ -155,7 +156,8 @@ void User::updateUserAfterRequest() {
 
 	user.printAsTable();
 
-	//claudio
+	MenuUpdateUser menuUpdate("", user);
+	menuUpdate.run();
 }
 
 void User::updateInDb() {
@@ -163,11 +165,11 @@ void User::updateInDb() {
 
 	QString skel = R"(
 UPDATE user SET
-    username = %1	
-    pwdHash = '%2'	
-    name = %3	
-    surname = %4	
-    address = %5	
+    username = %1,	
+    pwdHash = '%2',	
+    name = %3,	
+    surname = %4,	
+    address = %5,	
     drivingLicense = %6
 WHERE id = %7;
 )";

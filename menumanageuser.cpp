@@ -13,8 +13,8 @@ void ActionAddUser::run() {
 };
 
 void ActionUpdateUser::run() {
-	cout << "running update user" << endl;
-    //claudio
+	cout << "--- UPDATE ---" << endl;
+    User::updateUserAfterRequest();
     
 	printEmptyLineSeparator();
 };

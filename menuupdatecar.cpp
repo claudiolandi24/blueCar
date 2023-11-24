@@ -25,7 +25,7 @@ void ActionUpdateBrand::run() {
 	updateInDb();
 };
 
-void ActionUpdateName::run() {
+void ActionUpdateNameOfCar::run() {
 	car.setNameFromTerminal();
 	updateInDb();
 };
@@ -51,7 +51,7 @@ MenuUpdateCar::MenuUpdateCar(string label_, Car car_)
 	addItem(make_unique<ActionUpdateType>("Update the type", car));
 	addItem(make_unique<ActionUpdateLicensePlate>("Update the license plate", car));
 	addItem(make_unique<ActionUpdateBrand>("Update the brand", car));
-	addItem(make_unique<ActionUpdateName>("Update the name", car));
+	addItem(make_unique<ActionUpdateNameOfCar>("Update the name", car));
 	//TODO IMP only if free
 	addItem(make_unique<ActionUpdateLocation>("Update the location", car));
 	addItem(make_unique<ActionUpdateDistanceTraveled>("Update the total distance traveled", car));
