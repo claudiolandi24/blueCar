@@ -1,8 +1,10 @@
 #include "user.h"
+#include "creditcard.h"
 #include "hash.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rbk/misc/b64.h"
 #include "validate.h"
+#include "variadictable.h"
 
 extern DB db;
 
@@ -15,6 +17,25 @@ User User::getNewUserFromTerminal() {
 	user.setAddressFromTerminal();
 	user.setCreditCardFromTerminal();
 	user.setDrivingLicenseFromTerminal();
+
+	return user;
+}
+
+User User::getUserFromSqlRow(const sqlRow& row) {
+	User user;
+	row.get2("id", user.id);
+	row.get2("username", user.username);
+	row.get2("pwdHash", user.pwdHash);
+	row.get2("name", user.name);
+	row.get2("surname", user.surname);
+	row.get2("address", user.address);
+
+	long long creditCardId = 0;
+	row.get2("creditCardId", creditCardId);
+	auto cardList   = CreditCard::getCreditCardsFromDb(QSL("where id = %1").arg(creditCardId));
+	user.creditCard = cardList[0];
+
+	row.get2("drivingLicense", user.drivingLicense);
 
 	return user;
 }
@@ -74,4 +95,40 @@ void User::setCreditCardFromTerminal() {
 
 void User::setDrivingLicenseFromTerminal() {
 	drivingLicense = getValidatedString("Insert the driving license", make_unique<ValidateDrivingLicense>());
+}
+
+QList<User> User::getUsersFromDb(const QString& whereCondition) {
+	auto skel = QSL("select * from user %1;");
+	auto sql  = skel.arg(whereCondition);
+	auto res  = db.query(sql);
+
+	QList<User> users;
+	for (const auto& row : res) {
+		users.push_back(getUserFromSqlRow(row));
+	}
+	return users;
+}
+
+void User::printAllUsersAsTable() {
+	auto users = getUsersFromDb();
+	printUsersAsTable(users);
+}
+
+void User::printUsersAsTable(const QList<User>& users) {
+	VariadicTable<long long, string, string, string, string, string> table({"Id",
+	                                                                        "Username",
+	                                                                        "Name",
+	                                                                        "Surname",
+	                                                                        "Address",
+	                                                                        "Driving License"},
+	                                                                       10);
+	for (const auto& u : users) {
+		table.addRow(u.id,
+		             u.username.toStdString(),
+		             u.name.toStdString(),
+		             u.surname.toStdString(),
+		             u.address.toStdString(),
+		             u.drivingLicense.toStdString());
+	}
+	table.print(std::cout);
 }

@@ -2,6 +2,7 @@
 #include "car.h"
 #include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
+#include "user.h"
 #include "variadictable.h"
 #include <QTextStream>
 #include <iostream>
@@ -73,9 +74,14 @@ void tryErrPrint() {
 	//qFatal("fatal message") << "message: function e() failed" << QStacker16Light();
 }
 
+void printAllUsers(){
+    User::printAllUsersAsTable();
+}
+
 void try0() {
 	//tryTable();
 	//tryTableCar();
 	//tryHash();
-	tryErrPrint();
+	//tryErrPrint();
+    printAllUsers();
 }

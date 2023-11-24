@@ -1,6 +1,8 @@
 #ifndef CREDITCARD_H
 #define CREDITCARD_H
 
+#include "rbk/minMysql/sqlRow.h"
+#include <QList>
 #include <QString>
 
 class CreditCard {
@@ -9,10 +11,12 @@ class CreditCard {
 	QString   hash;
 
 	CreditCard() = default;
-    static CreditCard getNewCreditCardFromTerminal();
-    
-    void setHashFromTerminal();
-    void saveToDb();
+	static CreditCard        getNewCreditCardFromTerminal();
+	static CreditCard        getCreditCardFromSqlRow(const sqlRow& row);
+	static QList<CreditCard> getCreditCardsFromDb(const QString& whereCondition = QString());
+
+	void setHashFromTerminal();
+	void saveToDb();
 };
 
 #endif // CREDITCARD_H

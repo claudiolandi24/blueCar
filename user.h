@@ -2,6 +2,7 @@
 #define USER_H
 
 #include "creditcard.h"
+#include "rbk/minMysql/min_mysql.h"
 #include <QString>
 
 class User {
@@ -16,8 +17,10 @@ class User {
 	QString    drivingLicense;
 
 	User() = default;
-	static User getNewUserFromTerminal();
-	void        saveToDb();
+	static User        getNewUserFromTerminal();
+	static User        getUserFromSqlRow(const sqlRow& row);
+	static QList<User> getUsersFromDb(const QString& whereCondition = "");
+	void               saveToDb();
 
 	void setUsernameFromTerminal();
 	void setPwdHashFromTerminal();
@@ -26,6 +29,9 @@ class User {
 	void setAddressFromTerminal();
 	void setCreditCardFromTerminal();
 	void setDrivingLicenseFromTerminal();
+
+	static void printAllUsersAsTable();
+    static void printUsersAsTable(const QList<User>& users);
 };
 
 #endif // USER_H

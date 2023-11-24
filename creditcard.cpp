@@ -18,6 +18,25 @@ CreditCard CreditCard::getNewCreditCardFromTerminal() {
 	return card;
 }
 
+CreditCard CreditCard::getCreditCardFromSqlRow(const sqlRow& row) {
+	CreditCard card;
+	row.get2("id", card.id);
+	row.get2("hash", card.hash);
+	return card;
+}
+
+QList<CreditCard> CreditCard::getCreditCardsFromDb(const QString& whereCondition) {
+	auto skel = QSL("select * from creditCard %1;");
+	auto sql  = skel.arg(whereCondition);
+	auto res  = db.query(sql);
+
+	QList<CreditCard> cards;
+	for (const auto& row : res) {
+		cards.push_back(CreditCard::getCreditCardFromSqlRow(row));
+	}
+	return cards;
+}
+
 void CreditCard::saveToDb() {
 	QString skel = R"(
 INSERT INTO creditCard

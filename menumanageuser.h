@@ -25,14 +25,10 @@ class ActionRemoveUser : public Action {
 	void run() override;
 };
 
-class ActionShowUsers : public Action {
-      public:
-	ActionShowUsers(string label_)
-	    : Action(label_){};
-	void run() override;
-};
-
 class MenuManageUser : public Menu {
+      protected:
+	void actionBeforeShow() override;
+
       public:
 	MenuManageUser(string label_);
 };

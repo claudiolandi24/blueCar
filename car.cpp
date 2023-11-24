@@ -14,7 +14,7 @@ using namespace std;
 
 extern DB db;
 
-Car Car::getCarFromSqlRow(sqlRow row) {
+Car Car::getCarFromSqlRow(const sqlRow& row) {
 	Car car;
 	row.get2("id", car.id);
 	row.get2("typeId", car.typeId);
@@ -59,7 +59,7 @@ Car Car::getNewCarFromTerminal() {
 	car.setNameFromTerminal();
 	car.setLocationFromTerminal();
 	car.setDistanceTraveledFromTerminal();
-    
+
 	return car;
 }
 
@@ -174,7 +174,7 @@ void Car::updateCarAfterUserRequest() {
 	Car  car     = carList[0];
 	QTextStream(stdout) << "Updating car:" << Qt::endl;
 
-    car.printAsTable();
+	car.printAsTable();
 
 	MenuUpdateCar menuUpdate("", car);
 	menuUpdate.run();
@@ -197,14 +197,14 @@ QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
 
 void Car::printCarsAsTable(const QList<Car>& cars) {
 	VariadicTable<int, string, string, string, string, string, string, int> table(
-	    {"id",
-	     "type",
-	     "licensePlate",
-	     "brand",
-	     "name",
-	     "availability",
-	     "location",
-	     "totalDistanceTraveled"},
+	    {"Id",
+	     "Type",
+	     "License Plate",
+	     "Brand",
+	     "Name",
+	     "Availability",
+	     "Location",
+	     "Total Distance Traveled"},
 	    10);
 	for (const auto& car : cars) {
 		table.addRow(car.id,

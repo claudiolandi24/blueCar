@@ -22,7 +22,7 @@ class Car {
 	int     totalDistanceTraveled = 0;
 
 	Car() = default;
-	static Car        getCarFromSqlRow(sqlRow row);
+	static Car        getCarFromSqlRow(const sqlRow& row);
 	static Car        getNewCarFromTerminal();
 	static Car        getCarFromDb(int id);
 	static QList<Car> getCarsFromDb(const QString& whereCondition = QString());
