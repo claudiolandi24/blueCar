@@ -50,7 +50,14 @@ class ValidatePwd : public Validate {
 	QPair<bool, QString> getValidatedString(const QString& string) override;
 };
 
-QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate);
-int     getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate);
+class ValidateDrivingLicense : public Validate {
+      public:
+	ValidateDrivingLicense();
+	QPair<bool, QString> getValidatedString(const QString& string) override;
+};
+
+QString
+    getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate);
+int getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate);
 
 #endif // VALIDATE_H

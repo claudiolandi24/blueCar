@@ -75,6 +75,18 @@ QPair<bool, QString> ValidateUsername::getValidatedString(const QString& string)
 	return {true, string};
 }
 
+ValidateDrivingLicense::ValidateDrivingLicense() {
+	conditionForValue = "; must be alphanumeric string, length = 10";
+}
+
+QPair<bool, QString> ValidateDrivingLicense::getValidatedString(const QString& string) {
+	bool ok = isAlphanumeric(string) and string.length() == 10;
+	if (!ok) {
+		return {false, QString()};
+	}
+	return {true, string};
+}
+
 ValidatePwd::ValidatePwd() {
 	conditionForValue = R"(.
 Allowed characters:

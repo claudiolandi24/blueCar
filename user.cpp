@@ -1,4 +1,5 @@
 #include "user.h"
+#include "hash.h"
 #include "validate.h"
 
 User User::getNewUserFromTerminal() {
@@ -24,20 +25,24 @@ void User::setUsernameFromTerminal() {
 
 void User::setPwdHashFromTerminal() {
 	QString pwd = getValidatedString("Choose a password and insert it", make_unique<ValidatePwd>());
-    //TODO here
+	pwdHash     = hash0(pwd);
 }
 
-void User::setNameFromTerminal() { //TODO
+void User::setNameFromTerminal() {
+	name = getValidatedString("Insert the name of the user", make_unique<ValidateGeneralAlphaNum>());
 }
 
-void User::setSurnameFromTerminal() { //TODO
+void User::setSurnameFromTerminal() {
+	surname = getValidatedString("Insert the surname of the user", make_unique<ValidateGeneralAlphaNum>());
 }
 
 void User::setAddressFromTerminal() { //TODO
+    //here
 }
 
 void User::setCreditCardFromTerminal() { //TODO
 }
 
-void User::setDrivingLicenseFromTerminal() { //TODO
+void User::setDrivingLicenseFromTerminal() {
+	drivingLicense = getValidatedString("Insert the driving license of the user", make_unique<ValidateDrivingLicense>());
 }
