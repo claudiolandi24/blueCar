@@ -29,7 +29,7 @@ class Car {
 	static void       printAllCarsAsTable();
 	static void       printCarsAsTable(const QList<Car>& cars);
 	void              printAsTable();
-	static void       deleteCarAfterUserRequest();
+	static void       deleteCarAfterRequest();
 	static void       updateCarAfterUserRequest();
 	static void       deleteCarFromDb(int id);
 

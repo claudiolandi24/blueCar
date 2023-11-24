@@ -149,7 +149,7 @@ void Car::deleteCarFromDb(int id) {
 	db.query(sql);
 }
 
-void Car::deleteCarAfterUserRequest() {
+void Car::deleteCarAfterRequest() {
 	auto carId = getCarIdFromUser("remove");
 	if (!carId.first) {
 		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
