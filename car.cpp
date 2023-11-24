@@ -129,7 +129,7 @@ void Car::updateCarAfterRequest() {
 
 	car.printAsTable();
 
-	MenuUpdateCar menuUpdate("", car);
+	MenuUpdateCar menuUpdate("", &car);
 	menuUpdate.run();
 }
 
