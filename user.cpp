@@ -156,7 +156,7 @@ void User::updateUserAfterRequest() {
 
 	user.printAsTable();
 
-	MenuUpdateUser menuUpdate("", user);
+	MenuUpdateUser menuUpdate("", &user);
 	menuUpdate.run();
 }
 
