@@ -3,11 +3,26 @@
 
 #include "action.h"
 #include "menu.h"
+#include <QString>
+
+enum Actor {
+	Admin,
+	NormalUser,
+	Null
+};
 
 class ActionAddUser : public Action {
+      private:
+	QString title();
+	QString confirmationMsg();
+
       public:
-	ActionAddUser(string label_)
-	    : Action(label_){};
+	Actor actor = Actor::Null;
+
+	ActionAddUser(string label_, Actor actor_)
+	    : Action(label_) {
+		actor = actor_;
+	};
 	void run() override;
 };
 

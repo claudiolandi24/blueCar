@@ -1,5 +1,6 @@
 #include "menulogin.h"
 #include "menuadmin.h"
+#include "menumanageuser.h"
 #include "menuuser.h"
 #include <QTextStream>
 #include <iostream>
@@ -33,7 +34,7 @@ MenuLogin::MenuLogin(string label_)
     : Menu(label_) {
 	title = "LOGIN OR REGISTER";
 	addItem(make_unique<ActionLogin>("Log in (I already have an account)"));
-	addItem(make_unique<ActionRegister>("Register (I do not have an account)"));
+	addItem(make_unique<ActionAddUser>("Register (I do not have an account)",Actor::NormalUser));
 	exitLabel = "Quit";
 }
 
