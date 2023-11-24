@@ -132,3 +132,7 @@ void User::printUsersAsTable(const QList<User>& users) {
 	}
 	table.print(std::cout);
 }
+
+void User::deleteUserAfterRequest() {
+    //here2
+}

@@ -14,7 +14,7 @@ void ActionAddCar::run() {
 
 void ActionUpdateCar::run() {
 	cout << "--- UPDATE CAR ---" << endl;
-    Car::updateCarAfterUserRequest();
+    Car::updateCarAfterRequest();
     
 	printEmptyLineSeparator();
 };

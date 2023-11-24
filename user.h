@@ -5,6 +5,9 @@
 #include "rbk/minMysql/min_mysql.h"
 #include <QString>
 
+
+
+
 class User {
       public:
 	long long  id = 0;
@@ -32,6 +35,8 @@ class User {
 
 	static void printAllUsersAsTable();
     static void printUsersAsTable(const QList<User>& users);
+    
+    static void deleteUserAfterRequest();
 };
 
 #endif // USER_H

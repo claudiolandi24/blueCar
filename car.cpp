@@ -163,7 +163,7 @@ void Car::printAsTable() {
 	printCarsAsTable({*this});
 }
 
-void Car::updateCarAfterUserRequest() {
+void Car::updateCarAfterRequest() {
 	auto carId = getCarIdFromUser("update");
 	if (!carId.first) {
 		QTextStream(stdout) << "Update operation cancelled" << Qt::endl;
