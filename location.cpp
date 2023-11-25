@@ -1,4 +1,5 @@
 #include "location.h"
+#include "rbk/QStacker/qstacker.h"
 
 extern DB db;
 
@@ -19,27 +20,49 @@ QList<Location> Location::getAllLocationsFromDb() {
 	return locationList;
 }
 
-int Location::getLocationId(QString location) {
-	location = location.trimmed();
-	location = location.toLower();
-	if (location == "inner circle") {
-		return 1;
-	} else if (location == "middle circle") {
-		return 2;
-	} else if (location == "outer circle") {
-		return 3;
-	} else {
-		return 0;
+QMap<int, Location> Location::id_Location_Map() {
+	static auto         locationList = getAllLocationsFromDb();
+	QMap<int, Location> map;
+	for (const auto& location : locationList) {
+		map[location.id] = location;
 	}
+	return map;
+}
+
+//tolerant
+int Location::getLocationIdTolerant(QString location) {
+    location = location.trimmed();
+    location = location.toLower();
+    
+    // Initial letter -> full name
+    QMap<QChar, QString> initial_location;
+    initial_location['i']="inner circle";
+    initial_location['m']="middle circle";
+    initial_location['o']="outer circle";
+    if(location.size()==1 and initial_location.contains(location[0])){
+        location = initial_location[location[0]];
+    }
+    return getLocationId(location);    
+}
+
+/*
+ * Case-insensitive
+ */ 
+int Location::getLocationId(QString name) {
+	static auto locationList = getAllLocationsFromDb();
+	for (const auto& location : locationList) {
+		if (location.name.toLower() == name.toLower()) {
+			return location.id;
+		}
+	}
+	return 0;
 }
 
 QString Location::getLocationNameHuman(int id) {
-	if (id == 1) {
-		return "Inner Circle";
-	} else if (id == 2) {
-		return "Middle Circle";
-	} else if (id == 3) {
-		return "Outer Circle";
-	} else
-		return QString();
+	static auto map = id_Location_Map();
+	if (!map.contains(id)) {
+		qCritical().noquote() << "wrong location id" << QStacker16Light();
+		return "";
+	}
+	return map[id].name;
 }

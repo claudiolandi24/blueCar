@@ -97,7 +97,7 @@ ValidateLocation::ValidateLocation() {
 }
 
 QPair<bool, int> ValidateLocation::getValidatedInt(const QString& string) {
-	int locationId = Location::getLocationId(string);
+	int locationId = Location::getLocationIdTolerant(string);
 	if (!locationId) {
 		return {false, 0};
 	}
