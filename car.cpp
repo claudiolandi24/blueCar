@@ -15,13 +15,14 @@ using namespace std;
 extern DB db;
 
 Car::Car() {
-	entityName  = "car";
-	table = "car";
+	entityName = "car";
+	table      = "car";
 }
 
 Car Car::getCarFromSqlRow(const sqlRow& row) {
 	Car car;
 	row.get2("id", car.id);
+	row.get2("active", car.active);
 	row.get2("typeId", car.typeId);
 	row.get2("licensePlate", car.licensePlate);
 	row.get2("brand", car.brand);
@@ -71,15 +72,17 @@ Car Car::getNewCarFromTerminal() {
 void Car::saveToDb() {
 	QString skel = R"(
 INSERT INTO car
-SET typeId = %1,
-    licensePlate = %2,
-    brand = %3,
-    name = %4,
-    isFree = %5,
-    locationId = %6,
-    totalDistanceTraveled = %7;
+SET active = %1,
+    typeId = %2,
+    licensePlate = %3,
+    brand = %4,
+    name = %5,
+    isFree = %6,
+    locationId = %7,
+    totalDistanceTraveled = %8;
 )";
 	auto    sql  = skel
+	               .arg(active)
 	               .arg(typeId)
 	               .arg(base64this(licensePlate))
 	               .arg(base64this(brand))
@@ -93,15 +96,17 @@ SET typeId = %1,
 void Car::updateInDb() {
 	QString skel = R"(
 UPDATE car SET
-    typeId = %1,
-    licensePlate = %2,
-    brand = %3,
-    name = %4,
-    locationId = %5,
-    totalDistanceTraveled = %6
-WHERE id = %7;
+    active = %1,
+    typeId = %2,
+    licensePlate = %3,
+    brand = %4,
+    name = %5,
+    locationId = %6,
+    totalDistanceTraveled = %7
+WHERE id = %8;
 )";
 	auto    sql  = skel
+	               .arg(active)
 	               .arg(typeId)
 	               .arg(base64this(licensePlate))
 	               .arg(base64this(brand))
@@ -123,7 +128,7 @@ void Car::updateCarAfterRequest() {
 		return;
 	}
 
-	auto carList = getCarsFromDb(QSL("where id = %1").arg(carId.second));
+	auto carList = getCarsFromDb(QSL("id = %1").arg(carId.second));
 	Car  car     = carList[0];
 	QTextStream(stdout) << "Updating car:" << Qt::endl;
 
@@ -134,8 +139,11 @@ void Car::updateCarAfterRequest() {
 }
 
 QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
-	auto sqlSkel = QSL("select * from car %1;");
-	auto sql     = sqlSkel.arg(whereCondition);
+    QString sql = "select * from car where active = 1";
+    if(!whereCondition.isEmpty()){
+        sql+=" "+whereCondition;
+    }
+    sql+=";";
 	auto res     = db.query(sql);
 
 	QList<Car> cars;

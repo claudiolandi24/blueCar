@@ -7,9 +7,9 @@ extern DB db;
 QString Entity::entityName;
 QString Entity::table;
 
-bool Entity::idExists(int id) {
+bool Entity::idExistsActive(int id) {
 	QString skel = R"(
-select * from %1 where id = %2; 
+select * from %1 where id = %2 and active = 1; 
 )";
 	auto    sql  = skel
 	               .arg(table)
@@ -40,7 +40,7 @@ Insert 0 (zero) to cancel this operation)";
 		QTextStream(stdout) << "The inserted value is not a valid number" << Qt::endl;
 		return {false, 0};
 	}
-	if (!idExists(id)) {
+	if (!idExistsActive(id)) {
 		auto msg = QSL("No %1 with ID %2")
 		               .arg(entityName)
 		               .arg(id);
@@ -51,8 +51,8 @@ Insert 0 (zero) to cancel this operation)";
 	return {true, id};
 }
 
-void Entity::deleteFromDb(int id) {
-	QString sql = QSL("DELETE FROM %1 WHERE id = %2;")
+void Entity::setNotActiveInDb(int id) {
+    auto sql = QSL("UPDATE %1 SET active = 0 WHERE id = %2;")
             .arg(table)
             .arg(id);
 	db.query(sql);
@@ -64,7 +64,7 @@ void Entity::deleteAfterRequest() {
 		QTextStream(stdout) << "Remove operation cancelled" << Qt::endl;
 		return;
 	}
-	deleteFromDb(id.second);
+	setNotActiveInDb(id.second);
     //Car/User
     QString entityNameFirstUpper = entityName;
     entityNameFirstUpper[0]=entityNameFirstUpper[0].toUpper();

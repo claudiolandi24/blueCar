@@ -14,6 +14,7 @@ class Car : public Entity {
       public:
 	// db id
 	int     id     = 0;
+	bool    active = true;
 	int     typeId = 0;
 	QString licensePlate;
 	QString brand;
@@ -31,8 +32,7 @@ class Car : public Entity {
 	static void       printCarsAsTable(const QList<Car>& cars);
 	void              printAsTable();
 
-	static void       updateCarAfterRequest();
-
+	static void updateCarAfterRequest();
 
 	void saveToDb();
 	void updateInDb();
