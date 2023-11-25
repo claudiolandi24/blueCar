@@ -3,6 +3,7 @@
 
 #include "action.h"
 #include "menu.h"
+#include "user.h"
 
 class ActionRentCar : public Action {
       public:
@@ -24,9 +25,9 @@ class ActionUnsubscribe : public Action {
 
 class MenuUser : public Menu {
       public:
-	long long loggedUserId = 0;
+	User* user=nullptr;
 
-	MenuUser(string label_, long long loggedUserId_);
+	MenuUser(string label_, User* user_);
 };
 
 #endif // MENUUSER_H

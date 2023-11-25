@@ -23,14 +23,13 @@ void ActionUnsubscribe::run() {
 	printEmptyLineSeparator();
 };
 
-MenuUser::MenuUser(string label_, long long loggedUserId_)
+MenuUser::MenuUser(string label_, User *user_)
     : Menu(label_) {
-	loggedUserId = loggedUserId_;
+	user = user_;
 
 	title = "USER";
 	addItem(make_unique<ActionRentCar>("Rent car"));
-	addItem(make_unique<ActionUnsubscribe>("Unsubscribe", loggedUserId));
-    auto user = User::getById(loggedUserId);
-    addItem(make_unique<MenuUpdateUser>("Update my data",&user));
+	addItem(make_unique<ActionUnsubscribe>("Unsubscribe", user->id));
+    addItem(make_unique<MenuUpdateUser>("Update my data",user));
 	exitLabel = "Log out";
 }

@@ -42,7 +42,8 @@ void ActionLogin::run() {
 		MenuAdmin menuAdmin("");
 		menuAdmin.run();
 	} else {
-		MenuUser menuUser("",check.second.id);
+        auto user = User::getById(check.second.id);
+		MenuUser menuUser("",&user);
 		menuUser.run();
 	}
 
