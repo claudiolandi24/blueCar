@@ -5,39 +5,45 @@
 #include "menumanageuser.h"
 #include "menuuser.h"
 #include <QTextStream>
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 QPair<bool, User> ActionLogin::checkPwd(const QString& username, const QString& password) {
 	if (username == "admin") {
-        assert(false);
-        //if(true){
+		// admin
 		if (getHash(password) != config::adminPwdHash) {
 			return {false, {}};
 		}
 		return {true, {}};
 	} else {
+		// normal user
+		bool ok = User::usernameExists(username) and getHash(password) == User::getPwdHash(username);
+		if (!ok) {
+			return {false, {}};
+		} else {
+			return {true, User::getByUsername(username)};
+		}
 	}
 }
 
 void ActionLogin::run() {
 	QTextStream(stdout) << "--- LOGIN ---" << Qt::endl;
 	QTextStream(stdout) << "Insert your username" << Qt::endl;
-	QString userName = QTextStream(stdin).readLine();
+	QString username = QTextStream(stdin).readLine();
 	QTextStream(stdout) << "Insert your password\n";
-	QString password = QTextStream(stdin).readLine();
+	QString pwd = QTextStream(stdin).readLine();
 
 	printEmptyLineSeparator();
 
-	if (userName == "admin") {
+	auto check = checkPwd(username, pwd);
+	if (!check.first) {
+		QTextStream(stdout) << "Invalid username or password\n";
+	} else if (username == "admin") {
 		MenuAdmin menuAdmin("");
 		menuAdmin.run();
-	} else if (userName == "claudio") {
+	} else {
 		MenuUser menuUser("");
 		menuUser.run();
-	} else {
-		//TODO remove all cout <<. use qtextstream. so here remove toStdString()
-		cout << "Invalid user " << userName.toStdString() << endl;
 	}
 
 	printEmptyLineSeparator();

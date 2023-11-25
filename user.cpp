@@ -117,6 +117,14 @@ QList<User> User::getUsersFromDb(const QString& whereCondition) {
 	return users;
 }
 
+User User::getByUsername(const QString& username) {
+    auto listUsers = getUsersFromDb(QSL("WHERE username = %1").arg(base64this(username)));
+    if(listUsers.empty()){
+        return {};
+    }
+    return listUsers[0];    
+}
+
 void User::printAllUsersAsTable() {
 	auto users = getUsersFromDb();
 	printUsersAsTable(users);
@@ -189,16 +197,21 @@ WHERE id = %7;
 }
 
 QString User::getPwdHash(const QString& username) {
-	//claudio auto sql = "SELECT pwdHash FROM user WHERE username "
+	auto sql = QSL("SELECT pwdHash FROM user WHERE username = %1;").arg(base64this(username));
+	auto res = db.query(sql);
+	assert(res.size() <= 1);
+	if (res.empty()) {
+		return {};
+	}
+	return res[0]["pwdHash"];
 }
 
 bool User::usernameExists(const QString& username) {
-	auto sql = QSL("SELECT * FROM user WHERE username = %1;").arg(username);
+	auto sql = QSL("SELECT * FROM user WHERE username = %1;").arg(base64this(username));
 	auto res = db.query(sql);
 	assert(res.size() <= 1);
 	if (res.empty()) {
 		return false;
-	} else {
-		return true;
 	}
+	return true;
 }

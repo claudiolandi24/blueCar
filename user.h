@@ -21,7 +21,9 @@ class User : public Entity {
 	static User        getNewUserFromTerminal();
 	static User        getUserFromSqlRow(const sqlRow& row);
 	static QList<User> getUsersFromDb(const QString& whereCondition = "");
-	void               saveToDb();
+	static User        getByUsername(const QString& username);
+
+	void saveToDb();
 
 	void setUsernameFromTerminal();
 	void setPwdHashFromTerminal();
@@ -38,7 +40,7 @@ class User : public Entity {
 	static void    updateUserAfterRequest();
 	void           updateInDb();
 	static QString getPwdHash(const QString& username);
-	static bool    usernameExists(const QString &username);
+	static bool    usernameExists(const QString& username);
 };
 
 #endif // USER_H
