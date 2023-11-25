@@ -49,8 +49,9 @@ class ValidateCarType : public Validate {
 	QList<CarType> okTypes;
 
       public:
-    //TODO2
-    // 0 -> disable
+    /*
+     * minNumbPersons = 0 -> any CarType
+     */ 
 	ValidateCarType(int minNumbPersons_);
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };

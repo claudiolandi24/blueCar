@@ -53,7 +53,6 @@ QPair<bool, int> ValidatePositiveOrZeroInteger::getValidatedInt(const QString& s
 }
 
 ValidateNumbPersons::ValidateNumbPersons() {
-
 	conditionForValue = "; must be an integer >= 1 and <= 7";
 }
 
@@ -72,16 +71,24 @@ QPair<bool, int> ValidateNumbPersons::getValidatedInt(const QString& string) {
 
 ValidateCarType::ValidateCarType(int minNumbPersons_) {
 	minNumbPersons    = minNumbPersons_;
-    okTypes = CarType::getCarTypes(minNumbPersons);
-	conditionForValue = "; must be ECO, MID-CLASS or DELUXE (E, M or D)";
+	okTypes           = CarType::getCarTypes(minNumbPersons);
+	conditionForValue = "; must be " + CarType::asStringFullName(okTypes) + " (" + CarType::asStringInitial(okTypes) + ")";
 }
 
 QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
 	int typeId = CarType::getIdFromNameTolerant(string);
 	if (!typeId) {
+		// Type does not exist
 		return {false, 0};
 	}
-	return {true, typeId};
+	for (const auto& type : okTypes) {
+		if (type.id == typeId) {
+			// Type is ok: min number of persons satisfied
+			return {true, typeId};
+		}
+	}
+    // Type not ok: not enough number of persons for it
+	return {false, 0};
 }
 
 ValidateLocation::ValidateLocation() {
