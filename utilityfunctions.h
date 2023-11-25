@@ -8,8 +8,7 @@
 
 using namespace std;
 
-int     getTypeId(QString type);
-QString getTypeNameHuman(int id);
+
 int     getLocationId(QString location);
 QString getLocationNameHuman(int id);
 QString getAvailabilityHuman(bool isFree);

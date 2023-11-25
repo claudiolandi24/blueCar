@@ -5,30 +5,7 @@
 #include <QTextStream>
 #include <memory>
 
-int getTypeId(QString type) {
-	type = type.trimmed();
-	type = type.toLower();
-	if (type == "eco") {
-		return 1;
-	} else if (type == "mid-class") {
-		return 2;
-	} else if (type == "deluxe") {
-		return 3;
-	} else {
-		return 0;
-	}
-}
 
-QString getTypeNameHuman(int id) {
-	if (id == 1) {
-		return "ECO";
-	} else if (id == 2) {
-		return "MID-CLASS";
-	} else if (id == 3) {
-		return "DELUXE";
-	} else
-		return QString();
-}
 
 int getLocationId(QString location) {
 	location = location.trimmed();

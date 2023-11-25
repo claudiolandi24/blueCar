@@ -9,11 +9,13 @@ CONFIG -= app_bundle
 
 SOURCES += \
         car.cpp \
+        cartype.cpp \
         config.cpp \
         creditcard.cpp \
         database.cpp \
         entity.cpp \
         hash.cpp \
+        location.cpp \
         main.cpp \
         menu.cpp \
         menuadmin.cpp \
@@ -24,6 +26,7 @@ SOURCES += \
         menuupdatecar.cpp \
         menuupdateuser.cpp \
         menuuser.cpp \
+        rentrequest.cpp \
         try.cpp \
         user.cpp \
         utilityfunctions.cpp \
@@ -37,11 +40,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     action.h \
     car.h \
+    cartype.h \
     config.h \
     creditcard.h \
     database.h \
     entity.h \
     hash.h \
+    location.h \
     menu.h \
     menuadmin.h \
     menuitem.h \
@@ -51,6 +56,7 @@ HEADERS += \
     menuupdatecar.h \
     menuupdateuser.h \
     menuuser.h \
+    rentrequest.h \
     try.h \
     user.h \
     utilityfunctions.h \

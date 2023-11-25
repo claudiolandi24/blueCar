@@ -1,4 +1,5 @@
 #include "validate.h"
+#include "cartype.h"
 #include "user.h"
 #include <QRegularExpression>
 #include <QTextStream>
@@ -56,7 +57,7 @@ ValidateCarType::ValidateCarType() {
 }
 
 QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
-	int typeId = getTypeId(string);
+	int typeId = CarType::getIdFromNameTolerant(string);
 	if (!typeId) {
 		return {false, 0};
 	}

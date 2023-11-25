@@ -6,7 +6,9 @@
 #include <iostream>
 
 void ActionRentCar::run() {
-	cout << "running rent car" << endl;
+	cout << "--- RENT CAR ---" << endl;
+    
+    
 	printEmptyLineSeparator();
 };
 

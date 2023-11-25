@@ -1,4 +1,5 @@
 #include "car.h"
+#include "cartype.h"
 #include "menu.h"
 #include "menuupdatecar.h"
 #include "rbk/minMysql/min_mysql.h"
@@ -167,7 +168,7 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 	    10);
 	for (const auto& car : cars) {
 		table.addRow(car.id,
-		             getTypeNameHuman(car.typeId).toStdString(),
+		             CarType::getTypeNameHuman(car.typeId).toStdString(),
 		             car.licensePlate.toStdString(),
 		             car.brand.toStdString(),
 		             car.name.toStdString(),
@@ -182,3 +183,13 @@ void Car::printAllCarsAsTable() {
 	auto cars = getCarsFromDb();
 	printCarsAsTable(cars);
 }
+
+//TODO IMP
+/*
+car isFree remove
+calculate checking if rent now
+*/
+
+
+
+
