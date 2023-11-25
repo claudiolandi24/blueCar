@@ -1,5 +1,6 @@
 #include "location.h"
 #include "rbk/QStacker/qstacker.h"
+#include <cassert>
 
 extern DB db;
 
@@ -8,6 +9,14 @@ Location Location::fromSqlRow(const sqlRow& row) {
 	row.get2("id", location.id);
 	row.get2("name", location.name);
 	return location;
+}
+
+Location Location::fromId(int id) {
+	static auto map = id_Location_Map();
+	if (!map.contains(id)) {
+		qCritical().noquote() << "wrong location id" << QStacker16Light();
+	}
+	return map[id];
 }
 
 QList<Location> Location::getAllLocationsFromDb() {
@@ -29,25 +38,24 @@ QMap<int, Location> Location::id_Location_Map() {
 	return map;
 }
 
-//tolerant
 int Location::getLocationIdTolerant(QString location) {
-    location = location.trimmed();
-    location = location.toLower();
-    
-    // Initial letter -> full name
-    QMap<QChar, QString> initial_location;
-    initial_location['i']="inner circle";
-    initial_location['m']="middle circle";
-    initial_location['o']="outer circle";
-    if(location.size()==1 and initial_location.contains(location[0])){
-        location = initial_location[location[0]];
-    }
-    return getLocationId(location);    
+	location = location.trimmed();
+	location = location.toLower();
+
+	// Initial letter -> full name
+	QMap<QChar, QString> initial_location;
+	initial_location['i'] = "inner circle";
+	initial_location['m'] = "middle circle";
+	initial_location['o'] = "outer circle";
+	if (location.size() == 1 and initial_location.contains(location[0])) {
+		location = initial_location[location[0]];
+	}
+	return getLocationId(location);
 }
 
 /*
  * Case-insensitive
- */ 
+ */
 int Location::getLocationId(QString name) {
 	static auto locationList = getAllLocationsFromDb();
 	for (const auto& location : locationList) {

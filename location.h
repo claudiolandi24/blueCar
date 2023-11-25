@@ -12,12 +12,13 @@ class Location {
 
 	Location() = default;
 	static Location        fromSqlRow(const sqlRow& row);
+	static Location        fromId(int id);
 	static QList<Location> getAllLocationsFromDb();
-    
-    static QMap<int,Location> id_Location_Map();
+
+	static QMap<int, Location> id_Location_Map();
 
 	static int     getLocationIdTolerant(QString location);
-    static int     getLocationId(QString name);
+	static int     getLocationId(QString name);
 	static QString getLocationNameHuman(int id);
 };
 

@@ -93,7 +93,7 @@ QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
 }
 
 ValidateLocation::ValidateLocation() {
-	conditionForValue = "; must be 'Inner Circle', 'Middle Circle' or 'Outer Circle'";
+	conditionForValue = "; must be 'Inner Circle', 'Middle Circle' or 'Outer Circle' (I, M or O)";
 }
 
 QPair<bool, int> ValidateLocation::getValidatedInt(const QString& string) {
