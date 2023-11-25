@@ -5,19 +5,29 @@
 #include <QPair>
 #include <QString>
 
+class Check {
+public:
+	bool    ok = false;
+	QString value;
+	QString errMsg;
+    
+    Check(bool ok_,QString value_);
+    Check(bool ok_,QString value_,QString errMsg_);
+};
+
 class Validate {
       public:
 	QString conditionForValue;
 
 	virtual ~Validate() = default;
-	virtual QPair<bool, QString> getValidatedString(const QString& string);
+	virtual Check getValidatedString(const QString& string);
 	virtual QPair<bool, int>     getValidatedInt(const QString& string);
 };
 
 class ValidateGeneralAlphaNum : public Validate {
       public:
 	ValidateGeneralAlphaNum();
-	QPair<bool, QString> getValidatedString(const QString& string) override;
+	Check getValidatedString(const QString& string) override;
 };
 
 class ValidatePositiveOrZeroInteger : public Validate {
@@ -41,39 +51,38 @@ class ValidateLocation : public Validate {
 class ValidateUsername : public Validate {
       public:
 	ValidateUsername();
-	QPair<bool, QString> getValidatedString(const QString& string) override;
+	Check getValidatedString(const QString& string) override;
 };
 
 class ValidatePwd : public Validate {
       public:
 	ValidatePwd();
-	QPair<bool, QString> getValidatedString(const QString& string) override;
+	Check getValidatedString(const QString& string) override;
 };
 
 class ValidateDrivingLicense : public Validate {
       public:
 	ValidateDrivingLicense();
-	QPair<bool, QString> getValidatedString(const QString& string) override;
+	Check getValidatedString(const QString& string) override;
 };
 
-class ValidateCreditCardNumber : public Validate{
-public:
-    ValidateCreditCardNumber();
-    QPair<bool, QString> getValidatedString(const QString& string) override;
+class ValidateCreditCardNumber : public Validate {
+      public:
+	ValidateCreditCardNumber();
+	Check getValidatedString(const QString& string) override;
 };
 
-class ValidateCreditCardDate : public Validate{
-public:
-    ValidateCreditCardDate();
-    QPair<bool, QString> getValidatedString(const QString& string) override;
+class ValidateCreditCardDate : public Validate {
+      public:
+	ValidateCreditCardDate();
+	Check getValidatedString(const QString& string) override;
 };
 
-class ValidateCreditCardSecureCode : public Validate{
-public:
-    ValidateCreditCardSecureCode();
-    QPair<bool, QString> getValidatedString(const QString& string) override;
+class ValidateCreditCardSecureCode : public Validate {
+      public:
+	ValidateCreditCardSecureCode();
+	Check getValidatedString(const QString& string) override;
 };
-
 
 QString
     getValidatedString(const QString& requestMsg, unique_ptr<Validate> validate);

@@ -3,6 +3,7 @@
 #include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "user.h"
+#include "validate.h"
 #include "variadictable.h"
 #include <QTextStream>
 #include <iostream>
@@ -85,6 +86,13 @@ void try0() {
 	//tryErrPrint();
     //printAllUsers();
     
-    assert(false);
+    //assert(false);
+
+
+    Check c1(true,"v1");
+    Check c2(true,"v2","e2");
+    
+    cout<<"";
+    
     
 }

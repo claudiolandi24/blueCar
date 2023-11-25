@@ -2,9 +2,18 @@
 #include <QRegularExpression>
 #include <QTextStream>
 
-QPair<bool, QString> Validate::getValidatedString(const QString& string) {
+Check::Check(bool ok_,QString value_){
+    ok=ok_;
+    value=value_;
+}
+
+Check::Check(bool ok_,QString value_,QString errMsg_) : Check(ok_,value_){
+    errMsg=errMsg_;
+}
+
+Check Validate::getValidatedString(const QString& string) {
 	Q_UNUSED(string);
-	return {false, QString()};
+    return {false, {}};
 };
 
 QPair<bool, int> Validate::getValidatedInt(const QString& string) {
@@ -16,10 +25,10 @@ ValidateGeneralAlphaNum::ValidateGeneralAlphaNum() {
 	conditionForValue = "; must contain only alphanumeric characters, max length 100";
 }
 
-QPair<bool, QString> ValidateGeneralAlphaNum::getValidatedString(const QString& string) {
+Check ValidateGeneralAlphaNum::getValidatedString(const QString& string) {
 	bool ok = isAlphanumeric(string, 100);
 	if (!ok) {
-		return {false, QString()};
+        return {false, {}};
 	}
 	return {true, string};
 }
@@ -68,7 +77,7 @@ ValidateUsername::ValidateUsername() {
 	conditionForValue = "; must contain only alphanumeric characters or '_', max length 50";
 }
 
-QPair<bool, QString> ValidateUsername::getValidatedString(const QString& string) {
+Check ValidateUsername::getValidatedString(const QString& string) {
 	bool ok = isAlphanumeric(string, 50, {'_'});
 	if (!ok) {
 		return {false, QString()};
@@ -80,7 +89,7 @@ ValidateDrivingLicense::ValidateDrivingLicense() {
 	conditionForValue = "; must be alphanumeric string, length = 10";
 }
 
-QPair<bool, QString> ValidateDrivingLicense::getValidatedString(const QString& string) {
+Check ValidateDrivingLicense::getValidatedString(const QString& string) {
 	bool ok = isAlphanumeric(string) and string.length() == 10;
 	if (!ok) {
 		return {false, QString()};
@@ -105,7 +114,7 @@ And must contain at least the following:
 - 1 allowed symbol)";
 }
 
-QPair<bool, QString> ValidatePwd::getValidatedString(const QString& string) {
+Check ValidatePwd::getValidatedString(const QString& string) {
 	bool ok = isValidPwd(string);
 	if (!ok) {
 		return {false, QString()};
@@ -120,7 +129,7 @@ ValidateCreditCardNumber::ValidateCreditCardNumber() {
 //TODO
 // remove all magic numbs
 // for example here CONFIG <--- or define const for class <--- maybe better?
-QPair<bool, QString> ValidateCreditCardNumber::getValidatedString(const QString& string) {
+Check ValidateCreditCardNumber::getValidatedString(const QString& string) {
 	bool ok = isNumeric(string, 19);
 	if (!ok) {
 		return {false, {}};
@@ -132,7 +141,7 @@ ValidateCreditCardDate::ValidateCreditCardDate() {
 	conditionForValue = "must have the format 'MM/AAAA'";
 }
 
-QPair<bool, QString> ValidateCreditCardDate::getValidatedString(const QString& string) {
+Check ValidateCreditCardDate::getValidatedString(const QString& string) {
 	// Format for date is 'MM/YYYY'
 	static QRegularExpression regexp("^\\d{2}/\\d{4}$");
 	QRegularExpressionMatch   match = regexp.match(string);
@@ -147,7 +156,7 @@ ValidateCreditCardSecureCode::ValidateCreditCardSecureCode() {
 	conditionForValue = "must contain only digits, max length = 4";
 }
 
-QPair<bool, QString> ValidateCreditCardSecureCode::getValidatedString(const QString& string) {
+Check ValidateCreditCardSecureCode::getValidatedString(const QString& string) {
 	bool ok = isNumeric(string, 4);
 	if (!ok) {
 		return {false, {}};
@@ -162,8 +171,8 @@ QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> valid
 		value         = value.trimmed();
 		auto res      = validate.get()->getValidatedString(value);
 
-		if (res.first) {
-			return res.second;
+		if (res.ok) {
+			return res.value;
 		}
 		QTextStream(stdout) << "Invalid value" << value << "\n\n";
 	}
