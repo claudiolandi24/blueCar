@@ -8,8 +8,7 @@
 
 using namespace std;
 
-int     getLocationId(QString location);
-QString getLocationNameHuman(int id);
+
 QString getAvailabilityHuman(bool isFree);
 
 bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars = QList<QChar>());

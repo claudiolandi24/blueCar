@@ -1,5 +1,6 @@
 #include "car.h"
 #include "cartype.h"
+#include "location.h"
 #include "menu.h"
 #include "menuupdatecar.h"
 #include "rbk/minMysql/min_mysql.h"
@@ -174,7 +175,7 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 		             car.brand.toStdString(),
 		             car.name.toStdString(),
 		             getAvailabilityHuman(car.isFree).toStdString(),
-		             getLocationNameHuman(car.locationId).toStdString(),
+		             Location::getLocationNameHuman(car.locationId).toStdString(),
 		             car.totalDistanceTraveled);
 	}
 	table.print(std::cout);

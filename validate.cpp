@@ -3,6 +3,7 @@
 #include "user.h"
 #include <QRegularExpression>
 #include <QTextStream>
+#include "location.h"
 
 Check::Check(bool ok_, QString value_) {
 	ok    = ok_;
@@ -96,7 +97,7 @@ ValidateLocation::ValidateLocation() {
 }
 
 QPair<bool, int> ValidateLocation::getValidatedInt(const QString& string) {
-	int locationId = getLocationId(string);
+	int locationId = Location::getLocationId(string);
 	if (!locationId) {
 		return {false, 0};
 	}

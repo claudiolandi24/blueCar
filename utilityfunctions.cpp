@@ -5,30 +5,7 @@
 #include <QTextStream>
 #include <memory>
 
-int getLocationId(QString location) {
-	location = location.trimmed();
-	location = location.toLower();
-	if (location == "inner circle") {
-		return 1;
-	} else if (location == "middle circle") {
-		return 2;
-	} else if (location == "outer circle") {
-		return 3;
-	} else {
-		return 0;
-	}
-}
 
-QString getLocationNameHuman(int id) {
-	if (id == 1) {
-		return "Inner Circle";
-	} else if (id == 2) {
-		return "Middle Circle";
-	} else if (id == 3) {
-		return "Outer Circle";
-	} else
-		return QString();
-}
 
 QString getAvailabilityHuman(bool isFree) {
 	if (isFree) {
