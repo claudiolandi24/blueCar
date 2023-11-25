@@ -47,7 +47,7 @@ User User::getUserFromSqlRow(const sqlRow& row) {
 }
 
 void User::saveToDb() {
-    db.query(QSL("START TRANSACTION;"));
+	db.query(QSL("START TRANSACTION;"));
 	creditCard.saveToDb();
 	QString skel = R"(
 INSERT INTO user
@@ -68,7 +68,7 @@ SET username = %1,
 	               .arg(creditCard.id)
 	               .arg(base64this(drivingLicense));
 	db.query(sql);
-    db.query(QSL("COMMIT;"));
+	db.query(QSL("COMMIT;"));
 }
 
 //TODO IMP
@@ -77,7 +77,7 @@ SET username = %1,
 // credit card
 // others? -> all validations
 void User::setUsernameFromTerminal() {
-	username = getValidatedString("Choose an username and insert it", make_unique<ValidateGeneralAlphaNum>());
+	username = getValidatedString("Choose an username and insert it", make_unique<ValidateUsername>());
 }
 
 void User::setPwdHashFromTerminal() {
@@ -163,7 +163,7 @@ void User::updateUserAfterRequest() {
 }
 
 void User::updateInDb() {
-    db.query(QSL("START TRANSACTION;"));
+	db.query(QSL("START TRANSACTION;"));
 	creditCard.updateInDb();
 
 	QString skel = R"(
@@ -185,11 +185,20 @@ WHERE id = %7;
 	               .arg(base64this(drivingLicense))
 	               .arg(id);
 	db.query(sql);
-    db.query(QSL("COMMIT;"));
+	db.query(QSL("COMMIT;"));
 }
 
-QString User::getPwdHash(const QString& username){
-    //claudio auto sql = "SELECT pwdHash FROM user WHERE username "
-    
+QString User::getPwdHash(const QString& username) {
+	//claudio auto sql = "SELECT pwdHash FROM user WHERE username "
 }
 
+bool User::usernameExists(const QString& username) {
+	auto sql = QSL("SELECT * FROM user WHERE username = %1;").arg(username);
+	auto res = db.query(sql);
+	assert(res.size() <= 1);
+	if (res.empty()) {
+		return false;
+	} else {
+		return true;
+	}
+}

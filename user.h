@@ -35,9 +35,10 @@ class User : public Entity {
 	static void printUsersAsTable(const QList<User>& users);
 	void        printAsTable();
 
-	static void updateUserAfterRequest();
-	void        updateInDb();
-	QString     getPwdHash(const QString& username);
+	static void    updateUserAfterRequest();
+	void           updateInDb();
+	static QString getPwdHash(const QString& username);
+	static bool    usernameExists(const QString &username);
 };
 
 #endif // USER_H

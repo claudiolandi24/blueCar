@@ -1,19 +1,21 @@
 #include "validate.h"
+#include "user.h"
 #include <QRegularExpression>
 #include <QTextStream>
 
-Check::Check(bool ok_,QString value_){
-    ok=ok_;
-    value=value_;
+Check::Check(bool ok_, QString value_) {
+	ok    = ok_;
+	value = value_;
 }
 
-Check::Check(bool ok_,QString value_,QString errMsg_) : Check(ok_,value_){
-    errMsg=errMsg_;
+Check::Check(bool ok_, QString value_, QString errMsg_)
+    : Check(ok_, value_) {
+	errMsg = errMsg_;
 }
 
 Check Validate::getValidatedString(const QString& string) {
 	Q_UNUSED(string);
-    return {false, {}};
+	return {false, {}};
 };
 
 QPair<bool, int> Validate::getValidatedInt(const QString& string) {
@@ -28,7 +30,7 @@ ValidateGeneralAlphaNum::ValidateGeneralAlphaNum() {
 Check ValidateGeneralAlphaNum::getValidatedString(const QString& string) {
 	bool ok = isAlphanumeric(string, 100);
 	if (!ok) {
-        return {false, {}};
+		return {false, {}};
 	}
 	return {true, string};
 }
@@ -81,6 +83,9 @@ Check ValidateUsername::getValidatedString(const QString& string) {
 	bool ok = isAlphanumeric(string, 50, {'_'});
 	if (!ok) {
 		return {false, QString()};
+	}
+	if (User::usernameExists(string)) {
+		return {false, {}, "Username already in use, choose a different one"};
 	}
 	return {true, string};
 }
@@ -174,7 +179,11 @@ QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> valid
 		if (res.ok) {
 			return res.value;
 		}
-		QTextStream(stdout) << "Invalid value" << value << "\n\n";
+		if (!res.errMsg.isEmpty()) {
+			QTextStream(stdout) << res.errMsg << "\n\n";
+		} else {
+			QTextStream(stdout) << "Invalid value" << value << "\n\n";
+		}
 	}
 }
 
