@@ -3,6 +3,23 @@
 #include "validate.h"
 #include <QTextStream>
 
+Car RentRequest::selectCar(){
+    //claudio
+    /*
+     * Car must:
+     * - Be in start location
+     * - Wanted type
+     * - Free
+     */ 
+    
+    
+    
+    
+    
+    
+
+}
+
 RentRequest RentRequest::getFromTerminal() {
 	RentRequest request;
 
@@ -22,4 +39,8 @@ RentRequest RentRequest::getFromTerminal() {
 
 	return request;
 	//claudio
+}
+
+void RentRequest::run(){
+    
 }

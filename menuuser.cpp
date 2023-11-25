@@ -4,10 +4,13 @@
 #include "utilityfunctions.h"
 #include <QTextStream>
 #include <iostream>
+#include "rentrequest.h"
 
 void ActionRentCar::run() {
 	cout << "--- RENT CAR ---" << endl;
     
+    //claudio
+    RentRequest request = RentRequest::getFromTerminal();
     
 	printEmptyLineSeparator();
 };
