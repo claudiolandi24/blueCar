@@ -30,6 +30,7 @@ User User::getNewUserFromTerminal() {
 User User::getUserFromSqlRow(const sqlRow& row) {
 	User user;
 	row.get2("id", user.id);
+	row.get2("active", user.active);
 	row.get2("username", user.username);
 	row.get2("pwdHash", user.pwdHash);
 	row.get2("name", user.name);
@@ -51,15 +52,17 @@ void User::saveToDb() {
 	creditCard.saveToDb();
 	QString skel = R"(
 INSERT INTO user
-SET username = %1,
-    pwdHash = '%2',
-    name = %3,
-    surname = %4,
-    address = %5,
-    creditCardId = %6,
-    drivingLicense = %7;
+SET active = %1
+    username = %2,
+    pwdHash = '%3',
+    name = %4,
+    surname = %5,
+    address = %6,
+    creditCardId = %7,
+    drivingLicense = %8;
 )";
 	auto    sql  = skel
+	               .arg(active)
 	               .arg(base64this(username))
 	               .arg(pwdHash)
 	               .arg(base64this(name))
@@ -105,10 +108,14 @@ void User::setDrivingLicenseFromTerminal() {
 	drivingLicense = getValidatedString("Insert the driving license", make_unique<ValidateDrivingLicense>());
 }
 
+//claudio
 QList<User> User::getUsersFromDb(const QString& whereCondition) {
-	auto skel = QSL("select * from user %1;");
-	auto sql  = skel.arg(whereCondition);
-	auto res  = db.query(sql);
+	auto sql = QSL("SELECT * FROM user WHERE active = 1");
+	if (!whereCondition.isEmpty()) {
+		sql += " and " + whereCondition;
+	}
+	sql += ";";
+	auto res = db.query(sql);
 
 	QList<User> users;
 	for (const auto& row : res) {
@@ -118,11 +125,11 @@ QList<User> User::getUsersFromDb(const QString& whereCondition) {
 }
 
 User User::getByUsername(const QString& username) {
-    auto listUsers = getUsersFromDb(QSL("WHERE username = %1").arg(base64this(username)));
-    if(listUsers.empty()){
-        return {};
-    }
-    return listUsers[0];    
+	auto listUsers = getUsersFromDb(QSL("username = %1").arg(base64this(username)));
+	if (listUsers.empty()) {
+		return {};
+	}
+	return listUsers[0];
 }
 
 void User::printAllUsersAsTable() {
@@ -160,7 +167,7 @@ void User::updateUserAfterRequest() {
 		return;
 	}
 
-	auto userList = getUsersFromDb(QSL("where id = %1").arg(userId.second));
+	auto userList = getUsersFromDb(QSL("id = %1").arg(userId.second));
 	User user     = userList[0];
 	QTextStream(stdout) << "Updating user:" << Qt::endl;
 
@@ -176,15 +183,17 @@ void User::updateInDb() {
 
 	QString skel = R"(
 UPDATE user SET
-    username = %1,	
-    pwdHash = '%2',	
-    name = %3,	
-    surname = %4,	
-    address = %5,	
-    drivingLicense = %6
-WHERE id = %7;
+    active = %1,
+    username = %2,	
+    pwdHash = '%3',	
+    name = %4,	
+    surname = %5,	
+    address = %6,	
+    drivingLicense = %7
+WHERE id = %8;
 )";
 	auto    sql  = skel
+	               .arg(active)
 	               .arg(base64this(username))
 	               .arg(pwdHash)
 	               .arg(base64this(name))
@@ -197,7 +206,7 @@ WHERE id = %7;
 }
 
 QString User::getPwdHash(const QString& username) {
-	auto sql = QSL("SELECT pwdHash FROM user WHERE username = %1;").arg(base64this(username));
+	auto sql = QSL("SELECT pwdHash FROM user WHERE active = 1 AND username = %1;").arg(base64this(username));
 	auto res = db.query(sql);
 	assert(res.size() <= 1);
 	if (res.empty()) {
@@ -207,7 +216,7 @@ QString User::getPwdHash(const QString& username) {
 }
 
 bool User::usernameExists(const QString& username) {
-	auto sql = QSL("SELECT * FROM user WHERE username = %1;").arg(base64this(username));
+	auto sql = QSL("SELECT * FROM user WHERE active = 1 AND username = %1;").arg(base64this(username));
 	auto res = db.query(sql);
 	assert(res.size() <= 1);
 	if (res.empty()) {

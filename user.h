@@ -8,7 +8,8 @@
 
 class User : public Entity {
       public:
-	long long  id = 0;
+	long long  id     = 0;
+	bool       active = true;
 	QString    username;
 	QString    pwdHash;
 	QString    name;
