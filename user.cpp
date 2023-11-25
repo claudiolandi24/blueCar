@@ -187,3 +187,9 @@ WHERE id = %7;
 	db.query(sql);
     db.query(QSL("COMMIT;"));
 }
+
+QString User::getPwdHash(const QString& username){
+    //claudio auto sql = "SELECT pwdHash FROM user WHERE username "
+    
+}
+

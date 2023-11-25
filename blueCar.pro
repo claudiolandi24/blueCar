@@ -9,6 +9,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         car.cpp \
+        config.cpp \
         creditcard.cpp \
         database.cpp \
         entity.cpp \
@@ -36,6 +37,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     action.h \
     car.h \
+    config.h \
     creditcard.h \
     database.h \
     entity.h \

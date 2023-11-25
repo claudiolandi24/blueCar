@@ -37,6 +37,7 @@ class User : public Entity {
 
 	static void updateUserAfterRequest();
 	void        updateInDb();
+	QString     getPwdHash(const QString& username);
 };
 
 #endif // USER_H

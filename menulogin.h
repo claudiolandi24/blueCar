@@ -3,8 +3,14 @@
 
 #include "action.h"
 #include "menu.h"
+#include "user.h"
+#include <QString>
+#include <QPair>
 
 class ActionLogin : public Action {
+      private:
+    QPair<bool,User> checkPwd(const QString& username, const QString& password);
+    
       public:
 	ActionLogin(string label_)
 	    : Action(label_){};
