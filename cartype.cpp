@@ -1,4 +1,5 @@
 #include "cartype.h"
+#include "rbk/QStacker/qstacker.h"
 #include <QList>
 #include <QMap>
 
@@ -12,6 +13,15 @@ CarType CarType::fromSqlRow(sqlRow row) {
 	row.get2("cost", carType.cost);
 	row.get2("speed", carType.speed);
 	return carType;
+}
+
+CarType CarType::fromId(int id) {
+	static auto id_Type_Map = get_id_CarType_Map();
+	if (!id_Type_Map.contains(id)) {
+		qCritical().noquote() << "not valid id for carType" << QStacker16Light();
+		return {};
+	}
+	return id_Type_Map[id];
 }
 
 QList<CarType> CarType::getAllCarTypesFromDb() {
@@ -33,13 +43,13 @@ QMap<QString, int> CarType::get_Name_Id_Map() {
 	return map_Name_Id;
 }
 
-QMap<int, QString> CarType::get_id_name_Map() {
+QMap<int, CarType> CarType::get_id_CarType_Map() {
 	static auto        carTypeList = getAllCarTypesFromDb();
-	QMap<int, QString> map_Id_Name;
+	QMap<int, CarType> id_type_map;
 	for (const auto& carType : carTypeList) {
-		map_Id_Name[carType.id] = carType.name;
+		id_type_map[carType.id] = carType;
 	}
-	return map_Id_Name;
+	return id_type_map;
 }
 
 int CarType::getIdFromName(const QString& type) {
@@ -59,7 +69,7 @@ int CarType::getIdFromNameTolerant(QString type) {
 	type = type.trimmed();
 	type = type.toLower();
 
-	// initial letter -> full name
+	// Initial letter -> full name
 	QMap<QChar, QString> initial_name_map;
 	initial_name_map['e'] = "eco";
 	initial_name_map['m'] = "mid-class";

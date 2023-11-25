@@ -40,6 +40,8 @@ QString getAvailabilityHuman(bool isFree) {
 	}
 }
 
+namespace utility{
+
 bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars) {
 	for (const QChar& c : string) {
 		bool ok = c.isLetterOrNumber() or extraAllowedChars.contains(c);
@@ -62,6 +64,23 @@ bool isNumeric(const QString& string, int maxLength) {
 	}
 	return true;
 }
+
+Check::Check(bool ok_, int value_){
+    ok=ok_;
+    value=value_;
+}
+
+Check isNumericV2(const QString& string, int maxLength){
+    bool ok;
+	int  n = string.toInt(&ok);
+	if (!ok) {
+		return {false, 0};
+	}
+    return {true,n};
+}
+
+
+ 
 
 bool isValidPwd(const QString& string) {
 	if (string.length() < 10 or string.length() > 100) {
@@ -104,4 +123,5 @@ bool yesFromTerminal() {
 		return true;
 	}
 	return false;
+}
 }

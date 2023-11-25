@@ -4,9 +4,13 @@
 
 
 RentRequest RentRequest::getFromTerminal() {
-    QTextStream(stdout) << "Select ";//claudio
+    RentRequest request;
+    
+    
+    
     int carTypeId = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>());
+    request.carType = CarType::fromId(carTypeId);
     
-    
+    //claudio
     
 }

@@ -36,6 +36,12 @@ class ValidatePositiveOrZeroInteger : public Validate {
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
 
+class ValidateNumbPersons : public Validate {
+      public:
+	ValidateNumbPersons();
+	QPair<bool, int> getValidatedInt(const QString& string) override;
+};
+
 class ValidateCarType : public Validate {
       public:
 	ValidateCarType();

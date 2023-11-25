@@ -8,12 +8,22 @@
 
 using namespace std;
 
-
 int     getLocationId(QString location);
 QString getLocationNameHuman(int id);
 QString getAvailabilityHuman(bool isFree);
-bool    isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars = QList<QChar>());
-bool    isNumeric(const QString& string, int maxLength = 0);
+
+namespace utility {
+bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars = QList<QChar>());
+
+class Check {
+      public:
+	bool ok    = false;
+	int  value = 0;
+
+	Check(bool ok_, int value_);
+};
+
+bool isNumeric(const QString& string, int maxLength = 0);
 /*
  * Allowed characters:
  * - letters
@@ -33,5 +43,6 @@ bool isValidPwd(const QString& string);
 bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
 bool yesFromTerminal();
+} // namespace utility
 
 #endif // UTILITYFUNCTIONS_H
