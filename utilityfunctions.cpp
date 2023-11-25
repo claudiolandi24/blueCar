@@ -5,8 +5,6 @@
 #include <QTextStream>
 #include <memory>
 
-
-
 int getLocationId(QString location) {
 	location = location.trimmed();
 	location = location.toLower();
@@ -40,7 +38,7 @@ QString getAvailabilityHuman(bool isFree) {
 	}
 }
 
-namespace utility{
+namespace utility {
 
 bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars) {
 	for (const QChar& c : string) {
@@ -65,22 +63,19 @@ bool isNumeric(const QString& string, int maxLength) {
 	return true;
 }
 
-Check::Check(bool ok_, int value_){
-    ok=ok_;
-    value=value_;
+NumericCheck::NumericCheck(bool ok_, int value_) {
+	ok    = ok_;
+	value = value_;
 }
 
-Check isNumericV2(const QString& string, int maxLength){
-    bool ok;
+NumericCheck isNumericV2(const QString& string) {
+	bool ok;
 	int  n = string.toInt(&ok);
 	if (!ok) {
 		return {false, 0};
 	}
-    return {true,n};
+	return {true, n};
 }
-
-
- 
 
 bool isValidPwd(const QString& string) {
 	if (string.length() < 10 or string.length() > 100) {
@@ -124,4 +119,4 @@ bool yesFromTerminal() {
 	}
 	return false;
 }
-}
+} // namespace utility

@@ -15,15 +15,16 @@ QString getAvailabilityHuman(bool isFree);
 namespace utility {
 bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
-class Check {
+class NumericCheck {
       public:
 	bool ok    = false;
 	int  value = 0;
 
-	Check(bool ok_, int value_);
+	NumericCheck(bool ok_, int value_);
 };
 
 bool isNumeric(const QString& string, int maxLength = 0);
+NumericCheck isNumericV2(const QString& string);
 /*
  * Allowed characters:
  * - letters

@@ -58,6 +58,7 @@ ValidateNumbPersons::ValidateNumbPersons(){
 
 QPair<bool, int> ValidateNumbPersons::getValidatedInt(const QString& string){
     //claudio
+    auto check = utility::isNumericV2(string);
 }
 
 ValidateCarType::ValidateCarType() {
