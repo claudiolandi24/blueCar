@@ -42,7 +42,7 @@ void ActionLogin::run() {
 		MenuAdmin menuAdmin("");
 		menuAdmin.run();
 	} else {
-		MenuUser menuUser("");
+		MenuUser menuUser("",check.second.id);
 		menuUser.run();
 	}
 

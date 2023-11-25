@@ -51,7 +51,7 @@ Insert 0 (zero) to cancel this operation)";
 	return {true, id};
 }
 
-void Entity::setNotActiveInDb(int id) {
+void Entity::setNotActiveInDb(long long id) {
     auto sql = QSL("UPDATE %1 SET active = 0 WHERE id = %2;")
             .arg(table)
             .arg(id);

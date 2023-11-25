@@ -4,17 +4,15 @@
 #include "action.h"
 #include "menu.h"
 #include "user.h"
-#include <QString>
 #include <QPair>
+#include <QString>
 
 class ActionLogin : public Action {
-      private:
-    QPair<bool,User> checkPwd(const QString& username, const QString& password);
-    
       public:
 	ActionLogin(string label_)
 	    : Action(label_){};
-	void run() override;
+	void              run() override;
+	QPair<bool, User> checkPwd(const QString& username, const QString& password);
 };
 
 class ActionRegister : public Action {

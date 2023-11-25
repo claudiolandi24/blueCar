@@ -118,3 +118,13 @@ bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extra
 	bool ok = isAlphanumeric(string, extraAllowedChars) and string.length() <= maxLen;
 	return ok;
 }
+
+bool yesFromTerminal() {
+	QString answer = QTextStream(stdin).readLine();
+	answer         = answer.toLower();
+
+	if (answer == "yes" or answer == "y") {
+		return true;
+	}
+	return false;
+}

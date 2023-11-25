@@ -7,6 +7,7 @@
 #include "variadictable.h"
 #include <QTextStream>
 #include <iostream>
+#include "menulogin.h"
 
 using namespace std;
 
@@ -88,11 +89,9 @@ void try0() {
     
     //assert(false);
 
+    ActionLogin a("action");
+    a.checkPwd("cane","cane");
 
-    Check c1(true,"v1");
-    Check c2(true,"v2","e2");
-    
-    cout<<"";
     
     
 }

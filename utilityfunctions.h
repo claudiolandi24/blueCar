@@ -33,4 +33,6 @@ bool    isNumeric(const QString& string, int maxLength = 0);
 bool isValidPwd(const QString& string);
 bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
+bool yesFromTerminal();
+
 #endif // UTILITYFUNCTIONS_H

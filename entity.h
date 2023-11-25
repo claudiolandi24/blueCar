@@ -16,7 +16,7 @@ class Entity {
 
 	static bool             idExistsActive(int id);
 	static QPair<bool, int> getIdFromTerminal(const QString& operation);
-	static void             setNotActiveInDb(int id);
+	static void             setNotActiveInDb(long long id);
 	static void             deleteAfterRequest();
 };
 

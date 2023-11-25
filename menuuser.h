@@ -11,9 +11,22 @@ class ActionRentCar : public Action {
 	void run() override;
 };
 
+class ActionUnsubscribe : public Action {
+      public:
+	long long loggedUserId = 0;
+
+	ActionUnsubscribe(string label_, long long loggedUserId_)
+	    : Action(label_) {
+		loggedUserId = loggedUserId_;
+	};
+	void run() override;
+};
+
 class MenuUser : public Menu {
       public:
-	MenuUser(string label_);
+	long long loggedUserId = 0;
+
+	MenuUser(string label_, long long loggedUserId_);
 };
 
 #endif // MENUUSER_H
