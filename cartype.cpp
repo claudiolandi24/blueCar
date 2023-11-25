@@ -93,3 +93,45 @@ QString CarType::getTypeNameHuman(int id) {
 	} else
 		return QString();
 }
+
+QList<CarType> CarType::getCarTypes(int minNumbPersons) {
+	static auto    typeList = getAllCarTypesFromDb();
+	QList<CarType> res;
+	for (const auto& type : typeList) {
+		if (type.numbPersons >= minNumbPersons) {
+			res.push_back(type);
+		}
+	}
+	return res;
+}
+
+/*
+ * E.g.
+ * output = "ECO, MID-CLASS or DELUXE"
+ */
+QString CarType::asStringFullName(const QList<CarType>& types) {
+	QString res = types[0].name;
+	int     len = types.size();
+	for (int i = 1; i <= len - 2; i++) {
+		res += ", " + types[i].name;
+	}
+	res += "OR " + types[len - 1].name;
+	return res;
+}
+
+QString CarType::asStringInitial(const QList<CarType>& types) {
+	QString res = types[0].initial();
+	int     len = types.size();
+	for (int i = 1; i <= len - 2; i++) {
+		res += ", " + types[i].initial();
+	}
+	res += "OR " + types[len - 1].initial();
+	return res;
+}
+
+QString CarType::initial() const {
+	if (name.isEmpty()) {
+		return "_";
+	}
+	return QString(name[0]);
+}

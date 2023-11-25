@@ -29,7 +29,7 @@ ValidateGeneralAlphaNum::ValidateGeneralAlphaNum() {
 }
 
 Check ValidateGeneralAlphaNum::getValidatedString(const QString& string) {
-	bool ok = utility::isAlphanumeric(string, 100);
+	bool ok = isAlphanumeric(string, 100);
 	if (!ok) {
 		return {false, {}};
 	}
@@ -52,16 +52,27 @@ QPair<bool, int> ValidatePositiveOrZeroInteger::getValidatedInt(const QString& s
 	return {true, n};
 }
 
-ValidateNumbPersons::ValidateNumbPersons(){
-    conditionForValue="; must be an integer >= 1 and <= 7";
+ValidateNumbPersons::ValidateNumbPersons() {
+
+	conditionForValue = "; must be an integer >= 1 and <= 7";
 }
 
-QPair<bool, int> ValidateNumbPersons::getValidatedInt(const QString& string){
-    //claudio
-    auto check = utility::isNumericV2(string);
+QPair<bool, int> ValidateNumbPersons::getValidatedInt(const QString& string) {
+	//claudio
+	auto check = isNumericV2(string);
+	if (!check.ok) {
+		return {false, 0};
+	}
+	int n = check.value;
+	if (n < 1 or n > 7) {
+		return {false, 0};
+	}
+	return {true, n};
 }
 
-ValidateCarType::ValidateCarType() {
+ValidateCarType::ValidateCarType(int minNumbPersons_) {
+	minNumbPersons    = minNumbPersons_;
+    okTypes = CarType::getCarTypes(minNumbPersons);
 	conditionForValue = "; must be ECO, MID-CLASS or DELUXE (E, M or D)";
 }
 
@@ -90,7 +101,7 @@ ValidateUsername::ValidateUsername() {
 }
 
 Check ValidateUsername::getValidatedString(const QString& string) {
-	bool ok = utility::isAlphanumeric(string, 50, {'_'});
+	bool ok = isAlphanumeric(string, 50, {'_'});
 	if (!ok) {
 		return {false, QString()};
 	}
@@ -105,7 +116,7 @@ ValidateDrivingLicense::ValidateDrivingLicense() {
 }
 
 Check ValidateDrivingLicense::getValidatedString(const QString& string) {
-	bool ok = utility::isAlphanumeric(string) and string.length() == 10;
+	bool ok = isAlphanumeric(string) and string.length() == 10;
 	if (!ok) {
 		return {false, QString()};
 	}
@@ -130,7 +141,7 @@ And must contain at least the following:
 }
 
 Check ValidatePwd::getValidatedString(const QString& string) {
-	bool ok = utility::isValidPwd(string);
+	bool ok = isValidPwd(string);
 	if (!ok) {
 		return {false, QString()};
 	}
@@ -145,7 +156,7 @@ ValidateCreditCardNumber::ValidateCreditCardNumber() {
 // remove all magic numbs
 // for example here CONFIG <--- or define const for class <--- maybe better?
 Check ValidateCreditCardNumber::getValidatedString(const QString& string) {
-	bool ok = utility::isNumeric(string, 19);
+	bool ok = isNumeric(string, 19);
 	if (!ok) {
 		return {false, {}};
 	}
@@ -172,7 +183,7 @@ ValidateCreditCardSecureCode::ValidateCreditCardSecureCode() {
 }
 
 Check ValidateCreditCardSecureCode::getValidatedString(const QString& string) {
-	bool ok = utility::isNumeric(string, 4);
+	bool ok = isNumeric(string, 4);
 	if (!ok) {
 		return {false, {}};
 	}

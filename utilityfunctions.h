@@ -12,7 +12,6 @@ int     getLocationId(QString location);
 QString getLocationNameHuman(int id);
 QString getAvailabilityHuman(bool isFree);
 
-namespace utility {
 bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
 class NumericCheck {
@@ -23,7 +22,7 @@ class NumericCheck {
 	NumericCheck(bool ok_, int value_);
 };
 
-bool isNumeric(const QString& string, int maxLength = 0);
+bool         isNumeric(const QString& string, int maxLength = 0);
 NumericCheck isNumericV2(const QString& string);
 /*
  * Allowed characters:
@@ -44,6 +43,5 @@ bool isValidPwd(const QString& string);
 bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
 bool yesFromTerminal();
-} // namespace utility
 
 #endif // UTILITYFUNCTIONS_H

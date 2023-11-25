@@ -24,6 +24,11 @@ class CarType {
 	static int                getIdFromName(const QString& type);
 	static int                getIdFromNameTolerant(QString type);
 	static QString            getTypeNameHuman(int id);
+
+	static QList<CarType> getCarTypes(int minNumbPersons);
+	static QString        asStringFullName(const QList<CarType>& types);
+	static QString        asStringInitial(const QList<CarType>& types);
+	QString               initial() const;
 };
 
 #endif // CARTYPE_H

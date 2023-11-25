@@ -15,7 +15,7 @@ void ActionRentCar::run() {
 void ActionUnsubscribe::run() {
 	cout << "--- UNSUBSCRIBE ---" << endl;
 	QTextStream(stdout) << "Are you sure you want to unsubscribe? Press 'yes' to unsubscribe or 'no' to keep your account (Y/N)\n";
-	if (utility::yesFromTerminal()) {
+	if (yesFromTerminal()) {
 		User::setNotActiveInDb(loggedUserId);
 		QTextStream(stdout) << "Unsubscribe operation completed successfully\n";
 	} else {

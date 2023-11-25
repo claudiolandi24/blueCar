@@ -1,18 +1,19 @@
 #ifndef VALIDATE_H
 #define VALIDATE_H
 
+#include "cartype.h"
 #include "utilityfunctions.h"
 #include <QPair>
 #include <QString>
 
 class Check {
-public:
+      public:
 	bool    ok = false;
 	QString value;
 	QString errMsg;
-    
-    Check(bool ok_,QString value_);
-    Check(bool ok_,QString value_,QString errMsg_);
+
+	Check(bool ok_, QString value_);
+	Check(bool ok_, QString value_, QString errMsg_);
 };
 
 class Validate {
@@ -20,8 +21,8 @@ class Validate {
 	QString conditionForValue;
 
 	virtual ~Validate() = default;
-	virtual Check getValidatedString(const QString& string);
-	virtual QPair<bool, int>     getValidatedInt(const QString& string);
+	virtual Check            getValidatedString(const QString& string);
+	virtual QPair<bool, int> getValidatedInt(const QString& string);
 };
 
 class ValidateGeneralAlphaNum : public Validate {
@@ -43,8 +44,14 @@ class ValidateNumbPersons : public Validate {
 };
 
 class ValidateCarType : public Validate {
+      private:
+	int            minNumbPersons = 0;
+	QList<CarType> okTypes;
+
       public:
-	ValidateCarType();
+    //TODO2
+    // 0 -> disable
+	ValidateCarType(int minNumbPersons_);
 	QPair<bool, int> getValidatedInt(const QString& string) override;
 };
 

@@ -38,8 +38,6 @@ QString getAvailabilityHuman(bool isFree) {
 	}
 }
 
-namespace utility {
-
 bool isAlphanumeric(const QString& string, const QList<QChar>& extraAllowedChars) {
 	for (const QChar& c : string) {
 		bool ok = c.isLetterOrNumber() or extraAllowedChars.contains(c);
@@ -119,4 +117,3 @@ bool yesFromTerminal() {
 	}
 	return false;
 }
-} // namespace utility
