@@ -47,6 +47,7 @@ User User::getUserFromSqlRow(const sqlRow& row) {
 }
 
 void User::saveToDb() {
+    db.query(QSL("START TRANSACTION;"));
 	creditCard.saveToDb();
 	QString skel = R"(
 INSERT INTO user
@@ -67,6 +68,7 @@ SET username = %1,
 	               .arg(creditCard.id)
 	               .arg(base64this(drivingLicense));
 	db.query(sql);
+    db.query(QSL("COMMIT;"));
 }
 
 //TODO IMP
@@ -161,6 +163,7 @@ void User::updateUserAfterRequest() {
 }
 
 void User::updateInDb() {
+    db.query(QSL("START TRANSACTION;"));
 	creditCard.updateInDb();
 
 	QString skel = R"(
@@ -182,4 +185,5 @@ WHERE id = %7;
 	               .arg(base64this(drivingLicense))
 	               .arg(id);
 	db.query(sql);
+    db.query(QSL("COMMIT;"));
 }
