@@ -1,4 +1,5 @@
 #include "menuuser.h"
+#include "menuupdateuser.h"
 #include "user.h"
 #include "utilityfunctions.h"
 #include <QTextStream>
@@ -29,5 +30,7 @@ MenuUser::MenuUser(string label_, long long loggedUserId_)
 	title = "USER";
 	addItem(make_unique<ActionRentCar>("Rent car"));
 	addItem(make_unique<ActionUnsubscribe>("Unsubscribe", loggedUserId));
+    auto user = User::getById(loggedUserId);
+    addItem(make_unique<MenuUpdateUser>("Update my data",&user));
 	exitLabel = "Log out";
 }

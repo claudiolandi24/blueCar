@@ -132,6 +132,14 @@ User User::getByUsername(const QString& username) {
 	return listUsers[0];
 }
 
+User User::getById(long long id) {
+	auto listUsers = getUsersFromDb(QSL("id = %1").arg(id));
+	if (listUsers.empty()) {
+		return {};
+	}
+	return listUsers[0];
+}
+
 void User::printAllUsersAsTable() {
 	auto users = getUsersFromDb();
 	printUsersAsTable(users);

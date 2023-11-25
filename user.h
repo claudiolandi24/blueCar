@@ -23,6 +23,7 @@ class User : public Entity {
 	static User        getUserFromSqlRow(const sqlRow& row);
 	static QList<User> getUsersFromDb(const QString& whereCondition = "");
 	static User        getByUsername(const QString& username);
+	static User        getById(long long id);
 
 	void saveToDb();
 
