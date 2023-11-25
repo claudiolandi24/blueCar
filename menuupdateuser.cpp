@@ -42,8 +42,7 @@ void ActionUpdateDrivingLicense::run() {
 	updateInDb();
 }
 
-//claudio
-MenuUpdateUser::MenuUpdateUser(string label_, User *user_)
+MenuUpdateUser::MenuUpdateUser(string label_, User* user_)
     : Menu(label_) {
 	user = user_;
 

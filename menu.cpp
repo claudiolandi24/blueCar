@@ -18,7 +18,10 @@ int Menu::askForOption() {
 	QString strOption = QTextStream(stdin).readLine();
 	bool    ok;
 	int     option = strOption.toInt(&ok);
-	//TODO check ok
+	if (!ok) {
+		cout << "Invalid option " << strOption.toStdString() << "\n";
+		return -1;
+	}
 
 	printEmptyLineSeparator();
 	return option;
@@ -29,9 +32,16 @@ void Menu::run() {
 		show();
 		int selectedOption = askForOption();
 		if (!selectedOption) {
+			// 0 -> end execution of this menu
 			break;
 		}
-		items.getItemByItemNumber(unsigned(selectedOption))->run();
+		if (selectedOption == -1) {
+			// Invalid, do nothing
+			printEmptyLineSeparator();
+		} else {
+			// Run selected option
+			items.getItemByItemNumber(unsigned(selectedOption))->run();
+		}
 	}
 };
 
