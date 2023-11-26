@@ -145,14 +145,25 @@ void RentRequest::logEndDateTime() {
 
 void RentRequest::updateCarLocationAndDistanceTraveled() {
 	// Update car location and total distance traveled
-	auto sqlCar = QSL("update car set locationId = %1, totalDistanceTraveled = %2 where id = %3")
-	                  .arg(endLocation.id)
-	                  .arg(car.totalDistanceTraveled + distance)
-	                  .arg(car.id);
-	db.query(sqlCar);
+	car.locationId = endLocation.id;
+	car.totalDistanceTraveled += distance;
+	car.updateInDb();
 }
 
 void RentRequest::scheduleServiceIfNeed() {
+	auto sql         = QSL("select * from lastServiceView where carId = %1;").arg(car.id);
+	auto res         = db.query(sql);
+    
+	bool needService = false;
+	int lastServiceDistanceTraveled = 0;
+	if (!res.isEmpty()) {
+		res[0].get2("serviceTotalDistanceTraveled", lastServiceDistanceTraveled);
+	}
+	if (car.totalDistanceTraveled >= lastServiceDistanceTraveled + config::serviceEveryKm) {
+		needService = true;
+	}
+    
+    
 }
 
 void RentRequest::simulateCarIsReturned() {
