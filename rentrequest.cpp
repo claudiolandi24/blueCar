@@ -3,6 +3,7 @@
 #include "location.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rent.h"
+#include "rentedcarview.h"
 #include "service.h"
 #include "validate.h"
 #include <QTextStream>
@@ -178,8 +179,10 @@ void RentRequest::simulateCarIsReturned() {
 
 void RentRequest::run() {
 	if (!selectCar()) {
-		//claudio
-		//TODO IMP
+        int waitingTimeSecs = getWaitingTime(*this);
+        if(waitingTimeSecs!=-1){
+            QTextStream(stdout) << "Estimated waiting time " << waitingTimeSecs/secondsPerMinute<<" min\n";
+        }
 	}
 	if (!confirmCarAndCost()) {
 		return;

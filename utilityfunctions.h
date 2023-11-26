@@ -9,6 +9,7 @@
 using namespace std;
 
 extern const int secondsPerHour;
+extern const int secondsPerMinute;
 
 QString getAvailabilityHuman(bool isFree);
 

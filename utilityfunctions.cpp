@@ -6,6 +6,7 @@
 #include <memory>
 
 const int secondsPerHour = 3600;
+const int secondsPerMinute = 60;
 
 QString getAvailabilityHuman(bool isFree) {
 	if (isFree) {
