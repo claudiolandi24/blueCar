@@ -22,6 +22,7 @@ class Car : public Entity {
 	int     locationId            = 0;
 	int     totalDistanceTraveled = 0;
 
+    QString toString() const;
 	Car();
 	static Car        getCarFromSqlRow(const sqlRow& row);
 	static Car        getNewCarFromTerminal();

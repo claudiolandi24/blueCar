@@ -5,17 +5,41 @@
 #include "menuupdatecar.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rbk/misc/b64.h"
+#include "rentedcarview.h"
 #include "utilityfunctions.h"
 #include "validate.h"
 #include "variadictable.h"
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
-#include "rentedcarview.h"
 
 using namespace std;
 
 extern DB db;
+
+QString Car::toString() const {
+	QString skel   = R"(
+id     = %1
+active = %2
+typeId = %3
+licensePlate = %4
+brand = %5
+name = %6
+locationId = %7             
+totalDistanceTraveled = %8
+
+)";
+	auto    string = skel
+	                  .arg(id)
+	                  .arg(active)
+	                  .arg(typeId)
+	                  .arg(licensePlate)
+	                  .arg(brand)
+	                  .arg(name)
+	                  .arg(locationId)
+	                  .arg(totalDistanceTraveled);
+	return string;
+}
 
 Car::Car() {
 	entityName = "car";
@@ -124,10 +148,10 @@ void Car::printAsTable() {
 }
 
 QString Car::locationName() const {
-    if(locationId){
-        return Location::getLocationNameHuman(locationId);
-    }
-    return "N/A";
+	if (locationId) {
+		return Location::getLocationNameHuman(locationId);
+	}
+	return "N/A";
 }
 
 QString Car::availability() const {
@@ -177,7 +201,7 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 	     "Availability",
 	     "Location",
 	     "Total Distance Traveled",
-         "Next Service Date"},
+	     "Next Service Date"},
 	    10);
 	for (const auto& car : cars) {
 		table.addRow(car.id,
@@ -188,7 +212,7 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 		             car.availability().toStdString(),
 		             car.locationName().toStdString(),
 		             car.totalDistanceTraveled,
-                     getNextServiceDateString(car.id).toStdString());
+		             getNextServiceDateString(car.id).toStdString());
 	}
 	table.print(std::cout);
 }
@@ -197,5 +221,3 @@ void Car::printAllCarsAsTable() {
 	auto cars = getCarsFromDb();
 	printCarsAsTable(cars);
 }
-
-

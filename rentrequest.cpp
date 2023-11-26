@@ -1,6 +1,7 @@
 #include "rentrequest.h"
 #include "config.h"
 #include "location.h"
+#include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rent.h"
 #include "rentedcarview.h"
@@ -24,9 +25,11 @@ LIMIT 1;
 	               .arg(startLocation.id);
 	auto res = db.query(sql);
 	if (res.isEmpty()) {
+        qDebug().noquote() << "empty sql res\n"<<QStacker16Light();
 		return false;
 	}
 	car = Car::getCarFromSqlRow(res[0]);
+    qDebug().noquote() << "sql =\n"<< sql <<"\n\nselected car:\n"<<car.toString()<<"\n"<<QStacker16Light();
 	return true;
 }
 
@@ -180,10 +183,12 @@ void RentRequest::simulateCarIsReturned() {
 
 void RentRequest::run() {
 	if (!selectCar()) {
+        QTextStream(stdout)<<"No car available at the moment. Rent operation canceled\n\n";
         int waitingTimeSecs = getWaitingTime(*this);
         if(waitingTimeSecs!=-1){
             QTextStream(stdout) << "Estimated waiting time " << waitingTimeSecs/secondsPerMinute<<" min\n";
         }
+        return;
 	}
 	if (!confirmCarAndCost()) {
 		return;
