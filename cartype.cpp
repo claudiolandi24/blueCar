@@ -115,7 +115,9 @@ QString CarType::asStringFullName(const QList<CarType>& types) {
 	for (int i = 1; i <= len - 2; i++) {
 		res += ", " + types[i].name;
 	}
-	res += " or " + types[len - 1].name;
+	if (len > 1) {
+		res += " or " + types[len - 1].name;
+	}
 	return res;
 }
 
@@ -125,7 +127,9 @@ QString CarType::asStringInitial(const QList<CarType>& types) {
 	for (int i = 1; i <= len - 2; i++) {
 		res += ", " + types[i].initial();
 	}
-	res += " or " + types[len - 1].initial();
+	if (len > 1) {
+		res += " or " + types[len - 1].initial();
+	}
 	return res;
 }
 

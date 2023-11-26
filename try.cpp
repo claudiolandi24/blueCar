@@ -85,6 +85,10 @@ void printCars() {
 }
 
 void try0() {
-    int n   = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(3));
-    cout<<n<<"\n";
+    //int carTypeId   = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(7));
+    ValidateCarType v(2);
+    
+    //ValidateCarType::ValidateCarType(int minNumbPersons_) {
+
+    cout<<"\n";
 }
