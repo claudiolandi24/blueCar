@@ -60,7 +60,7 @@ Do you want to rent this car? Press 'yes' to rent it or 'no' to cancel the rent 
  */
 bool RentRequest::makePayment() {
 	if (config::paymentOperationSuccess) {
-		QTextStream(stdout) << "Payment operation completed successfully\n";
+		QTextStream(stdout) << QSL("Payment operation completed successfully. The car can be collected at the pick-up point of %1\n").arg(startLocation.name);
 		return true;
 	}
 	QTextStream(stdout) << "Error in payment operation. Rent operation canceled\n";
@@ -78,22 +78,38 @@ bool RentRequest::confirmAndMakePayment() {
 	return makePayment();
 }
 
+int RentRequest::getExactTravelTime() const {
+	int time = (secondsPerHour * distance) / carType.speed;
+	return time;
+}
+
 void RentRequest::updateDb() {
-	Rent rent;
 	rent.userId          = user->id;
 	rent.carId           = car.id;
 	rent.startLocationId = startLocation.id;
 	rent.startDateTime   = QDateTime::currentDateTimeUtc();
 	rent.endLocationId   = endLocation.id;
 	// real endDateTime unknow at this point
-	
-    int estimatedTimeInSeconds = (secondsPerHour * distance) / carType.speed;
-    rent.estimatedEndDateTime = rent.startDateTime.addSecs(estimatedTimeInSeconds);
-    
-    rent.distance = distance;
-    rent.cost = cost;
-    
-    rent.saveInDb();
+
+	// +50 % margin
+	int estimatedTimeInSeconds = int(double(getExactTravelTime()) * 1.5);
+	rent.estimatedEndDateTime  = rent.startDateTime.addSecs(estimatedTimeInSeconds);
+
+	rent.distance = distance;
+	rent.cost     = cost;
+
+	db.query("START TRANSACTION;");
+	rent.saveInDb();
+	// Set locationId of the car as NULL
+	// When a car is rented its location is unknown
+	QString skel = R"(
+UPDATE car SET
+    locationId = NULL
+WHERE id = %1;
+)";
+	auto    sql  = skel.arg(car.id);
+	db.query(sql);
+	db.query("COMMIT");
 }
 
 RentRequest RentRequest::getFromTerminal() {
@@ -116,6 +132,37 @@ RentRequest RentRequest::getFromTerminal() {
 	return request;
 }
 
+void RentRequest::logEndDateTime() {
+	// Log endDateTime in rent table
+	// Simulate time is +20 % than exact time
+	int       timeInSeconds = int(double(getExactTravelTime()) * 1.2);
+	QDateTime endDateTime   = rent.startDateTime.addSecs(timeInSeconds);
+	auto      sql           = QSL("update rent set endDateTime = %1 where id = %2;")
+	               .arg(endDateTime.toString(mysqlDateTimeFormat))
+	               .arg(rent.id);
+	db.query(sql);
+}
+
+void RentRequest::updateCarLocationAndDistanceTraveled() {
+	// Update car location and total distance traveled
+	auto sqlCar = QSL("update car set locationId = %1, totalDistanceTraveled = %2 where id = %3")
+	                  .arg(endLocation.id)
+	                  .arg(car.totalDistanceTraveled + distance)
+	                  .arg(car.id);
+	db.query(sqlCar);
+}
+
+void RentRequest::scheduleServiceIfNeed() {
+}
+
+void RentRequest::simulateCarIsReturned() {
+	db.query(QSL("START TRANSACTION;"));
+	logEndDateTime();
+	updateCarLocationAndDistanceTraveled();
+	scheduleServiceIfNeed();
+	db.query(QSL("COMMIT;"));
+}
+
 void RentRequest::run() {
 	if (!selectCar()) {
 		//claudio
@@ -127,7 +174,15 @@ void RentRequest::run() {
 	if (!confirmAndMakePayment()) {
 		return;
 	}
-	//update db
-	// ok you can collet
-	//claudio
+	updateDb();
+	/*
+	 * We simulate the return of the car so that after the user rent a car, the software simulates
+	 * its return and we can see consistent data in the database.
+	 * I.e.
+	 * Updated location for the car, update total distance traveled, etc.
+	 *
+	 * In a real system the return of the car would be managed by another software component and
+	 * not now, but in the future when the user will return the car
+	 */
+	simulateCarIsReturned();
 }

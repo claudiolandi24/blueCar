@@ -71,6 +71,7 @@ SET active = %1
 	               .arg(creditCard.id)
 	               .arg(base64this(drivingLicense));
 	db.query(sql);
+    id = (long long)(db.lastId());
 	db.query(QSL("COMMIT;"));
 }
 

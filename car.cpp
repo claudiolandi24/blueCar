@@ -91,6 +91,7 @@ SET active = %1,
 	               .arg(locationId)
 	               .arg(totalDistanceTraveled);
 	db.query(sql);
+    id = int(db.lastId());
 }
 
 void Car::updateInDb() {

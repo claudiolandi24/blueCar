@@ -32,4 +32,5 @@ SET userId = %1
 	               .arg(distance)
 	               .arg(cost);
 	db.query(sql);
+    id = (long long)(db.lastId());
 }
