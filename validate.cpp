@@ -159,7 +159,7 @@ Check ValidatePwd::getValidatedString(const QString& string) {
 }
 
 ValidateCreditCardNumber::ValidateCreditCardNumber() {
-	conditionForValue = "must contain only digits, max length = 19";
+	conditionForValue = "; must contain only digits, max length = 19";
 }
 
 //TODO
@@ -174,7 +174,7 @@ Check ValidateCreditCardNumber::getValidatedString(const QString& string) {
 }
 
 ValidateCreditCardDate::ValidateCreditCardDate() {
-	conditionForValue = "must have the format 'MM/AAAA'";
+	conditionForValue = "; must have the format 'MM/AAAA'";
 }
 
 Check ValidateCreditCardDate::getValidatedString(const QString& string) {
@@ -189,7 +189,7 @@ Check ValidateCreditCardDate::getValidatedString(const QString& string) {
 }
 
 ValidateCreditCardSecureCode::ValidateCreditCardSecureCode() {
-	conditionForValue = "must contain only digits, max length = 4";
+	conditionForValue = "; must contain only digits, max length = 4";
 }
 
 Check ValidateCreditCardSecureCode::getValidatedString(const QString& string) {
