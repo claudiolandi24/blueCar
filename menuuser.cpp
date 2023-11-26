@@ -6,6 +6,8 @@
 #include <QTextStream>
 #include <iostream>
 
+bool userCanceledAccount = false;
+
 ActionRentCar::ActionRentCar(string label_, User* user_)
     : Action(label_) {
 	user = user_;
@@ -26,7 +28,8 @@ void ActionUnsubscribe::run() {
 	QTextStream(stdout) << "Are you sure you want to unsubscribe? Press 'yes' to unsubscribe or 'no' to keep your account (Y/N)\n";
 	if (yesFromTerminal()) {
 		User::setNotActiveInDb(loggedUserId);
-		QTextStream(stdout) << "Unsubscribe operation completed successfully\n";
+		QTextStream(stdout) << "Unsubscribe operation completed successfully\nLogging out\n";
+        userCanceledAccount = true;
 	} else {
 		QTextStream(stdout) << "Unsubscribe operation canceled\n";
 	}

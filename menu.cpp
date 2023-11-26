@@ -7,6 +7,8 @@
 
 using namespace std;
 
+extern bool userCanceledAccount;
+
 void Menu::show() {
 	cout << "--- " << title << " ---" << endl;
 	actionBeforeShow();
@@ -39,6 +41,11 @@ int Menu::askForOption() {
 
 void Menu::run() {
 	while (true) {
+        if(userCanceledAccount){
+            userCanceledAccount=false;
+            break;
+        }
+        
 		show();
 		int selectedOption = askForOption();
 		if (!selectedOption) {
