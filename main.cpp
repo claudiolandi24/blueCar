@@ -1,11 +1,12 @@
 #include "database.h"
 #include "menulogin.h"
+#include "rbk/QStacker/qstacker.h"
 #include "try.h"
 #include <QCoreApplication>
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
-
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
 	QByteArray  localMsg = msg.toLocal8Bit();
@@ -16,37 +17,41 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext& context, const QS
 	switch (type) {
 	case QtDebugMsg:
 		fprintf(stderr, "%s\nDebug: %s (%s:%u, %s)\n", now, localMsg.constData(), context.file, context.line, context.function);
-        fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
+		fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
 		break;
 	case QtInfoMsg:
 		fprintf(stderr, "%s\nInfo: %s (%s:%u, %s)\n", now, localMsg.constData(), context.file, context.line, context.function);
-        fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
+		fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
 		break;
 	case QtWarningMsg:
 		fprintf(stderr, "%s\nWarning: %s (%s:%u, %s)\n", now, localMsg.constData(), context.file, context.line, context.function);
-        fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
+		fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
 		break;
 	case QtCriticalMsg:
 		fprintf(stderr, "%s\nCritical: %s (%s:%u, %s)\n", now, localMsg.constData(), context.file, context.line, context.function);
-        fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
+		fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
 		break;
 	case QtFatalMsg:
 		fprintf(stderr, "%s\nFatal: %s (%s:%u, %s)\n", now, localMsg.constData(), context.file, context.line, context.function);
-        fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
+		fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
 		abort();
 	}
 }
 
 // ./blueCar 2>> error.log
 int main() {
-	qInstallMessageHandler(myMessageOutput);
+	try {
+		qInstallMessageHandler(myMessageOutput);
+		initDb();
 
-	initDb();
-    
-	runApplication();
-	//try0();
+		runApplication();
+		//try0();
+
+	} catch (const std::exception& ex) {
+		qCritical().noquote() << ex.what() << "\n"
+		                      << QStacker16Light();
+		cout << "An error has occurred. The Program will now be terminated\n";
+	}
 
 	return 0;
 }
-
-
