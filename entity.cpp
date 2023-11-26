@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
 #include <QString>
 #include "utilityfunctions.h"
@@ -59,6 +60,7 @@ void Entity::setNotActiveInDb(long long id) {
     auto sql = QSL("UPDATE %1 SET active = 0 WHERE id = %2;")
             .arg(table)
             .arg(id);
+    qDebug() << "sql = "<<sql<<"\n"<<QStacker16Light();
 	db.query(sql);
 }
 
