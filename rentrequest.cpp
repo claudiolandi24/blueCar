@@ -1,5 +1,6 @@
 #include "rentrequest.h"
 #include "config.h"
+#include "freecarview.h"
 #include "location.h"
 #include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
@@ -8,7 +9,6 @@
 #include "service.h"
 #include "validate.h"
 #include <QTextStream>
-#include "freecarview.h"
 
 extern DB db;
 
@@ -26,19 +26,19 @@ LIMIT 1;
 	               .arg(startLocation.id);
 	auto res = db.query(sql);
 	if (res.isEmpty()) {
-        //qDebug().noquote() << "empty sql res\n"<<QStacker16Light();
+		//qDebug().noquote() << "empty sql res\n"<<QStacker16Light();
 		return false;
 	}
 	car = FreeCarView::getCarFromSqlRow(res[0]);
-    //qDebug().noquote() << "sql =\n"<< sql <<"\n\nselected car:\n"<<car.toString()<<"\n"<<QStacker16Light();
+	//qDebug().noquote() << "sql =\n"<< sql <<"\n\nselected car:\n"<<car.toString()<<"\n"<<QStacker16Light();
 	return true;
 }
 
 bool RentRequest::confirmCarAndCost() {
-	distance                = getDistanceInKm(startLocation, endLocation);
-	int     costCentDollars = distance * carType.cost;
-	int     costDollar      = costCentDollars / 100;
-	QString skel            = R"(This car has been selected:
+	distance           = getDistanceInKm(startLocation, endLocation);
+	cost               = distance * carType.cost;
+	int     costDollar = cost / 100;
+	QString skel       = R"(This car has been selected:
 Type: %1
 Brand: %2
 Name: %3
@@ -47,7 +47,7 @@ The total rent cost is %4 $
 
 Do you want to rent this car? Press 'yes' to rent it or 'no' to cancel the rent operation (Y/N)
 )";
-	auto    msg             = skel
+	auto    msg        = skel
 	               .arg(carType.name)
 	               .arg(car.brand)
 	               .arg(car.name)
@@ -90,8 +90,10 @@ int RentRequest::getExactTravelTime() const {
 }
 
 void RentRequest::updateDb() {
-	rent.userId          = user->id;
-    qDebug().noquote() << "car =\n"<<car.toString()<<"\n"<<QStacker16Light();
+	rent.userId = user->id;
+	qDebug().noquote() << "car =\n"
+	                   << car.toString() << "\n"
+	                   << QStacker16Light();
 	rent.carId           = car.id;
 	rent.startLocationId = startLocation.id;
 	rent.startDateTime   = QDateTime::currentDateTimeUtc();
@@ -103,7 +105,9 @@ void RentRequest::updateDb() {
 	rent.estimatedEndDateTime  = rent.startDateTime.addSecs(estimatedTimeInSeconds);
 
 	rent.distance = distance;
-	rent.cost     = cost;
+	qDebug().noquote() << "185 cost = " << cost << "\n"
+	                   << QStacker16Light();
+	rent.cost = cost;
 
 	db.query("START TRANSACTION;");
 	rent.saveInDb();
@@ -125,7 +129,7 @@ RentRequest RentRequest::getFromTerminal() {
 	// numb persons
 	request.numbPersons = getValidatedInt("Insert the number of persons will be in the car", make_unique<ValidateNumbPersons>());
 	// car type
-    //claudio
+	//claudio
 	int carTypeId   = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(request.numbPersons));
 	request.carType = CarType::fromId(carTypeId);
 
@@ -185,12 +189,12 @@ void RentRequest::simulateCarIsReturned() {
 
 void RentRequest::run() {
 	if (!selectCar()) {
-        QTextStream(stdout)<<"No car available at the moment. Rent operation canceled\n\n";
-        int waitingTimeSecs = getWaitingTime(*this);
-        if(waitingTimeSecs!=-1){
-            QTextStream(stdout) << "Estimated waiting time " << waitingTimeSecs/secondsPerMinute<<" min\n";
-        }
-        return;
+		QTextStream(stdout) << "No car available at the moment. Rent operation canceled\n\n";
+		int waitingTimeSecs = getWaitingTime(*this);
+		if (waitingTimeSecs != -1) {
+			QTextStream(stdout) << "Estimated waiting time " << waitingTimeSecs / secondsPerMinute << " min\n";
+		}
+		return;
 	}
 	if (!confirmCarAndCost()) {
 		return;
