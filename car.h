@@ -19,7 +19,6 @@ class Car : public Entity {
 	QString licensePlate;
 	QString brand;
 	QString name;
-	bool    isFree                = true;
 	int     locationId            = 0;
 	int     totalDistanceTraveled = 0;
 

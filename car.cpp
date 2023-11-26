@@ -29,7 +29,6 @@ Car Car::getCarFromSqlRow(const sqlRow& row) {
 	row.get2("licensePlate", car.licensePlate);
 	row.get2("brand", car.brand);
 	row.get2("name", car.name);
-	row.get2("isFree", car.isFree);
 	row.get2("locationId", car.locationId);
 	row.get2("totalDistanceTraveled", car.totalDistanceTraveled);
 	return car;
@@ -80,9 +79,8 @@ SET active = %1,
     licensePlate = %3,
     brand = %4,
     name = %5,
-    isFree = %6,
-    locationId = %7,
-    totalDistanceTraveled = %8;
+    locationId = %6,
+    totalDistanceTraveled = %7;
 )";
 	auto    sql  = skel
 	               .arg(active)
@@ -90,7 +88,6 @@ SET active = %1,
 	               .arg(base64this(licensePlate))
 	               .arg(base64this(brand))
 	               .arg(base64this(name))
-	               .arg(isFree)
 	               .arg(locationId)
 	               .arg(totalDistanceTraveled);
 	db.query(sql);
@@ -158,13 +155,12 @@ QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
 }
 
 void Car::printCarsAsTable(const QList<Car>& cars) {
-	VariadicTable<int, string, string, string, string, string, string, int> table(
+	VariadicTable<int, string, string, string, string, string, int> table(
 	    {"Id",
 	     "Type",
 	     "License Plate",
 	     "Brand",
 	     "Name",
-	     "Availability",
 	     "Location",
 	     "Total Distance Traveled"},
 	    10);
@@ -174,7 +170,6 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 		             car.licensePlate.toStdString(),
 		             car.brand.toStdString(),
 		             car.name.toStdString(),
-		             getAvailabilityHuman(car.isFree).toStdString(),
 		             Location::getLocationNameHuman(car.locationId).toStdString(),
 		             car.totalDistanceTraveled);
 	}
