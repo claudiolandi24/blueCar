@@ -1,5 +1,6 @@
 #include "try.h"
 #include "car.h"
+#include "menulogin.h"
 #include "rbk/QStacker/qstacker.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "user.h"
@@ -7,7 +8,6 @@
 #include "variadictable.h"
 #include <QTextStream>
 #include <iostream>
-#include "menulogin.h"
 
 using namespace std;
 
@@ -76,17 +76,15 @@ void tryErrPrint() {
 	//qFatal("fatal message") << "message: function e() failed" << QStacker16Light();
 }
 
-void printAllUsers(){
-    User::printAllUsersAsTable();
+void printAllUsers() {
+	User::printAllUsersAsTable();
 }
 
-void printCars(){
-    Car::printAllCarsAsTable();
+void printCars() {
+	Car::printAllCarsAsTable();
 }
 
 void try0() {
-    printCars();
-
-    
-    
+	auto id = CarType::getIdFromNameTolerant("d");
+	cout << id;
 }

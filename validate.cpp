@@ -1,5 +1,6 @@
 #include "validate.h"
 #include "cartype.h"
+#include "rbk/QStacker/qstacker.h"
 #include "user.h"
 #include <QRegularExpression>
 #include <QTextStream>
@@ -77,6 +78,7 @@ ValidateCarType::ValidateCarType(int minNumbPersons_) {
 }
 
 QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
+    qDebug().noquote() << "string = "<< string <<"\n"<<QStacker16Light();
 	int typeId = CarType::getIdFromNameTolerant(string);
 	if (!typeId) {
 		// Type does not exist
@@ -211,7 +213,7 @@ QString getValidatedString(const QString& requestMsg, unique_ptr<Validate> valid
 		if (!res.errMsg.isEmpty()) {
 			QTextStream(stdout) << res.errMsg << "\n\n";
 		} else {
-			QTextStream(stdout) << "Invalid value" << value << "\n\n";
+			QTextStream(stdout) << "Invalid value " << value << "\n\n";
 		}
 	}
 }
@@ -228,6 +230,6 @@ int getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate) {
 		if (res.first) {
 			return res.second;
 		}
-		QTextStream(stdout) << "Invalid value" << value << "\n\n";
+		QTextStream(stdout) << "Invalid value " << value << "\n\n";
 	}
 }
