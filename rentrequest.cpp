@@ -25,11 +25,11 @@ LIMIT 1;
 	               .arg(startLocation.id);
 	auto res = db.query(sql);
 	if (res.isEmpty()) {
-        qDebug().noquote() << "empty sql res\n"<<QStacker16Light();
+        //qDebug().noquote() << "empty sql res\n"<<QStacker16Light();
 		return false;
 	}
 	car = Car::getCarFromSqlRow(res[0]);
-    qDebug().noquote() << "sql =\n"<< sql <<"\n\nselected car:\n"<<car.toString()<<"\n"<<QStacker16Light();
+    //qDebug().noquote() << "sql =\n"<< sql <<"\n\nselected car:\n"<<car.toString()<<"\n"<<QStacker16Light();
 	return true;
 }
 

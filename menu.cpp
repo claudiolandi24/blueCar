@@ -1,4 +1,6 @@
 #include "menu.h"
+#include "qdebug.h"
+#include "rbk/QStacker/qstacker.h"
 #include "utilityfunctions.h"
 #include <QTextStream>
 #include <iostream>
@@ -17,12 +19,19 @@ void Menu::show() {
 int Menu::askForOption() {
 	cout << "Select an option" << endl;
 	QString strOption = QTextStream(stdin).readLine();
-	bool    ok;
-	int     option = strOption.toInt(&ok);
+	//qDebug().noquote() << "strOption = " << strOption << QStacker16Light();
+	bool ok;
+	int  option = strOption.toInt(&ok);
 	if (!ok) {
+        // not numeric
 		cout << "Invalid option " << strOption.toStdString() << "\n";
 		return -1;
 	}
+    if(option < 0 or option > int(items.size())){
+        // numeric but not existing
+        cout << "Invalid option " << strOption.toStdString() << "\n";
+		return -1;        
+    }
 
 	printEmptyLineSeparator();
 	return option;
