@@ -26,6 +26,7 @@ SOURCES += \
         menuupdatecar.cpp \
         menuupdateuser.cpp \
         menuuser.cpp \
+        rent.cpp \
         rentrequest.cpp \
         try.cpp \
         user.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     menuupdatecar.h \
     menuupdateuser.h \
     menuuser.h \
+    rent.h \
     rentrequest.h \
     try.h \
     user.h \

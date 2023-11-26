@@ -20,8 +20,10 @@ public:
     int numbPersons = 0;
     Location startLocation;
     Location endLocation;
+    // km
+    int distance = 0;
     
-    Car selectedCar;
+    Car car;
     int cost = 0;
     
     

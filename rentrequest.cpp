@@ -2,6 +2,7 @@
 #include "config.h"
 #include "location.h"
 #include "rbk/minMysql/min_mysql.h"
+#include "rent.h"
 #include "validate.h"
 #include <QTextStream>
 
@@ -23,12 +24,13 @@ LIMIT 1;
 	if (res.isEmpty()) {
 		return false;
 	}
-	selectedCar = Car::getCarFromSqlRow(res[0]);
+	car = Car::getCarFromSqlRow(res[0]);
 	return true;
 }
 
 bool RentRequest::confirmCarAndCost() {
-	int     costCentDollars = getDistanceInKm(startLocation, endLocation) * carType.cost;
+	distance                = getDistanceInKm(startLocation, endLocation);
+	int     costCentDollars = distance * carType.cost;
 	int     costDollar      = costCentDollars / 100;
 	QString skel            = R"(This car has been selected:
 Type: %1
@@ -41,10 +43,10 @@ Do you want to rent this car? Press 'yes' to rent it or 'no' to cancel the rent 
 )";
 	auto    msg             = skel
 	               .arg(carType.name)
-	               .arg(selectedCar.brand)
-	               .arg(selectedCar.name)
+	               .arg(car.brand)
+	               .arg(car.name)
 	               .arg(costDollar);
-    QTextStream(stdout) << msg;
+	QTextStream(stdout) << msg;
 	if (!yesFromTerminal()) {
 		QTextStream(stdout) << "Rent operation canceled\n";
 		return false;
@@ -77,6 +79,18 @@ bool RentRequest::confirmAndMakePayment() {
 }
 
 void RentRequest::updateDb() {
+	Rent rent;
+	rent.userId          = user->id;
+	rent.carId           = car.id;
+	rent.startLocationId = startLocation.id;
+	rent.startDateTime   = QDateTime::currentDateTimeUtc();
+	rent.endLocationId   = endLocation.id;
+	// real endDateTime unknow at this point
+	//rent.estimatedEndDateTime =
+    
+    // claudio
+    int timeInSeconds = (3600 * distance) / carType.speed; 
+    
 }
 
 RentRequest RentRequest::getFromTerminal() {
@@ -110,5 +124,7 @@ void RentRequest::run() {
 	if (!confirmAndMakePayment()) {
 		return;
 	}
+	//update db
+	// ok you can collet
 	//claudio
 }

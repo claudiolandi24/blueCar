@@ -5,7 +5,7 @@
 #include <QTextStream>
 #include <memory>
 
-
+const int secondsPerHour = 3600;
 
 QString getAvailabilityHuman(bool isFree) {
 	if (isFree) {
