@@ -1,4 +1,5 @@
 #include "menuupdateuser.h"
+#include "utilityfunctions.h"
 
 void ActionUpdateUser::updateInDb() {
 	user->updateInDb();

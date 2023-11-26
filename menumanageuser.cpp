@@ -1,6 +1,7 @@
 #include "menumanageuser.h"
 #include "rbk/QStacker/qstacker.h"
 #include "user.h"
+#include "utilityfunctions.h"
 #include <QTextStream>
 #include <iostream>
 

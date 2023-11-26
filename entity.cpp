@@ -1,7 +1,7 @@
 #include "entity.h"
 #include "rbk/minMysql/min_mysql.h"
 #include <QString>
-#include "menuitem.h"
+#include "utilityfunctions.h"
 
 extern DB db;
 

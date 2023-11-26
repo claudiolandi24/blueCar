@@ -4,6 +4,7 @@
 #include "menuadmin.h"
 #include "menumanageuser.h"
 #include "menuuser.h"
+#include "utilityfunctions.h"
 #include <QTextStream>
 #include <cassert>
 #include <iostream>

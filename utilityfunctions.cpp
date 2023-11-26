@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QTextStream>
 #include <memory>
+#include <iostream>
 
 const int secondsPerHour = 3600;
 const int secondsPerMinute = 60;
@@ -95,3 +96,8 @@ bool yesFromTerminal() {
 	}
 	return false;
 }
+
+void printEmptyLineSeparator() {
+       cout << "\n\n";
+}
+

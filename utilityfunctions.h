@@ -44,5 +44,6 @@ bool isValidPwd(const QString& string);
 bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
 bool yesFromTerminal();
+void printEmptyLineSeparator();
 
 #endif // UTILITYFUNCTIONS_H
