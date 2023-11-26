@@ -14,7 +14,6 @@ ActionRentCar::ActionRentCar(string label_, User* user_)
 void ActionRentCar::run() {
 	cout << "--- RENT CAR ---" << endl;
 
-	//claudio
 	RentRequest request = RentRequest::getFromTerminal();
     request.user=user;
     request.run();

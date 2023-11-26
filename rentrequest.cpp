@@ -3,6 +3,7 @@
 #include "location.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "rent.h"
+#include "service.h"
 #include "validate.h"
 #include <QTextStream>
 
@@ -151,19 +152,20 @@ void RentRequest::updateCarLocationAndDistanceTraveled() {
 }
 
 void RentRequest::scheduleServiceIfNeed() {
-	auto sql         = QSL("select * from lastServiceView where carId = %1;").arg(car.id);
-	auto res         = db.query(sql);
-    
-	bool needService = false;
-	int lastServiceDistanceTraveled = 0;
+	auto sql = QSL("select * from lastServiceView where carId = %1;").arg(car.id);
+	auto res = db.query(sql);
+
+	bool needService                 = false;
+	int  lastServiceDistanceTraveled = 0;
 	if (!res.isEmpty()) {
 		res[0].get2("serviceTotalDistanceTraveled", lastServiceDistanceTraveled);
 	}
 	if (car.totalDistanceTraveled >= lastServiceDistanceTraveled + config::serviceEveryKm) {
 		needService = true;
 	}
-    
-    
+	if (needService) {
+		Service::scheduleService(car);
+	}
 }
 
 void RentRequest::simulateCarIsReturned() {

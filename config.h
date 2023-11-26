@@ -8,6 +8,8 @@ extern QString adminPwdHash;
 extern int     kmPerHop;
 extern bool    paymentOperationSuccess;
 extern int     serviceEveryKm;
+// $ cent
+extern int serviceCost;
 
 bool readConfigFile();
 } // namespace config
