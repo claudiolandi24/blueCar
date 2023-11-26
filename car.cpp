@@ -48,7 +48,7 @@ Car::Car() {
 }
 
 Car Car::getCarFromSqlRow(const sqlRow& row) {
-    qDebug().noquote() << "sqlRow row =\n"<<row.serialize()<<"\n"<<QStacker16Light();
+    //qDebug().noquote() << "sqlRow row =\n"<<row.serialize()<<"\n"<<QStacker16Light();
 	Car car;
 	row.get2("id", car.id);
 	row.get2("active", car.active);
@@ -62,7 +62,6 @@ Car Car::getCarFromSqlRow(const sqlRow& row) {
 }
 
 void Car::setTypeFromTerminal() {
-	//claudio
 	typeId = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(0));
 }
 

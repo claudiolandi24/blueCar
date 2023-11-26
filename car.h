@@ -7,10 +7,6 @@
 #include <QPair>
 
 class Car : public Entity {
-      private:
-	//static QPair<bool, int> getCarIdFromUser(const QString& operation);
-	//static bool             carIdExists(int carId);
-
       public:
 	// db id
 	int     id     = 0;
@@ -22,7 +18,7 @@ class Car : public Entity {
 	int     locationId            = 0;
 	int     totalDistanceTraveled = 0;
 
-    QString toString() const;
+	QString toString() const;
 	Car();
 	static Car        getCarFromSqlRow(const sqlRow& row);
 	static Car        getNewCarFromTerminal();
@@ -33,7 +29,6 @@ class Car : public Entity {
 	void              printAsTable();
 	QString           availability() const;
 	QString           locationName() const;
-    //QDate nextSer
 
 	static void updateCarAfterRequest();
 

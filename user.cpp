@@ -71,15 +71,10 @@ SET active = %1,
 	               .arg(creditCard.id)
 	               .arg(base64this(drivingLicense));
 	db.query(sql);
-    id = (long long)(db.lastId());
+	id = (long long)(db.lastId());
 	db.query(QSL("COMMIT;"));
 }
 
-//TODO IMP
-// check all these validations
-// check ones in car
-// credit card
-// others? -> all validations
 void User::setUsernameFromTerminal() {
 	username = getValidatedString("Choose an username and insert it", make_unique<ValidateUsername>());
 }
@@ -109,7 +104,6 @@ void User::setDrivingLicenseFromTerminal() {
 	drivingLicense = getValidatedString("Insert the driving license", make_unique<ValidateDrivingLicense>());
 }
 
-//claudio
 QList<User> User::getUsersFromDb(const QString& whereCondition) {
 	auto sql = QSL("SELECT * FROM user WHERE active = 1");
 	if (!whereCondition.isEmpty()) {

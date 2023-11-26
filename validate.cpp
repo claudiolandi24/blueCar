@@ -1,10 +1,10 @@
 #include "validate.h"
 #include "cartype.h"
+#include "location.h"
 #include "rbk/QStacker/qstacker.h"
 #include "user.h"
 #include <QRegularExpression>
 #include <QTextStream>
-#include "location.h"
 
 Check::Check(bool ok_, QString value_) {
 	ok    = ok_;
@@ -55,11 +55,10 @@ QPair<bool, int> ValidatePositiveOrZeroInteger::getValidatedInt(const QString& s
 }
 
 ValidateNumbPersons::ValidateNumbPersons() {
-    conditionForValue = "; must be an integer, min = 1 and max = 7";
+	conditionForValue = "; must be an integer, min = 1 and max = 7";
 }
 
 QPair<bool, int> ValidateNumbPersons::getValidatedInt(const QString& string) {
-	//claudio
 	auto check = isNumericV2(string);
 	if (!check.ok) {
 		return {false, 0};
@@ -78,7 +77,7 @@ ValidateCarType::ValidateCarType(int minNumbPersons_) {
 }
 
 QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
-    //qDebug().noquote() << "string = "<< string <<"\n"<<QStacker16Light();
+	//qDebug().noquote() << "string = "<< string <<"\n"<<QStacker16Light();
 	int typeId = CarType::getIdFromNameTolerant(string);
 	if (!typeId) {
 		// Type does not exist
@@ -90,7 +89,7 @@ QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
 			return {true, typeId};
 		}
 	}
-    // Type not ok: not enough number of persons for it
+	// Type not ok: not enough number of persons for it
 	return {false, 0};
 }
 
@@ -162,9 +161,6 @@ ValidateCreditCardNumber::ValidateCreditCardNumber() {
 	conditionForValue = "; must contain only digits, max length = 19";
 }
 
-//TODO
-// remove all magic numbs
-// for example here CONFIG <--- or define const for class <--- maybe better?
 Check ValidateCreditCardNumber::getValidatedString(const QString& string) {
 	bool ok = isNumeric(string, 19);
 	if (!ok) {
@@ -222,7 +218,6 @@ int getValidatedInt(const QString& requestMsg, unique_ptr<Validate> validate) {
 	while (true) {
 		QTextStream(stdout) << requestMsg << validate.get()->conditionForValue << Qt::endl;
 		QString value = QTextStream(stdin).readLine();
-		//TODO
 		//qDebug().noquote() << QSL("value = '%1'\n\n%2").arg(value).arg(QStacker16Light());
 		value    = value.trimmed();
 		auto res = validate.get()->getValidatedInt(value);

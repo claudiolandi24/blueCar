@@ -21,7 +21,6 @@ class ItemVector {
 	 * item when the menu is printed (in Menu::show())
 	 */
 	unique_ptr<MenuItem>& getItemByItemNumber(unsigned long itemNumber) {
-		//TODO check range valid
 		unsigned long index = itemNumber - 1;
 		return items[index];
 	}

@@ -40,9 +40,6 @@ void ActionUpdateDistanceTraveled::run() {
 	updateInDb();
 };
 
-//TODO
-// check empty lines separator in interaction
-// some missing
 MenuUpdateCar::MenuUpdateCar(string label_, Car* car_)
     : Menu(label_) {
 	car = car_;
@@ -53,7 +50,7 @@ MenuUpdateCar::MenuUpdateCar(string label_, Car* car_)
 	addItem(make_unique<ActionUpdateBrand>("Update the brand", car));
 	addItem(make_unique<ActionUpdateNameOfCar>("Update the name", car));
 	if (car->locationId) {
-        // admin can update the location of a car only when it is not rented (parked in a pick-up point)
+		// admin can update the location of a car only when it is not rented (parked in a pick-up point)
 		addItem(make_unique<ActionUpdateLocation>("Update the location", car));
 	}
 	addItem(make_unique<ActionUpdateDistanceTraveled>("Update the total distance traveled", car));

@@ -25,7 +25,6 @@ select * from %1 where id = %2 and active = 1;
 
 QPair<bool, int> Entity::getIdFromTerminal(const QString& operation) {
 	if (operation != "update" and operation != "remove") {
-		//TODO log error
 		return {false, 0};
 	}
 
@@ -71,7 +70,6 @@ void Entity::deleteAfterRequest() {
 		return;
 	}
 	setNotActiveInDb(id.second);
-    //Car/User
     QString entityNameFirstUpper = entityName;
     entityNameFirstUpper[0]=entityNameFirstUpper[0].toUpper();
     auto msg = QSL("%1 removed successfully").arg(entityNameFirstUpper);
