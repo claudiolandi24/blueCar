@@ -1,0 +1,135 @@
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+CREATE TABLE `car` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `active` tinyint(4) NOT NULL,
+  `carTypeId` int(11) NOT NULL,
+  `licensePlate` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `brand` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `locationId` int(11) DEFAULT NULL,
+  `totalDistanceTraveled` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `locationId` (`locationId`),
+  KEY `carTypeId` (`carTypeId`),
+  CONSTRAINT `car_ibfk_2` FOREIGN KEY (`locationId`) REFERENCES `location` (`id`),
+  CONSTRAINT `car_ibfk_3` FOREIGN KEY (`carTypeId`) REFERENCES `carType` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+INSERT INTO `car` (`id`, `active`, `carTypeId`, `licensePlate`, `brand`, `name`, `locationId`, `totalDistanceTraveled`) VALUES
+(5,	1,	2,	'aabbcc',	'peugeot',	'206',	1,	100),
+(6,	1,	1,	'aabbdd',	'fiat',	'panda',	2,	80),
+(11,	1,	3,	'aabbee',	'ferrari',	'enzo',	3,	50);
+
+CREATE TABLE `carType` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `numbPersons` int(11) NOT NULL,
+  `cost` int(11) NOT NULL COMMENT '$cent / km',
+  `speed` int(11) NOT NULL COMMENT 'km/h',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+INSERT INTO `carType` (`id`, `name`, `numbPersons`, `cost`, `speed`) VALUES
+(1,	'ECO',	2,	100,	15),
+(2,	'MID-CLASS',	4,	200,	25),
+(3,	'DELUXE',	7,	500,	50);
+
+CREATE TABLE `creditCard` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `hash` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+INSERT INTO `creditCard` (`id`, `hash`) VALUES
+(4,	'HASH_OF_111100001111000112/2024174'),
+(5,	'HASH_OF_111100001111000212/2024638'),
+(7,	'HASH_OF_111100001111000312/2024873');
+
+CREATE TABLE `freeCarView` (`carId` int(11), `carTypeId` int(11), `carTypeName` varchar(255), `licensePlate` varchar(255), `brand` varchar(255), `name` varchar(255), `locationId` int(11), `locationName` varchar(255), `totalDistanceTraveled` int(11));
+
+
+CREATE TABLE `lastServiceView` (`carId` int(11), `serviceId` int(11), `serviceDate` date, `serviceTotalDistanceTraveled` int(11));
+
+
+CREATE TABLE `location` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+INSERT INTO `location` (`id`, `name`) VALUES
+(1,	'Inner Circle'),
+(2,	'Middle Circle'),
+(3,	'Outer Circle');
+
+CREATE TABLE `rent` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) NOT NULL,
+  `carId` int(11) NOT NULL,
+  `startLocationId` int(11) NOT NULL,
+  `startDateTime` datetime NOT NULL COMMENT 'UTC',
+  `endLocationId` int(11) NOT NULL,
+  `endDateTime` datetime DEFAULT NULL COMMENT 'UTC',
+  `estimatedEndDateTime` datetime NOT NULL COMMENT 'UTC',
+  `distance` int(11) NOT NULL COMMENT 'km',
+  `cost` int(11) NOT NULL COMMENT '$cent',
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  KEY `carId` (`carId`),
+  KEY `startLocationId` (`startLocationId`),
+  KEY `endLocationId` (`endLocationId`),
+  CONSTRAINT `rent_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`),
+  CONSTRAINT `rent_ibfk_3` FOREIGN KEY (`carId`) REFERENCES `car` (`id`),
+  CONSTRAINT `rent_ibfk_4` FOREIGN KEY (`startLocationId`) REFERENCES `location` (`id`),
+  CONSTRAINT `rent_ibfk_5` FOREIGN KEY (`endLocationId`) REFERENCES `location` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+
+CREATE TABLE `rentedCarView` (`carId` int(11), `carTypeId` int(11), `carTypeName` varchar(255), `licensePlate` varchar(255), `brand` varchar(255), `name` varchar(255), `locationId` int(11), `locationName` varchar(255), `totalDistanceTraveled` int(11), `rentId` bigint(20), `userId` bigint(20), `startLocationId` int(11), `startLocationName` varchar(255), `startDateTime` datetime, `endLocationId` int(11), `endLocationName` varchar(255), `endDateTime` datetime, `estimatedEndDateTime` datetime, `distance` int(11), `cost` int(11));
+
+
+CREATE TABLE `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carId` int(11) NOT NULL,
+  `date` date NOT NULL COMMENT 'UTC',
+  `totalDistanceTraveled` int(11) NOT NULL,
+  `cost` int(11) NOT NULL COMMENT '$cent',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `carId_date` (`carId`,`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `active` tinyint(4) NOT NULL,
+  `username` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `pwdHash` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `surname` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `address` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `creditCardId` bigint(20) NOT NULL,
+  `drivingLicense` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+INSERT INTO `user` (`id`, `active`, `username`, `pwdHash`, `name`, `surname`, `address`, `creditCardId`, `drivingLicense`) VALUES
+(1,	1,	'cla',	'HASH_OF_Segretoblu123!',	'claudio',	'landi',	'dublino',	4,	'00001111aa'),
+(2,	1,	'supermario91',	'HASH_OF_Tavolofelice456!',	'mario',	'rossi',	'milano',	5,	'00001111bb'),
+(4,	1,	'carlo42',	'HASH_OF_Pizzarossa12345!',	'carlo',	'bianchi',	'torino',	7,	'00001111cc');
+
+DROP TABLE IF EXISTS `freeCarView`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `freeCarView` AS select `c`.`id` AS `carId`,`ct`.`id` AS `carTypeId`,`ct`.`name` AS `carTypeName`,`c`.`licensePlate` AS `licensePlate`,`c`.`brand` AS `brand`,`c`.`name` AS `name`,`l`.`id` AS `locationId`,`l`.`name` AS `locationName`,`c`.`totalDistanceTraveled` AS `totalDistanceTraveled` from (((`car` `c` left join `carType` `ct` on(`c`.`carTypeId` = `ct`.`id`)) left join `location` `l` on(`c`.`locationId` = `l`.`id`)) left join `service` `s` on(`c`.`id` = `s`.`carId` and `s`.`date` = utc_date())) where `c`.`active` = 1 and `c`.`locationId` is not null and `s`.`id` is null;
+
+DROP TABLE IF EXISTS `lastServiceView`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `lastServiceView` AS select `c`.`id` AS `carId`,`s`.`serviceId` AS `serviceId`,`s`.`date` AS `serviceDate`,`s`.`totalDistanceTraveled` AS `serviceTotalDistanceTraveled` from (`blueCar`.`car` `c` join (select `blueCar`.`service`.`id` AS `serviceId`,`blueCar`.`service`.`carId` AS `carId`,`blueCar`.`service`.`date` AS `date`,`blueCar`.`service`.`totalDistanceTraveled` AS `totalDistanceTraveled`,`blueCar`.`service`.`cost` AS `cost`,row_number() over ( partition by `blueCar`.`service`.`carId` order by `blueCar`.`service`.`date` desc) AS `rn` from `blueCar`.`service`) `s` on(`c`.`id` = `s`.`carId` and `s`.`rn` = 1)) where `c`.`active` = 1;
+
+DROP TABLE IF EXISTS `rentedCarView`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `rentedCarView` AS select `c`.`id` AS `carId`,`c`.`carTypeId` AS `carTypeId`,`ct`.`name` AS `carTypeName`,`c`.`licensePlate` AS `licensePlate`,`c`.`brand` AS `brand`,`c`.`name` AS `name`,`l`.`id` AS `locationId`,`l`.`name` AS `locationName`,`c`.`totalDistanceTraveled` AS `totalDistanceTraveled`,`r`.`id` AS `rentId`,`r`.`userId` AS `userId`,`r`.`startLocationId` AS `startLocationId`,`l1`.`name` AS `startLocationName`,`r`.`startDateTime` AS `startDateTime`,`r`.`endLocationId` AS `endLocationId`,`l2`.`name` AS `endLocationName`,`r`.`endDateTime` AS `endDateTime`,`r`.`estimatedEndDateTime` AS `estimatedEndDateTime`,`r`.`distance` AS `distance`,`r`.`cost` AS `cost` from (((((`car` `c` left join `carType` `ct` on(`c`.`carTypeId` = `ct`.`id`)) left join `location` `l` on(`c`.`locationId` = `l`.`id`)) left join `rent` `r` on(`c`.`id` = `r`.`carId`)) left join `location` `l1` on(`r`.`startLocationId` = `l1`.`id`)) left join `location` `l2` on(`r`.`endLocationId` = `l2`.`id`)) where `c`.`active` = 1 and `c`.`locationId` is null;
+
+
