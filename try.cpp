@@ -80,17 +80,12 @@ void printAllUsers(){
     User::printAllUsersAsTable();
 }
 
-void try0() {
-	//tryTable();
-	//tryTableCar();
-	//tryHash();
-	//tryErrPrint();
-    //printAllUsers();
-    
-    //assert(false);
+void printCars(){
+    Car::printAllCarsAsTable();
+}
 
-    ActionLogin a("action");
-    a.checkPwd("cane","cane");
+void try0() {
+    printCars();
 
     
     

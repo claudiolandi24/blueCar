@@ -79,7 +79,8 @@ int Location::getLocationId(QString name) {
 QString Location::getLocationNameHuman(int id) {
 	static auto map = id_Location_Map();
 	if (!map.contains(id)) {
-		qCritical().noquote() << "wrong location id" << QStacker16Light();
+		qCritical().noquote() << "wrong location id = " << id << "\n"
+		                      << QStacker16Light();
 		return "";
 	}
 	return map[id].name;

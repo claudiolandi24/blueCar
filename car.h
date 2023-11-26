@@ -30,6 +30,8 @@ class Car : public Entity {
 	static void       printAllCarsAsTable();
 	static void       printCarsAsTable(const QList<Car>& cars);
 	void              printAsTable();
+	QString           availability() const;
+	QString           locationName() const;
 
 	static void updateCarAfterRequest();
 

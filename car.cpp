@@ -35,7 +35,7 @@ Car Car::getCarFromSqlRow(const sqlRow& row) {
 }
 
 void Car::setTypeFromTerminal() {
-    //claudio
+	//claudio
 	typeId = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(0));
 }
 
@@ -91,7 +91,7 @@ SET active = %1,
 	               .arg(locationId)
 	               .arg(totalDistanceTraveled);
 	db.query(sql);
-    id = int(db.lastId());
+	id = int(db.lastId());
 }
 
 void Car::updateInDb() {
@@ -122,6 +122,17 @@ void Car::printAsTable() {
 	printCarsAsTable({*this});
 }
 
+QString Car::locationName() const {
+    if(locationId){
+        return Location::getLocationNameHuman(locationId);
+    }
+    return "N/A";
+}
+
+QString Car::availability() const {
+	return locationId ? "free" : "rented";
+}
+
 void Car::updateCarAfterRequest() {
 	auto carId = getIdFromTerminal("update");
 	if (!carId.first) {
@@ -140,12 +151,12 @@ void Car::updateCarAfterRequest() {
 }
 
 QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
-    QString sql = "select * from car where active = 1";
-    if(!whereCondition.isEmpty()){
-        sql+=" "+whereCondition;
-    }
-    sql+=";";
-	auto res     = db.query(sql);
+	QString sql = "select * from car where active = 1";
+	if (!whereCondition.isEmpty()) {
+		sql += " " + whereCondition;
+	}
+	sql += ";";
+	auto res = db.query(sql);
 
 	QList<Car> cars;
 	for (const auto& row : res) {
@@ -156,12 +167,13 @@ QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
 }
 
 void Car::printCarsAsTable(const QList<Car>& cars) {
-	VariadicTable<int, string, string, string, string, string, int> table(
+	VariadicTable<int, string, string, string, string, string, string, int> table(
 	    {"Id",
 	     "Type",
 	     "License Plate",
 	     "Brand",
 	     "Name",
+	     "Availability",
 	     "Location",
 	     "Total Distance Traveled"},
 	    10);
@@ -171,7 +183,8 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 		             car.licensePlate.toStdString(),
 		             car.brand.toStdString(),
 		             car.name.toStdString(),
-		             Location::getLocationNameHuman(car.locationId).toStdString(),
+		             car.availability().toStdString(),
+		             car.locationName().toStdString(),
 		             car.totalDistanceTraveled);
 	}
 	table.print(std::cout);
@@ -187,7 +200,3 @@ void Car::printAllCarsAsTable() {
 car isFree remove
 calculate checking if rent now
 */
-
-
-
-

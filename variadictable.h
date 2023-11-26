@@ -63,6 +63,7 @@ public:
       _static_column_size(static_column_size),
       _cell_padding(cell_padding)
   {
+    //std::cerr << "header size = " << headers.size() << " num columns = "<< _num_columns << "\n";   
     assert(headers.size() == _num_columns);
   }
 
