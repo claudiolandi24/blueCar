@@ -101,10 +101,18 @@ void printEmptyLineSeparator() {
 	cout << "\n\n";
 }
 
-QString getMysqlString(const QDateTime& endDateTime) {
-	QString endDateTimeStr = "NULL";
-	if (!endDateTime.isNull()) {
-		endDateTimeStr = "'"+endDateTime.toString(mysqlDateTimeFormat)+"'";
+QString getMysqlString(const QDateTime& dateTime) {
+	QString dateTimeStr = "NULL";
+	if (!dateTime.isNull()) {
+		dateTimeStr = "'"+dateTime.toString(mysqlDateTimeFormat)+"'";
 	}
-	return endDateTimeStr;
+	return dateTimeStr;
+}
+
+QString getMysqlString(const QDate& date) {
+	QString dateStr = "NULL";
+	if (!date.isNull()) {
+		dateStr = "'"+date.toString(mysqlDateFormat)+"'";
+	}
+	return dateStr;
 }

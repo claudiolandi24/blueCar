@@ -191,8 +191,9 @@ void RentRequest::run() {
 	if (!selectCar()) {
 		QTextStream(stdout) << "No car available at the moment. Rent operation canceled\n\n";
 		int waitingTimeSecs = getWaitingTime(*this);
+        qDebug().noquote() << "waiting time = " << waitingTimeSecs << "\n" << QStacker16Light();
 		if (waitingTimeSecs != -1) {
-			QTextStream(stdout) << "Estimated waiting time " << waitingTimeSecs / secondsPerMinute << " min\n";
+			QTextStream(stdout) << "Estimated waiting time for a free car " << waitingTimeSecs / secondsPerMinute << " min\n";
 		}
 		return;
 	}

@@ -44,8 +44,9 @@ NumericCheck isNumericV2(const QString& string);
 bool isValidPwd(const QString& string);
 bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extraAllowedChars = QList<QChar>());
 
-bool yesFromTerminal();
-void printEmptyLineSeparator();
-QString getMysqlString(const QDateTime& endDateTime);
+bool    yesFromTerminal();
+void    printEmptyLineSeparator();
+QString getMysqlString(const QDateTime& dateTime);
+QString getMysqlString(const QDate& date);
 
 #endif // UTILITYFUNCTIONS_H

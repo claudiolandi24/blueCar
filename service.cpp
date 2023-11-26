@@ -1,6 +1,7 @@
 #include "service.h"
 #include "config.h"
 #include "rbk/minMysql/min_mysql.h"
+#include "utilityfunctions.h"
 #include <QDate>
 
 extern DB db;
@@ -27,7 +28,7 @@ cost = %4;
 )";
 	auto    sql  = skel
 	               .arg(carId)
-	               .arg(date.toString(mysqlDateFormat))
+	               .arg(getMysqlString(date))
 	               .arg(totalDistanceTraveled)
 	               .arg(cost);
 	db.query(sql);

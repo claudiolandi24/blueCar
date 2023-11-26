@@ -9,7 +9,7 @@ int getWaitingTime(const RentRequest& request) {
 select *
 from rentedCarView
 where carTypeId = %1
-  and startLocationId = %2
+  and endLocationId = %2
 order by estimatedEndDateTime asc
 limit 1;
 )";
