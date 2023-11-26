@@ -90,6 +90,7 @@ int RentRequest::getExactTravelTime() const {
 
 void RentRequest::updateDb() {
 	rent.userId          = user->id;
+    qDebug().noquote() << "car =\n"<<car.toString()<<"\n"<<QStacker16Light();
 	rent.carId           = car.id;
 	rent.startLocationId = startLocation.id;
 	rent.startDateTime   = QDateTime::currentDateTimeUtc();

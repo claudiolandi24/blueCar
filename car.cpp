@@ -12,6 +12,7 @@
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
+#include "rbk/QStacker/qstacker.h"
 
 using namespace std;
 
@@ -47,6 +48,7 @@ Car::Car() {
 }
 
 Car Car::getCarFromSqlRow(const sqlRow& row) {
+    qDebug().noquote() << "sqlRow row =\n"<<row.serialize()<<"\n"<<QStacker16Light();
 	Car car;
 	row.get2("id", car.id);
 	row.get2("active", car.active);
