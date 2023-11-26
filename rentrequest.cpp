@@ -1,4 +1,5 @@
 #include "rentrequest.h"
+#include "config.h"
 #include "location.h"
 #include "rbk/minMysql/min_mysql.h"
 #include "validate.h"
@@ -26,14 +27,46 @@ LIMIT 1;
 	return true;
 }
 
-void RentRequest::calculateCost() {
-    //claudioint distanceInHops
-}
-
 bool RentRequest::confirmCarAndCost() {
+	int     costCentDollars = getDistanceInKm(startLocation, endLocation) * carType.cost;
+	QString skel            = R"(This car has been selected:
+Type: %1
+Brand: %2
+Name: %3
+
+The total rent cost is %4
+
+Do you want to rent this car? Press 'yes' to rent it or 'no' to cancel the rent operation (Y/N)
+)";
+	if (!yesFromTerminal()) {
+		QTextStream(stdout) << "Rent operation canceled\n";
+		return false;
+	}
+	return true;
 }
 
-bool makePayment() {
+/*
+ * Payment operation is simulated.
+ * A real application would call an external API to make the payment and send to them some user and credit card data
+ */
+bool RentRequest::makePayment() {
+	if (config::paymentOperationSuccess) {
+		QTextStream(stdout) << "Payment operation completed successfully\n";
+		return true;
+	}
+	QTextStream(stdout) << "Error in payment operation. Rent operation canceled\n";
+	return false;
+}
+
+bool RentRequest::confirmAndMakePayment() {
+	QTextStream(stdout) << "The rent will be paid by using the credit card registered in your account. Do you want to make the payment?\n";
+	QTextStream(stdout) << "Press 'yes' to make the payment or 'no' to cancel the rent operation (Y/N)\n";
+	if (!yesFromTerminal()) {
+		QTextStream(stdout) << "Rent operation canceled\n";
+		return false;
+	}
+
+	return makePayment();
 }
 
 void RentRequest::updateDb() {
@@ -64,4 +97,11 @@ void RentRequest::run() {
 		//claudio
 		//TODO IMP
 	}
+	if (!confirmCarAndCost()) {
+		return;
+	}
+    if(!confirmAndMakePayment()){
+        return; 
+    }
+    //claudio
 }

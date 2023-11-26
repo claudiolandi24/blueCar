@@ -5,6 +5,8 @@
 
 namespace config {
 extern QString adminPwdHash;
+extern int kmPerHop;
+extern bool paymentOperationSuccess;
 
 bool readConfigFile();
 } // namespace config

@@ -6,9 +6,10 @@
 #include "user.h"
 
 class ActionRentCar : public Action {
+private:
+    User* user;
       public:
-	ActionRentCar(string label_)
-	    : Action(label_){};
+	ActionRentCar(string label_,User* user_);
 	void run() override;
 };
 

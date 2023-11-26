@@ -1,17 +1,24 @@
 #include "menuuser.h"
 #include "menuupdateuser.h"
+#include "rentrequest.h"
 #include "user.h"
 #include "utilityfunctions.h"
 #include <QTextStream>
 #include <iostream>
-#include "rentrequest.h"
+
+ActionRentCar::ActionRentCar(string label_, User* user_)
+    : Action(label_) {
+	user = user_;
+}
 
 void ActionRentCar::run() {
 	cout << "--- RENT CAR ---" << endl;
-    
-    //claudio
-    RentRequest request = RentRequest::getFromTerminal();
-    
+
+	//claudio
+	RentRequest request = RentRequest::getFromTerminal();
+    request.user=user;
+    request.run();
+
 	printEmptyLineSeparator();
 };
 
@@ -28,13 +35,13 @@ void ActionUnsubscribe::run() {
 	printEmptyLineSeparator();
 };
 
-MenuUser::MenuUser(string label_, User *user_)
+MenuUser::MenuUser(string label_, User* user_)
     : Menu(label_) {
 	user = user_;
 
 	title = "USER";
-	addItem(make_unique<ActionRentCar>("Rent car"));
+	addItem(make_unique<ActionRentCar>("Rent car",user));
 	addItem(make_unique<ActionUnsubscribe>("Unsubscribe", user->id));
-    addItem(make_unique<MenuUpdateUser>("Update my data",user));
+	addItem(make_unique<MenuUpdateUser>("Update my data", user));
 	exitLabel = "Log out";
 }

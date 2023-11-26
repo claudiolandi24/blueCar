@@ -1,6 +1,8 @@
 #include "location.h"
+#include "config.h"
 #include "rbk/QStacker/qstacker.h"
 #include <cassert>
+#include <cstdlib>
 
 extern DB db;
 
@@ -83,9 +85,29 @@ QString Location::getLocationNameHuman(int id) {
 	return map[id].name;
 }
 
-int getDistanceInHops(const Location& loc1, const Location& loc2) {
-	if (loc1 == loc2) {
+QChar Location::initial() const {
+	return name[0].toUpper();
+}
+
+int Location::distanceFromInner() const {
+	if (initial() == 'I') {
+		return 0;
+	}
+	if (initial() == 'M') {
 		return 1;
 	}
-	//if(loc1.name)
+	if (initial() == 'O') {
+		return 2;
+	}
+	qCritical().noquote() << "wrong location initial" << QStacker16Light();
+	return -1;
+}
+
+int getDistanceInHops(const Location& loc1, const Location& loc2) {
+	int distance = abs(loc1.distanceFromInner() - loc2.distanceFromInner()) + 1;
+	return distance;
+}
+
+int getDistanceInKm(const Location& loc1, const Location& loc2) {
+	return getDistanceInHops(loc1, loc2) * config::kmPerHop;
 }

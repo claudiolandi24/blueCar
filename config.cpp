@@ -3,6 +3,8 @@
 namespace config {
 
 QString adminPwdHash = "HASH_OF_admin";
+int kmPerHop = 5;
+bool paymentOperationSuccess = true;
 
 bool readConfigFile() {
 	//TODO

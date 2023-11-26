@@ -4,16 +4,18 @@
 #include "car.h"
 #include "cartype.h"
 #include "location.h"
+#include "user.h"
 
 class RentRequest
 {
 private:
     bool selectCar();
-    void calculateCost();
     bool confirmCarAndCost();
     bool makePayment();
+    bool confirmAndMakePayment();
     void updateDb();
 public:
+    User* user;
     CarType carType;
     int numbPersons = 0;
     Location startLocation;
