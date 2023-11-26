@@ -13,5 +13,5 @@
 using namespace std;
 
 void try0() {
-	cout << getHash("admin").toStdString();
+	//cout << getHash("admin").toStdString();
 }
