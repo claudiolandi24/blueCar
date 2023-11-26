@@ -25,7 +25,7 @@ Car Car::getCarFromSqlRow(const sqlRow& row) {
 	Car car;
 	row.get2("id", car.id);
 	row.get2("active", car.active);
-	row.get2("typeId", car.typeId);
+	row.get2("carTypeId", car.typeId);
 	row.get2("licensePlate", car.licensePlate);
 	row.get2("brand", car.brand);
 	row.get2("name", car.name);
@@ -75,7 +75,7 @@ void Car::saveToDb() {
 	QString skel = R"(
 INSERT INTO car
 SET active = %1,
-    typeId = %2,
+    carTypeId = %2,
     licensePlate = %3,
     brand = %4,
     name = %5,
@@ -97,7 +97,7 @@ void Car::updateInDb() {
 	QString skel = R"(
 UPDATE car SET
     active = %1,
-    typeId = %2,
+    carTypeId = %2,
     licensePlate = %3,
     brand = %4,
     name = %5,
