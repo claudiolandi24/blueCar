@@ -8,12 +8,18 @@
 class RentRequest
 {
 private:
-    Car selectCar();
+    bool selectCar();
+    bool carAndCostAreOk();
+    bool makePayment();
+    void updateDb();
 public:
     CarType carType;
     int numbPersons = 0;
     Location startLocation;
     Location endLocation;
+    
+    Car selectedCar;
+    
     
     
     RentRequest() = default;

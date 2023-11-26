@@ -3,21 +3,24 @@
 #include "validate.h"
 #include <QTextStream>
 
-Car RentRequest::selectCar(){
-    //claudio
+bool RentRequest::selectCar() {
     /*
-     * Car must:
-     * - Be in start location
-     * - Wanted type
-     * - Free
-     */ 
+     * 
+     * 
+     * 
+     */
+        
     
     
-    
-    
-    
-    
+}
 
+bool RentRequest::carAndCostAreOk() {
+}
+
+bool makePayment() {
+}
+
+void RentRequest::updateDb() {
 }
 
 RentRequest RentRequest::getFromTerminal() {
@@ -33,14 +36,13 @@ RentRequest RentRequest::getFromTerminal() {
 	int startLocationId   = getValidatedInt("Insert the start location'", make_unique<ValidateLocation>());
 	request.startLocation = Location::fromId(startLocationId);
 
-    // end
+	// end
 	int endLocationId   = getValidatedInt("Insert the end location'", make_unique<ValidateLocation>());
 	request.endLocation = Location::fromId(endLocationId);
 
 	return request;
-	//claudio
 }
 
-void RentRequest::run(){
-    
+void RentRequest::run() {
+
 }
