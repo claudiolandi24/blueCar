@@ -32,6 +32,7 @@ class Car : public Entity {
 	void              printAsTable();
 	QString           availability() const;
 	QString           locationName() const;
+    //QDate nextSer
 
 	static void updateCarAfterRequest();
 

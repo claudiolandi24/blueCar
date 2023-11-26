@@ -11,6 +11,7 @@
 #include <QPair>
 #include <QTextStream>
 #include <iostream>
+#include "rentedcarview.h"
 
 using namespace std;
 
@@ -167,7 +168,7 @@ QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
 }
 
 void Car::printCarsAsTable(const QList<Car>& cars) {
-	VariadicTable<int, string, string, string, string, string, string, int> table(
+	VariadicTable<int, string, string, string, string, string, string, int, string> table(
 	    {"Id",
 	     "Type",
 	     "License Plate",
@@ -175,7 +176,8 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 	     "Name",
 	     "Availability",
 	     "Location",
-	     "Total Distance Traveled"},
+	     "Total Distance Traveled",
+         "Next Service Date"},
 	    10);
 	for (const auto& car : cars) {
 		table.addRow(car.id,
@@ -185,7 +187,8 @@ void Car::printCarsAsTable(const QList<Car>& cars) {
 		             car.name.toStdString(),
 		             car.availability().toStdString(),
 		             car.locationName().toStdString(),
-		             car.totalDistanceTraveled);
+		             car.totalDistanceTraveled,
+                     getNextServiceDateString(car.id).toStdString());
 	}
 	table.print(std::cout);
 }

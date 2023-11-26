@@ -27,3 +27,32 @@ limit 1;
 	}
 	return -1;
 }
+
+QDate getNextServiceDate(int carId) {
+	QString skel = R"(
+select *
+from lastServiceView
+where carId = %1;
+)";
+	auto    sql  = skel.arg(carId);
+	auto    res  = db.query(sql);
+	if (res.isEmpty()) {
+		return {};
+	}
+	auto serviceDateStr = res[0]["serviceDate"];
+	auto serviceDate    = QDate::fromString(serviceDateStr, mysqlDateFormat);
+	auto today          = QDateTime::currentDateTimeUtc().date();
+	if (serviceDate >= today) {
+		// we want only a scheduled service, it must be in future
+		return serviceDate;
+	}
+	return {};
+}
+
+QString getNextServiceDateString(int carId) {
+	auto serviceDate = getNextServiceDate(carId);
+	if (serviceDate.isNull()) {
+		return "not scheduled";
+	}
+	return serviceDate.toString(mysqlDateFormat);
+}
