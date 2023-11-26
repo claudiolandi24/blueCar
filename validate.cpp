@@ -147,7 +147,7 @@ And must contain at least the following:
 - 1 upper-case letter
 - 1 lowercase letter
 - 1 digit
-- 1 allowed symbol)";
+- 1 symbol of these: !, ?, @, (, ), [, ], {, })";
 }
 
 Check ValidatePwd::getValidatedString(const QString& string) {
