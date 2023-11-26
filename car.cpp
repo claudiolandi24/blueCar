@@ -198,8 +198,4 @@ void Car::printAllCarsAsTable() {
 	printCarsAsTable(cars);
 }
 
-//TODO IMP
-/*
-car isFree remove
-calculate checking if rent now
-*/
+

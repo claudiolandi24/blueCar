@@ -6,8 +6,7 @@
 
 using namespace std;
 
-//TODO
-// more simple now
+
 void myMessageOutput(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
 	QByteArray  localMsg = msg.toLocal8Bit();
 	QDateTime   qdtNow   = QDateTime::currentDateTimeUtc();
@@ -50,14 +49,4 @@ int main() {
 	return 0;
 }
 
-//TODO IMP
-/*
-when insert pwd or credit card do not show typed
-----------
 
-config file
-
-
-
-*/
-//

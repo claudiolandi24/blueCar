@@ -8,9 +8,4 @@ bool    paymentOperationSuccess = true;
 int     serviceEveryKm          = 1500;
 int     serviceCost             = 30000;
 
-bool readConfigFile() {
-	//TODO
-	// adminPwdHash=from file
-	return false;
-}
 } // namespace config

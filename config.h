@@ -11,7 +11,6 @@ extern int     serviceEveryKm;
 // $ cent
 extern int serviceCost;
 
-bool readConfigFile();
 } // namespace config
 
 #endif // CONFIG_H
