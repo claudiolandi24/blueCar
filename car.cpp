@@ -154,7 +154,7 @@ void Car::updateCarAfterRequest() {
 QList<Car> Car::getCarsFromDb(const QString& whereCondition) {
 	QString sql = "select * from car where active = 1";
 	if (!whereCondition.isEmpty()) {
-		sql += " " + whereCondition;
+		sql += " AND " + whereCondition;
 	}
 	sql += ";";
 	auto res = db.query(sql);
