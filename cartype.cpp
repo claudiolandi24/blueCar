@@ -9,7 +9,7 @@ CarType CarType::fromSqlRow(sqlRow row) {
 	CarType carType;
 	row.get2("id", carType.id);
 	row.get2("name", carType.name);
-	row.get2("mubPersons", carType.numbPersons);
+	row.get2("numbPersons", carType.numbPersons);
 	row.get2("cost", carType.cost);
 	row.get2("speed", carType.speed);
 	return carType;

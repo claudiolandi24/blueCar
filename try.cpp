@@ -85,6 +85,6 @@ void printCars() {
 }
 
 void try0() {
-	auto id = CarType::getIdFromNameTolerant("d");
-	cout << id;
+    int n   = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(3));
+    cout<<n<<"\n";
 }

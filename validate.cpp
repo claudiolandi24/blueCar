@@ -78,7 +78,7 @@ ValidateCarType::ValidateCarType(int minNumbPersons_) {
 }
 
 QPair<bool, int> ValidateCarType::getValidatedInt(const QString& string) {
-    qDebug().noquote() << "string = "<< string <<"\n"<<QStacker16Light();
+    //qDebug().noquote() << "string = "<< string <<"\n"<<QStacker16Light();
 	int typeId = CarType::getIdFromNameTolerant(string);
 	if (!typeId) {
 		// Type does not exist
