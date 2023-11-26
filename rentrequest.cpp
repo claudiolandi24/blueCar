@@ -29,15 +29,22 @@ LIMIT 1;
 
 bool RentRequest::confirmCarAndCost() {
 	int     costCentDollars = getDistanceInKm(startLocation, endLocation) * carType.cost;
+	int     costDollar      = costCentDollars / 100;
 	QString skel            = R"(This car has been selected:
 Type: %1
 Brand: %2
 Name: %3
 
-The total rent cost is %4
+The total rent cost is %4 $
 
 Do you want to rent this car? Press 'yes' to rent it or 'no' to cancel the rent operation (Y/N)
 )";
+	auto    msg             = skel
+	               .arg(carType.name)
+	               .arg(selectedCar.brand)
+	               .arg(selectedCar.name)
+	               .arg(costDollar);
+    QTextStream(stdout) << msg;
 	if (!yesFromTerminal()) {
 		QTextStream(stdout) << "Rent operation canceled\n";
 		return false;
@@ -100,8 +107,8 @@ void RentRequest::run() {
 	if (!confirmCarAndCost()) {
 		return;
 	}
-    if(!confirmAndMakePayment()){
-        return; 
-    }
-    //claudio
+	if (!confirmAndMakePayment()) {
+		return;
+	}
+	//claudio
 }
