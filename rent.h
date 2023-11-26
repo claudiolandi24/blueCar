@@ -21,7 +21,8 @@ class Rent {
 	// $ cent
 	int cost;
 
-	Rent();
+	Rent() = default;
+	void saveInDb();
 };
 
 #endif // RENT_H

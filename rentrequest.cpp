@@ -86,10 +86,13 @@ void RentRequest::updateDb() {
 	rent.startDateTime   = QDateTime::currentDateTimeUtc();
 	rent.endLocationId   = endLocation.id;
 	// real endDateTime unknow at this point
-	//rent.estimatedEndDateTime =
+	
+    int estimatedTimeInSeconds = (secondsPerHour * distance) / carType.speed;
+    rent.estimatedEndDateTime = rent.startDateTime.addSecs(estimatedTimeInSeconds);
     
-    // claudio
-    int timeInSeconds = (3600 * distance) / carType.speed; 
+    rent.distance = distance;
+    rent.cost = cost;
+    
     
 }
 
