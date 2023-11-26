@@ -9,7 +9,8 @@ class RentRequest
 {
 private:
     bool selectCar();
-    bool carAndCostAreOk();
+    void calculateCost();
+    bool confirmCarAndCost();
     bool makePayment();
     void updateDb();
 public:
@@ -19,6 +20,7 @@ public:
     Location endLocation;
     
     Car selectedCar;
+    int cost = 0;
     
     
     

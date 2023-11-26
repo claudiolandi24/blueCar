@@ -14,6 +14,7 @@ class Location {
 	static Location        fromSqlRow(const sqlRow& row);
 	static Location        fromId(int id);
 	static QList<Location> getAllLocationsFromDb();
+    bool operator==(const Location& location2) const;
 
 	static QMap<int, Location> id_Location_Map();
 

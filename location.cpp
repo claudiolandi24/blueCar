@@ -29,6 +29,14 @@ QList<Location> Location::getAllLocationsFromDb() {
 	return locationList;
 }
 
+bool Location::operator==(const Location& location2) const {
+	assert(id);
+	assert(location2.id);
+	assert(!name.isEmpty());
+	assert(!location2.name.isEmpty());
+	return id == location2.id and name == location2.name;
+}
+
 QMap<int, Location> Location::id_Location_Map() {
 	static auto         locationList = getAllLocationsFromDb();
 	QMap<int, Location> map;
@@ -73,4 +81,11 @@ QString Location::getLocationNameHuman(int id) {
 		return "";
 	}
 	return map[id].name;
+}
+
+int getDistanceInHops(const Location& loc1, const Location& loc2) {
+	if (loc1 == loc2) {
+		return 1;
+	}
+	//if(loc1.name)
 }

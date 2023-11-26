@@ -26,7 +26,11 @@ LIMIT 1;
 	return true;
 }
 
-bool RentRequest::carAndCostAreOk() {
+void RentRequest::calculateCost() {
+    //claudioint distanceInHops
+}
+
+bool RentRequest::confirmCarAndCost() {
 }
 
 bool makePayment() {
@@ -56,4 +60,8 @@ RentRequest RentRequest::getFromTerminal() {
 }
 
 void RentRequest::run() {
+	if (!selectCar()) {
+		//claudio
+		//TODO IMP
+	}
 }
