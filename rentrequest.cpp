@@ -1,17 +1,29 @@
 #include "rentrequest.h"
 #include "location.h"
+#include "rbk/minMysql/min_mysql.h"
 #include "validate.h"
 #include <QTextStream>
 
+extern DB db;
+
 bool RentRequest::selectCar() {
-    /*
-     * 
-     * 
-     * 
-     */
-        
-    
-    
+	// Metric: prefer cars with few km travelled
+	QString skel = R"(
+SELECT *
+FROM freeCarView
+WHERE carTypeId = %1 AND locationId = %2
+ORDER BY totalDistanceTraveled ASC
+LIMIT 1;
+)";
+	auto    sql  = skel
+	               .arg(carType.id)
+	               .arg(startLocation.id);
+	auto res = db.query(sql);
+	if (res.isEmpty()) {
+		return false;
+	}
+	selectedCar = Car::getCarFromSqlRow(res[0]);
+	return true;
 }
 
 bool RentRequest::carAndCostAreOk() {
@@ -44,5 +56,4 @@ RentRequest RentRequest::getFromTerminal() {
 }
 
 void RentRequest::run() {
-
 }
