@@ -55,7 +55,7 @@ QPair<bool, int> ValidatePositiveOrZeroInteger::getValidatedInt(const QString& s
 }
 
 ValidateNumbPersons::ValidateNumbPersons() {
-	conditionForValue = "; must be an integer >= 1 and <= 7";
+    conditionForValue = "; must be an integer, min = 1 and max = 7";
 }
 
 QPair<bool, int> ValidateNumbPersons::getValidatedInt(const QString& string) {
