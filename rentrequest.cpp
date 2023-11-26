@@ -8,6 +8,7 @@
 #include "service.h"
 #include "validate.h"
 #include <QTextStream>
+#include "freecarview.h"
 
 extern DB db;
 
@@ -28,7 +29,7 @@ LIMIT 1;
         //qDebug().noquote() << "empty sql res\n"<<QStacker16Light();
 		return false;
 	}
-	car = Car::getCarFromSqlRow(res[0]);
+	car = FreeCarView::getCarFromSqlRow(res[0]);
     //qDebug().noquote() << "sql =\n"<< sql <<"\n\nselected car:\n"<<car.toString()<<"\n"<<QStacker16Light();
 	return true;
 }
@@ -145,7 +146,7 @@ void RentRequest::logEndDateTime() {
 	int       timeInSeconds = int(double(getExactTravelTime()) * 1.2);
 	QDateTime endDateTime   = rent.startDateTime.addSecs(timeInSeconds);
 	auto      sql           = QSL("update rent set endDateTime = %1 where id = %2;")
-	               .arg(endDateTime.toString(mysqlDateTimeFormat))
+	               .arg(getMysqlString(endDateTime))
 	               .arg(rent.id);
 	db.query(sql);
 }

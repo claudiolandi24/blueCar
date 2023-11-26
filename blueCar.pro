@@ -14,6 +14,7 @@ SOURCES += \
         creditcard.cpp \
         database.cpp \
         entity.cpp \
+        freecarview.cpp \
         hash.cpp \
         location.cpp \
         main.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     creditcard.h \
     database.h \
     entity.h \
+    freecarview.h \
     hash.h \
     location.h \
     menu.h \
