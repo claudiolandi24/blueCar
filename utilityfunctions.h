@@ -1,6 +1,7 @@
 #ifndef UTILITYFUNCTIONS_H
 #define UTILITYFUNCTIONS_H
 
+#include "qdatetime.h"
 #include <QList>
 #include <QPair>
 #include <QString>
@@ -45,5 +46,6 @@ bool isAlphanumeric(const QString& string, int maxLen, const QList<QChar>& extra
 
 bool yesFromTerminal();
 void printEmptyLineSeparator();
+QString getMysqlString(const QDateTime& endDateTime);
 
 #endif // UTILITYFUNCTIONS_H

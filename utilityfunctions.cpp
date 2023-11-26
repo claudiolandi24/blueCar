@@ -3,10 +3,10 @@
 #include "rbk/defines/stringDefine.h"
 #include <QDebug>
 #include <QTextStream>
-#include <memory>
 #include <iostream>
+#include <memory>
 
-const int secondsPerHour = 3600;
+const int secondsPerHour   = 3600;
 const int secondsPerMinute = 60;
 
 QString getAvailabilityHuman(bool isFree) {
@@ -98,6 +98,13 @@ bool yesFromTerminal() {
 }
 
 void printEmptyLineSeparator() {
-       cout << "\n\n";
+	cout << "\n\n";
 }
 
+QString getMysqlString(const QDateTime& endDateTime) {
+	QString endDateTimeStr = "NULL";
+	if (!endDateTime.isNull()) {
+		endDateTimeStr = "'"+endDateTime.toString(mysqlDateTimeFormat)+"'";
+	}
+	return endDateTimeStr;
+}

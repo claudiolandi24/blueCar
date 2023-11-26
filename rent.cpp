@@ -1,13 +1,15 @@
 #include "rent.h"
 #include "rbk/defines/stringDefine.h"
 #include "rbk/minMysql/min_mysql.h"
+#include "rbk/misc/b64.h"
+#include "utilityfunctions.h"
 
 extern DB db;
 
 void Rent::saveInDb() {
-	QString skel           = R"(
+	QString skel = R"(
 INSERT INTO rent
-SET userId = %1
+SET userId = %1,
     carId = %2,
     startLocationId = %3,
     startDateTime = %4,
@@ -17,20 +19,16 @@ SET userId = %1
     distance = %8, 
     cost = %9;
 )";
-	QString endDateTimeStr = "NULL";
-	if (!endDateTime.isNull()) {
-		endDateTimeStr = endDateTime.toString(mysqlDateTimeFormat);
-	}
-	auto sql = skel
+	auto    sql  = skel
 	               .arg(userId)
 	               .arg(carId)
 	               .arg(startLocationId)
-	               .arg(startDateTime.toString(mysqlDateTimeFormat))
+	               .arg(getMysqlString(startDateTime))
 	               .arg(endLocationId)
-	               .arg(endDateTimeStr)
-	               .arg(estimatedEndDateTime.toString(mysqlDateTimeFormat))
+	               .arg(getMysqlString(endDateTime))
+	               .arg(getMysqlString(estimatedEndDateTime))
 	               .arg(distance)
 	               .arg(cost);
 	db.query(sql);
-    id = (long long)(db.lastId());
+	id = (long long)(db.lastId());
 }
