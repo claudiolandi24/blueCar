@@ -93,7 +93,7 @@ void RentRequest::updateDb() {
     rent.distance = distance;
     rent.cost = cost;
     
-    
+    rent.saveInDb();
 }
 
 RentRequest RentRequest::getFromTerminal() {

@@ -5,28 +5,31 @@
 extern DB db;
 
 void Rent::saveInDb() {
-	QString skel = R"(
+	QString skel           = R"(
 INSERT INTO rent
 SET userId = %1
     carId = %2,
     startLocationId = %3,
     startDateTime = %4,
     endLocationId = %5,
-    endDateTime = NULL,
-    estimatedEndDateTime = %6,
-    distance = %7, 
-    cost = %8;
+    endDateTime = %6,
+    estimatedEndDateTime = %7,
+    distance = %8, 
+    cost = %9;
 )";
-	auto    sql  = skel
+	QString endDateTimeStr = "NULL";
+	if (!endDateTime.isNull()) {
+		endDateTimeStr = endDateTime.toString(mysqlDateTimeFormat);
+	}
+	auto sql = skel
 	               .arg(userId)
 	               .arg(carId)
 	               .arg(startLocationId)
 	               .arg(startDateTime.toString(mysqlDateTimeFormat))
 	               .arg(endLocationId)
+	               .arg(endDateTimeStr)
 	               .arg(estimatedEndDateTime.toString(mysqlDateTimeFormat))
 	               .arg(distance)
 	               .arg(cost);
-    db.query(sql);
+	db.query(sql);
 }
-
-
