@@ -42,7 +42,7 @@ int main() {
 	qInstallMessageHandler(myMessageOutput);
 
 	initDb();
-
+    
 	runApplication();
 	//try0();
 

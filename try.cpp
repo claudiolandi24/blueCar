@@ -8,6 +8,7 @@
 #include "variadictable.h"
 #include <QTextStream>
 #include <iostream>
+#include "hash.h"
 
 using namespace std;
 
@@ -59,7 +60,7 @@ void tryTableCar() {
 
 #include <QCryptographicHash>
 void tryHash() {
-	QString    password     = "asd123";
+	QString    password     = "admin";
 	QByteArray passwordData = password.toUtf8(); // Convert the password to UTF-8 encoded bytes
 	QByteArray hashedData   = QCryptographicHash::hash(passwordData, QCryptographicHash::Sha256);
 
@@ -85,10 +86,5 @@ void printCars() {
 }
 
 void try0() {
-    //int carTypeId   = getValidatedInt("Insert the car 'type'", make_unique<ValidateCarType>(7));
-    ValidateCarType v(2);
-    
-    //ValidateCarType::ValidateCarType(int minNumbPersons_) {
-
-    cout<<"\n";
+    cout << getHash("admin").toStdString();    
 }

@@ -11,12 +11,15 @@ extern QString mariaDbPwd;
 extern int     mariaDbPort;
 extern QString mariaDbDefaultDb;
 
-extern QString adminPwdHash;
+
 extern int     kmPerHop;
 extern bool    paymentOperationSuccess;
 extern int     serviceEveryKm;
 // $ cent
 extern int serviceCost;
+
+extern bool simulateHash;
+extern QString adminPwdHash;
 
 } // namespace config
 

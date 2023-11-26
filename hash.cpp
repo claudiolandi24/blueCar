@@ -1,11 +1,12 @@
 #include "hash.h"
+#include "config.h"
 #include <QCryptographicHash>
 
-//TODO
 QString getHash(const QString& string) {
-    //TODO remove
-    return "HASH_OF_"+string;
-    
+	if (config::simulateHash) {
+		return "HASH_OF_" + string;
+	}
+
 	QByteArray qbaString = string.toUtf8();
 	QByteArray hash      = QCryptographicHash::hash(qbaString, QCryptographicHash::RealSha3_512);
 	QString    strHash   = QString(hash.toHex());
