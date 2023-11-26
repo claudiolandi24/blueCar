@@ -5,6 +5,4 @@ MenuItem::MenuItem(string label_) {
 	label = label_;
 }
 
-void MenuItem::printEmptyLineSeparator() {
-	cout << "\n\n";
-}
+

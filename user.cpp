@@ -52,7 +52,7 @@ void User::saveToDb() {
 	creditCard.saveToDb();
 	QString skel = R"(
 INSERT INTO user
-SET active = %1
+SET active = %1,
     username = %2,
     pwdHash = '%3',
     name = %4,

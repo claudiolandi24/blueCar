@@ -1,6 +1,7 @@
 #include "entity.h"
 #include "rbk/minMysql/min_mysql.h"
 #include <QString>
+#include "menuitem.h"
 
 extern DB db;
 
@@ -28,12 +29,15 @@ QPair<bool, int> Entity::getIdFromTerminal(const QString& operation) {
 	}
 
 	QString msgSkel = R"(Insert the ID of the %1 you want to %2.
-Insert 0 (zero) to cancel this operation)";
+Insert 0 (zero) to cancel this operation
+)";
 	auto    msg     = msgSkel
 	               .arg(entityName)
 	               .arg(operation);
-	QTextStream(stdout) << msg << Qt::endl;
+	QTextStream(stdout) << msg;
 	QString rawInput = QTextStream(stdin).readLine();
+    printEmptyLineSeparator();
+    
 	bool    ok;
 	int     id = rawInput.toInt(&ok);
 	if (!ok) {
