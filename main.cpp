@@ -1,6 +1,7 @@
 #include "database.h"
 #include "menulogin.h"
 #include "rbk/QStacker/qstacker.h"
+#include "rbk/caching/apcu2.h"
 #include "try.h"
 #include <QCoreApplication>
 #include <iostream>
@@ -36,6 +37,12 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext& context, const QS
 		fprintf(stderr, "------------------------------------------------------------------------------------------------------\n\n\n\n");
 		abort();
 	}
+}
+
+void startupfun(void) __attribute__((constructor));
+
+void startupfun(void) {
+	APCU::disableAPCU = true;
 }
 
 // ./blueCar 2>> error.log
